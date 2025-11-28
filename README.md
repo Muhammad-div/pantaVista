@@ -1,26 +1,43 @@
-# React Dashboard Project
+# Pantavista CRM Dashboard
 
-A modern React + TypeScript dashboard application built with Vite.
+A modern React + TypeScript dashboard application built with Vite and Material-UI (MUI).
 
-## 🚀 Getting Started
+## 🚀 Features
 
-### Install Dependencies
+- **Modern UI/UX**: Clean, professional design with smooth animations
+- **Authentication**: Login page with protected routes
+- **Dashboard Layout**: Fixed sidebar navigation with submenu support
+- **Suppliers Management**: Full CRUD interface with search and pagination
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **TypeScript**: Full type safety throughout the application
+
+## 📦 Tech Stack
+
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Material-UI (MUI)** - Component library
+- **React Router DOM** - Client-side routing
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and npm
+
+### Installation
+
 ```bash
+# Install dependencies
 npm install
-```
 
-### Run Development Server
-```bash
+# Start development server
 npm run dev
-```
 
-### Build for Production
-```bash
+# Build for production
 npm run build
-```
 
-### Preview Production Build
-```bash
+# Preview production build
 npm run preview
 ```
 
@@ -30,55 +47,45 @@ npm run preview
 src/
 ├── components/          # Reusable components
 │   ├── DashboardLayout.tsx    # Main dashboard layout with sidebar
-│   └── DashboardLayout.css
+│   └── SupplierActions.tsx   # Supplier actions drawer
 ├── pages/              # Page components
-│   ├── Dashboard.tsx   # Dashboard page
-│   └── Dashboard.css
+│   ├── Login.tsx       # Login page
+│   ├── Suppliers.tsx   # Suppliers table page
+│   └── ...             # Other pages
 ├── types/              # TypeScript type definitions
-│   └── index.ts
 ├── App.tsx             # Main app component with routing
-├── App.css             # Global app styles
-├── main.tsx            # Entry point
-└── index.css           # Global styles
+└── main.tsx            # Entry point
 ```
 
-## 🎨 Converting Figma Designs
+## 🔐 Authentication
 
-To convert your Figma design to React components, you can:
+Default credentials for testing:
+- **Username**: `test`
+- **Password**: `test`
 
-1. **Share Screenshots**: Take screenshots of your Figma designs and share them
-2. **Export Assets**: Export images, icons, and other assets from Figma
-3. **Share Design Specs**: Provide details about:
-   - Colors (hex codes)
-   - Typography (font families, sizes, weights)
-   - Spacing and layout measurements
-   - Component specifications
+## 📝 Available Pages
 
-## 📦 Dependencies
+- **Suppliers** - Manage supplier data with table view
+- **Regions** - Region management (in development)
+- **Persons** - Person management with submenu
+- **Products** - Product catalog
+- **Documents** - Document management
+- **Transactions** - Transaction history with submenu
+- **Workspace** - Workspace management (in development)
+- **Settings** - Application settings (in development)
 
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **React Router DOM** - Client-side routing
-- **Vite** - Build tool and dev server
+## 🎨 Features
 
-## 🛠️ Adding New Pages
+- **Supplier Actions**: Click any supplier row to view actions drawer
+- **Search & Filter**: Search suppliers by name, city, phone, etc.
+- **Pagination**: Navigate through large datasets efficiently
+- **Submenu Navigation**: Hover over menu items with ">" to see submenus
+- **Responsive Layout**: Adapts to different screen sizes
 
-1. Create a new component in `src/pages/`
-2. Add a route in `src/App.tsx`
-3. Add a navigation item in `src/components/DashboardLayout.tsx`
+## 📄 License
 
-Example:
-```typescript
-// In App.tsx
-<Route path="/settings" element={<Settings />} />
+This project is private and proprietary.
 
-// In DashboardLayout.tsx
-{ path: '/settings', label: 'Settings', icon: '⚙️' }
-```
+## 👥 Contributing
 
-## 📝 Notes
-
-- The dashboard layout includes a sidebar navigation
-- All components are TypeScript-typed
-- Responsive design is included
-- Modern CSS with flexbox/grid layouts
+This is a private project. For questions or issues, please contact the development team.
