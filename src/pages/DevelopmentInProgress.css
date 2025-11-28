@@ -1,0 +1,35 @@
+.development-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  width: 100%;
+}
+
+.development-card {
+  text-align: center;
+  padding: 48px 32px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  width: 100%;
+}
+
+.development-title {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16px !important;
+}
+
+.development-message {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 12px !important;
+}
+
+.development-subtitle {
+  color: #9ca3af;
+  font-style: italic;
+}
+

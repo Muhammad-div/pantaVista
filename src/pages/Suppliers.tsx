@@ -1,0 +1,336 @@
+import { useState, useMemo } from 'react'
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Typography,
+  Chip,
+  TextField,
+  InputAdornment,
+  Breadcrumbs,
+  Link,
+} from '@mui/material'
+import {
+  Home as HomeIcon,
+  Search as SearchIcon,
+} from '@mui/icons-material'
+import SupplierActions from '../components/SupplierActions'
+import './Suppliers.css'
+
+export interface Supplier {
+  id: number
+  shortName: string
+  supplierNo: string
+  street: string
+  zipCode: string
+  city: string
+  phoneNumber: string
+  accessRight: 'granted' | 'denied'
+}
+
+const sampleSuppliers: Supplier[] = [
+  {
+    id: 1,
+    shortName: 'Athesia',
+    supplierNo: '82',
+    street: 'Ottobrunner Str. 41',
+    zipCode: 'GE-82008',
+    city: 'Unterhaching',
+    phoneNumber: '+49-89-693378.0',
+    accessRight: 'granted',
+  },
+  {
+    id: 2,
+    shortName: 'Baier-Schneider',
+    supplierNo: '20',
+    street: 'Wollhausstr. 60-62',
+    zipCode: 'GE74072',
+    city: 'Heilbronn',
+    phoneNumber: '+49-7131-8860',
+    accessRight: 'granted',
+  },
+  {
+    id: 3,
+    shortName: 'Bigben',
+    supplierNo: '67',
+    street: 'Walter-Gropius-Str. 28',
+    zipCode: 'GE-50126',
+    city: 'Berghiem',
+    phoneNumber: '+49-2271-4985.90',
+    accessRight: 'denied',
+  },
+  {
+    id: 4,
+    shortName: 'ann',
+    supplierNo: '11',
+    street: 'Schonheider Str. 61',
+    zipCode: 'GE-08328',
+    city: 'Stutzengrun',
+    phoneNumber: '+49-37462-642.0',
+    accessRight: 'denied',
+  },
+  {
+    id: 5,
+    shortName: 'D',
+    supplierNo: '66',
+    street: 'Bernhard-Rottgen-Waldw',
+    zipCode: 'GE-41379',
+    city: 'Bruggen',
+    phoneNumber: '+49-2163-950900',
+    accessRight: 'granted',
+  },
+  {
+    id: 6,
+    shortName: 'TechCorp',
+    supplierNo: '101',
+    street: 'Innovation Avenue 123',
+    zipCode: 'GE-10001',
+    city: 'Berlin',
+    phoneNumber: '+49-30-12345678',
+    accessRight: 'granted',
+  },
+  {
+    id: 7,
+    shortName: 'GlobalSupply',
+    supplierNo: '202',
+    street: 'International Blvd 456',
+    zipCode: 'GE-20002',
+    city: 'Munich',
+    phoneNumber: '+49-89-98765432',
+    accessRight: 'granted',
+  },
+  {
+    id: 8,
+    shortName: 'LocalDist',
+    supplierNo: '303',
+    street: 'Main Street 789',
+    zipCode: 'GE-30003',
+    city: 'Hamburg',
+    phoneNumber: '+49-40-55555555',
+    accessRight: 'denied',
+  },
+  {
+    id: 9,
+    shortName: 'PrimeVendor',
+    supplierNo: '404',
+    street: 'Commerce Road 321',
+    zipCode: 'GE-40004',
+    city: 'Frankfurt',
+    phoneNumber: '+49-69-11111111',
+    accessRight: 'granted',
+  },
+  {
+    id: 10,
+    shortName: 'EliteSupply',
+    supplierNo: '505',
+    street: 'Business Park 654',
+    zipCode: 'GE-50005',
+    city: 'Stuttgart',
+    phoneNumber: '+49-711-22222222',
+    accessRight: 'granted',
+  },
+]
+
+const Suppliers = () => {
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null)
+  const [actionsOpen, setActionsOpen] = useState(false)
+
+  const filteredSuppliers = useMemo(() => {
+    if (!searchQuery) return sampleSuppliers
+
+    const query = searchQuery.toLowerCase()
+    return sampleSuppliers.filter(
+      (supplier) =>
+        supplier.shortName.toLowerCase().includes(query) ||
+        supplier.supplierNo.toLowerCase().includes(query) ||
+        supplier.city.toLowerCase().includes(query) ||
+        supplier.street.toLowerCase().includes(query) ||
+        supplier.phoneNumber.includes(query)
+    )
+  }, [searchQuery])
+
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
+
+  const paginatedSuppliers = useMemo(() => {
+    return filteredSuppliers.slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage
+    )
+  }, [filteredSuppliers, page, rowsPerPage])
+
+  const handleRowClick = (supplier: Supplier) => {
+    setSelectedSupplier(supplier)
+    setActionsOpen(true)
+  }
+
+  const handleCloseActions = () => {
+    setActionsOpen(false)
+    setSelectedSupplier(null)
+  }
+
+  return (
+    <>
+      <Box className="suppliers-page">
+        <Box className="page-header">
+          <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
+            <Link
+              underline="hover"
+              color="inherit"
+              href="#"
+              sx={{ display: 'flex', alignItems: 'center' }}
+            >
+              <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+              Home
+            </Link>
+            <Typography color="text.primary">Suppliers</Typography>
+          </Breadcrumbs>
+          <Typography variant="h4" component="h1" className="page-title">
+            Suppliers
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            List of all Suppliers
+          </Typography>
+        </Box>
+
+        <Paper elevation={0} className="suppliers-card">
+          <Box className="table-header">
+            <TextField
+              placeholder="Search suppliers..."
+              variant="outlined"
+              size="small"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                width: '300px',
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '8px',
+                },
+              }}
+            />
+            <Box className="table-stats">
+              <Typography variant="body2" color="text.secondary">
+                Total: <strong>{filteredSuppliers.length}</strong> suppliers
+              </Typography>
+            </Box>
+          </Box>
+
+          <TableContainer>
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell className="table-header-cell">Short Name</TableCell>
+                  <TableCell className="table-header-cell">Supplier No</TableCell>
+                  <TableCell className="table-header-cell">Street</TableCell>
+                  <TableCell className="table-header-cell">Zip Code</TableCell>
+                  <TableCell className="table-header-cell">City</TableCell>
+                  <TableCell className="table-header-cell">Phone Number</TableCell>
+                  <TableCell className="table-header-cell">Access Right</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {paginatedSuppliers.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
+                      <Typography color="text.secondary">
+                        No suppliers found matching your search.
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  paginatedSuppliers.map((supplier) => (
+                    <TableRow
+                      key={supplier.id}
+                      hover
+                      onClick={() => handleRowClick(supplier)}
+                      sx={{
+                        cursor: 'pointer',
+                        '&:nth-of-type(even)': {
+                          backgroundColor: '#f9fafb',
+                        },
+                        '&:hover': {
+                          backgroundColor: '#f3f4f6',
+                        },
+                      }}
+                    >
+                      <TableCell>{supplier.shortName}</TableCell>
+                      <TableCell>{supplier.supplierNo}</TableCell>
+                      <TableCell>{supplier.street}</TableCell>
+                      <TableCell>{supplier.zipCode}</TableCell>
+                      <TableCell>{supplier.city}</TableCell>
+                      <TableCell>{supplier.phoneNumber}</TableCell>
+                      <TableCell>
+                        <Chip
+                          label={
+                            supplier.accessRight === 'granted'
+                              ? 'Access granted'
+                              : 'Access denied'
+                          }
+                          color={
+                            supplier.accessRight === 'granted'
+                              ? 'success'
+                              : 'error'
+                          }
+                          size="small"
+                          sx={{
+                            fontWeight: 500,
+                            borderRadius: '6px',
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          <TablePagination
+            component="div"
+            count={filteredSuppliers.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            rowsPerPageOptions={[5, 10, 25, 50]}
+            sx={{
+              borderTop: '1px solid #e5e7eb',
+            }}
+          />
+        </Paper>
+      </Box>
+
+      <SupplierActions
+        open={actionsOpen}
+        onClose={handleCloseActions}
+        supplier={selectedSupplier}
+      />
+    </>
+  )
+}
+
+export default Suppliers
