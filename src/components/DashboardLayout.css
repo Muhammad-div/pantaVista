@@ -19,20 +19,6 @@
   margin-left: 4px;
 }
 
-.sidebar-summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 16px 20px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.summary-number {
-  font-weight: 600;
-  font-size: 16px;
-  color: #1f2937;
-}
-
 .sidebar-nav {
   padding: 8px;
   position: relative;

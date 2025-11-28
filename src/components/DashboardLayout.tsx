@@ -289,16 +289,6 @@ const DashboardLayout = () => {
           </Typography>
         </Box>
 
-        <Box className="sidebar-summary">
-          <Typography variant="body2" className="summary-number">
-            204
-          </Typography>
-          <Divider orientation="vertical" flexItem />
-          <Typography variant="body2" className="summary-number">
-            57
-          </Typography>
-        </Box>
-
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
           <List className="sidebar-nav" sx={{ flex: 1, overflowY: 'auto' }}>
             {navItems.map((item) => renderNavItem(item))}
