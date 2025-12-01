@@ -160,7 +160,7 @@ const EditSupplierSidebar = ({
           <IconButton
             onClick={onClose}
             className="back-button"
-            sx={{ color: '#6b7280' }}
+            sx={{ color: 'text.secondary' }}
           >
             <ArrowBackIcon />
           </IconButton>
@@ -170,7 +170,7 @@ const EditSupplierSidebar = ({
           <IconButton
             onClick={onClose}
             className="close-button"
-            sx={{ color: '#6b7280' }}
+            sx={{ color: 'text.secondary' }}
           >
             <CloseIcon />
           </IconButton>
@@ -196,7 +196,7 @@ const EditSupplierSidebar = ({
                     <IconButton
                       size="small"
                       onClick={() => handleClearField('shortName')}
-                      sx={{ color: '#9ca3af' }}
+                      sx={{ color: 'text.tertiary' }}
                     >
                       <CloseIcon fontSize="small" />
                     </IconButton>
@@ -218,7 +218,7 @@ const EditSupplierSidebar = ({
                     <IconButton
                       size="small"
                       onClick={() => handleClearField('organizationName')}
-                      sx={{ color: '#9ca3af' }}
+                      sx={{ color: 'text.tertiary' }}
                     >
                       <CloseIcon fontSize="small" />
                     </IconButton>
@@ -240,7 +240,7 @@ const EditSupplierSidebar = ({
                     <IconButton
                       size="small"
                       onClick={() => handleClearField('nameAddition')}
-                      sx={{ color: '#9ca3af' }}
+                      sx={{ color: 'text.tertiary' }}
                     >
                       <CloseIcon fontSize="small" />
                     </IconButton>
@@ -260,7 +260,7 @@ const EditSupplierSidebar = ({
                     <IconButton
                       size="small"
                       onClick={() => handleClearField('street')}
-                      sx={{ color: '#9ca3af' }}
+                      sx={{ color: 'text.tertiary' }}
                     >
                       <CloseIcon fontSize="small" />
                     </IconButton>
@@ -289,7 +289,7 @@ const EditSupplierSidebar = ({
                           handleClearField('zipCode')
                           handleClearField('city')
                         }}
-                        sx={{ color: '#9ca3af' }}
+                        sx={{ color: 'text.tertiary' }}
                       >
                         <CloseIcon fontSize="small" />
                       </IconButton>
@@ -309,7 +309,7 @@ const EditSupplierSidebar = ({
                     <IconButton
                       size="small"
                       onClick={() => handleClearField('district')}
-                      sx={{ color: '#9ca3af' }}
+                      sx={{ color: 'text.tertiary' }}
                     >
                       <CloseIcon fontSize="small" />
                     </IconButton>
@@ -324,7 +324,7 @@ const EditSupplierSidebar = ({
                   onChange={(e) => handleInputChange('country', e.target.value)}
                   endAdornment={
                     <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
-                      <PublicIcon sx={{ fontSize: 18, color: '#6b7280' }} />
+                      <PublicIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
                     </Box>
                   }
                 >
@@ -376,7 +376,7 @@ const EditSupplierSidebar = ({
               ) : (
                 <Box className="image-upload-placeholder">
                   <CloudUploadIcon
-                    sx={{ fontSize: 64, color: '#9ca3af', mb: 2 }}
+                    sx={{ fontSize: 64, color: 'text.tertiary', mb: 2 }}
                   />
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     Drag and drop files here to upload. Only JPEG, PNG and SVG files
@@ -394,7 +394,16 @@ const EditSupplierSidebar = ({
                       variant="outlined"
                       component="span"
                       size="small"
-                      sx={{ textTransform: 'none', mr: 1 }}
+                      sx={{ 
+                        textTransform: 'none', 
+                        mr: 1,
+                        borderColor: 'primary.main',
+                        color: 'primary.main',
+                        '&:hover': {
+                          borderColor: 'primary.dark',
+                          backgroundColor: 'action.hover',
+                        },
+                      }}
                     >
                       Select files...
                     </Button>
@@ -402,7 +411,15 @@ const EditSupplierSidebar = ({
                   <Button
                     variant="outlined"
                     size="small"
-                    sx={{ textTransform: 'none' }}
+                    sx={{ 
+                      textTransform: 'none',
+                      borderColor: 'primary.main',
+                      color: 'primary.main',
+                      '&:hover': {
+                        borderColor: 'primary.dark',
+                        backgroundColor: 'action.hover',
+                      },
+                    }}
                     onClick={() =>
                       document.getElementById('image-upload-input')?.click()
                     }
@@ -435,7 +452,7 @@ const EditSupplierSidebar = ({
                     <IconButton
                       size="small"
                       onClick={() => handleClearField('phoneNumber')}
-                      sx={{ color: '#9ca3af' }}
+                      sx={{ color: 'text.tertiary' }}
                     >
                       <CloseIcon fontSize="small" />
                     </IconButton>
@@ -455,7 +472,7 @@ const EditSupplierSidebar = ({
                     <IconButton
                       size="small"
                       onClick={() => handleClearField('fax')}
-                      sx={{ color: '#9ca3af' }}
+                      sx={{ color: 'text.tertiary' }}
                     >
                       <CloseIcon fontSize="small" />
                     </IconButton>
@@ -475,7 +492,7 @@ const EditSupplierSidebar = ({
                     <IconButton
                       size="small"
                       onClick={() => handleClearField('email')}
-                      sx={{ color: '#9ca3af' }}
+                      sx={{ color: 'text.tertiary' }}
                     >
                       <CloseIcon fontSize="small" />
                     </IconButton>
@@ -526,7 +543,7 @@ const EditSupplierSidebar = ({
                       <IconButton
                         size="small"
                         onClick={() => handleClearField('serviceProvider')}
-                        sx={{ color: '#9ca3af' }}
+                        sx={{ color: 'text.tertiary' }}
                       >
                         <CloseIcon fontSize="small" />
                       </IconButton>
@@ -548,7 +565,7 @@ const EditSupplierSidebar = ({
                             height: 20,
                             backgroundColor: '#FF6B35',
                             borderRadius: 1,
-                            border: '1px solid #e5e7eb',
+                            border: (theme) => `1px solid ${theme.palette.divider}`,
                           }}
                         />
                         <span>Red</span>
@@ -562,7 +579,7 @@ const EditSupplierSidebar = ({
                             height: 20,
                             backgroundColor: '#3b82f6',
                             borderRadius: 1,
-                            border: '1px solid #e5e7eb',
+                            border: (theme) => `1px solid ${theme.palette.divider}`,
                           }}
                         />
                         <span>Blue</span>
@@ -576,7 +593,7 @@ const EditSupplierSidebar = ({
                             height: 20,
                             backgroundColor: '#10b981',
                             borderRadius: 1,
-                            border: '1px solid #e5e7eb',
+                            border: (theme) => `1px solid ${theme.palette.divider}`,
                           }}
                         />
                         <span>Green</span>
@@ -618,13 +635,14 @@ const EditSupplierSidebar = ({
             onClick={handleCancel}
             className="cancel-button"
             sx={{
-              borderColor: '#3b82f6',
-              color: '#3b82f6',
+              borderColor: 'primary.main',
+              color: 'primary.main',
+              backgroundColor: 'background.paper',
               textTransform: 'none',
               fontWeight: 500,
               '&:hover': {
-                borderColor: '#2563eb',
-                backgroundColor: '#eff6ff',
+                borderColor: 'primary.dark',
+                backgroundColor: 'action.hover',
               },
             }}
           >

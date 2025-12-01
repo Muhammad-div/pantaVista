@@ -9,15 +9,23 @@
 
 .page-title {
   font-weight: 600;
-  color: #1f2937;
+  color: var(--text-primary, #1f2937);
   margin-top: 8px;
+  transition: color 0.2s ease;
 }
 
 .suppliers-card {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: var(--bg-paper, #ffffff);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.03));
   overflow: hidden;
+  border: 1px solid var(--border-color, #cbd5e1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.suppliers-card:hover {
+  box-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(15, 23, 42, 0.02));
+  transform: translateY(-2px);
 }
 
 .table-header {
@@ -25,7 +33,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 24px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--divider-color, #e2e8f0);
+  background: var(--bg-paper, #ffffff);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  backdrop-filter: blur(8px);
 }
 
 .table-stats {
@@ -35,13 +46,14 @@
 }
 
 .table-header-cell {
-  background-color: #f9fafb;
+  background-color: var(--table-header-bg, #f9fafb) !important;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-secondary, #374151) !important;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid var(--divider-color, #e5e7eb) !important;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 @media (max-width: 768px) {

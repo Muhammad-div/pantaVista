@@ -269,11 +269,12 @@ const Suppliers = () => {
                       onClick={() => handleRowClick(supplier)}
                       sx={{
                         cursor: 'pointer',
+                        transition: 'background-color 0.2s ease',
                         '&:nth-of-type(even)': {
-                          backgroundColor: '#f9fafb',
+                          backgroundColor: 'var(--table-row-even)',
                         },
                         '&:hover': {
-                          backgroundColor: '#f3f4f6',
+                          backgroundColor: 'var(--table-row-hover)',
                         },
                       }}
                     >
@@ -318,7 +319,8 @@ const Suppliers = () => {
             onRowsPerPageChange={handleChangeRowsPerPage}
             rowsPerPageOptions={[5, 10, 25, 50]}
             sx={{
-              borderTop: '1px solid #e5e7eb',
+              borderTop: '1px solid',
+              borderColor: 'divider',
             }}
           />
         </Paper>

@@ -18,6 +18,7 @@ A modern React + TypeScript dashboard application built with Vite and Material-U
 - **Vite** - Build tool and dev server
 - **Material-UI (MUI)** - Component library
 - **React Router DOM** - Client-side routing
+- **Vercel Analytics** - Web analytics and performance monitoring
 
 ## 🛠️ Getting Started
 
@@ -81,6 +82,51 @@ Default credentials for testing:
 - **Pagination**: Navigate through large datasets efficiently
 - **Submenu Navigation**: Hover over menu items with ">" to see submenus
 - **Responsive Layout**: Adapts to different screen sizes
+
+## 🚀 Deployment
+
+This project is configured for deployment on Vercel with analytics and performance monitoring.
+
+### Vercel Deployment
+
+1. **Install Vercel CLI** (optional):
+   ```bash
+   npm i -g vercel
+   ```
+
+2. **Deploy to Vercel**:
+   ```bash
+   # Login to Vercel
+   vercel login
+   
+   # Deploy (first time)
+   vercel
+   
+   # Deploy to production
+   vercel --prod
+   ```
+
+3. **Or use Vercel Dashboard**:
+   - Connect your GitHub repository to Vercel
+   - Vercel will automatically detect the Vite framework
+   - The `vercel.json` configuration will be applied automatically
+
+### Analytics & Monitoring
+
+The project includes:
+- **Vercel Analytics**: Automatic web analytics tracking
+- **Speed Insights**: Real-time performance monitoring
+
+Both are automatically enabled when deployed to Vercel. No additional configuration needed.
+
+### Configuration Files
+
+- `vercel.json` - Vercel deployment configuration
+  - SPA routing support (all routes redirect to index.html)
+  - Optimized caching for static assets
+  - Vite framework detection
+
+- `.vercelignore` - Files to exclude from deployment
 
 ## 📄 License
 

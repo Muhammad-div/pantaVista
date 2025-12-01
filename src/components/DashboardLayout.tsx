@@ -175,7 +175,7 @@ const DashboardLayout = () => {
             }`}
             sx={{
               '&.Mui-selected': {
-                backgroundColor: '#2563eb',
+                backgroundColor: 'var(--nav-active-bg, #2563eb)',
                 color: '#ffffff',
                 '&:hover': {
                   backgroundColor: '#1d4ed8',
@@ -191,7 +191,7 @@ const DashboardLayout = () => {
           >
             <ListItemIcon
               sx={{
-                color: isActive ? '#ffffff' : '#6b7280',
+                color: isActive ? '#ffffff' : 'var(--text-secondary, #6b7280)',
                 minWidth: 40,
                 transition: 'color 0.2s ease',
               }}
@@ -203,14 +203,15 @@ const DashboardLayout = () => {
               sx={{
                 '& .MuiListItemText-primary': {
                   fontWeight: isActive ? 600 : 500,
-                  color: isActive ? '#ffffff' : '#374151',
+                  color: isActive ? '#ffffff' : 'var(--text-primary, #374151)',
+                  transition: 'color 0.2s ease',
                 },
               }}
             />
             {item.hasSubmenu && (
               <ChevronRightIcon
                 sx={{
-                  color: isActive ? '#ffffff' : '#9ca3af',
+                  color: isActive ? '#ffffff' : 'var(--text-tertiary, #9ca3af)',
                   fontSize: 18,
                   transition: 'color 0.2s ease',
                 }}
@@ -297,6 +298,10 @@ const DashboardLayout = () => {
             overflow: 'visible',
             display: 'flex',
             flexDirection: 'column',
+            transition: 'background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
+            boxShadow: mode === 'light' 
+              ? '2px 0 8px rgba(15, 23, 42, 0.04), 4px 0 12px rgba(15, 23, 42, 0.02)'
+              : undefined,
           },
         }}
       >

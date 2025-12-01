@@ -269,9 +269,11 @@ const POSList = () => {
             className="pos-options-button"
             onClick={handleOptionsClick}
             sx={{
-              border: '1px solid #d1d5db',
+              border: '1px solid',
+              borderColor: 'var(--border-color, #d1d5db)',
               borderRadius: '8px',
               padding: '8px',
+              transition: 'border-color 0.2s ease',
             }}
           >
             <MoreVertIcon />
@@ -381,11 +383,12 @@ const POSList = () => {
                       key={pos.id}
                       hover
                       sx={{
+                        transition: 'background-color 0.2s ease',
                         '&:nth-of-type(even)': {
-                          backgroundColor: '#f9fafb',
+                          backgroundColor: 'var(--table-row-even)',
                         },
                         '&:hover': {
-                          backgroundColor: '#f3f4f6',
+                          backgroundColor: 'var(--table-row-hover)',
                         },
                       }}
                     >
@@ -414,7 +417,8 @@ const POSList = () => {
             rowsPerPageOptions={[3, 5, 10, 25, 50]}
             labelRowsPerPage="Items per page:"
             sx={{
-              borderTop: '1px solid #e5e7eb',
+              borderTop: '1px solid',
+              borderColor: 'divider',
               '& .MuiTablePagination-toolbar': {
                 padding: '12px 16px',
               },
