@@ -1,13 +1,14 @@
 .show-supplier-page {
   width: 100%;
   min-height: 100vh;
-  background-color: #f9fafb;
+  background-color: var(--bg-default, #f9fafb);
 }
 
 /* Header Section */
 .show-supplier-header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  background-color: var(--bg-paper, #ffffff);
+  border-bottom: 1px solid;
+  border-color: var(--divider-color, #e5e7eb);
   padding: 16px 32px;
   display: flex;
   justify-content: space-between;
@@ -54,7 +55,7 @@
 /* Tabs Section */
 .tabs-section {
   margin-bottom: 24px;
-  background-color: #ffffff;
+  background-color: var(--bg-paper, #ffffff);
   border-radius: 12px;
   padding: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -74,21 +75,35 @@
   border-radius: 8px;
   margin-right: 4px;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .supplier-tabs .MuiTab-root:hover {
   background-color: #f3f4f6;
-  color: #374151;
+  color: #1f2937;
 }
 
 .supplier-tabs .Mui-selected {
-  color: #ffffff;
-  background-color: #3b82f6;
+  color: #ffffff !important;
+  background-color: #3b82f6 !important;
   font-weight: 600;
 }
 
 .supplier-tabs .Mui-selected:hover {
-  background-color: #2563eb;
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .supplier-tabs .MuiTab-root {
+    color: #cbd5e1;
+  }
+  
+  .supplier-tabs .MuiTab-root:hover {
+    background-color: #334155;
+    color: #f1f5f9;
+  }
 }
 
 .supplier-tabs .MuiTabs-indicator {
@@ -111,12 +126,13 @@
 .image-upload-card,
 .contact-card,
 .additional-data-card {
-  background-color: #ffffff;
+  background-color: var(--bg-paper, #ffffff);
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 24px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e5e7eb;
+  border: 1px solid;
+  border-color: var(--divider-color, #e5e7eb);
 }
 
 /* Address Fields */

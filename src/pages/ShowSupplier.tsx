@@ -127,13 +127,22 @@ const ShowSupplier = () => {
             onClick={handleEditSupplier}
             className="edit-supplier-button"
             sx={{
-              borderColor: '#3b82f6',
-              color: '#3b82f6',
+              borderColor: 'primary.main',
+              color: 'primary.main',
               textTransform: 'none',
               fontWeight: 500,
+              borderRadius: '8px',
+              px: 2,
+              py: 1,
               '&:hover': {
-                borderColor: '#2563eb',
-                backgroundColor: '#eff6ff',
+                borderColor: 'primary.dark',
+                backgroundColor: 'primary.light',
+                color: '#ffffff',
+                boxShadow: '0 2px 8px rgba(59, 130, 246, 0.3)',
+              },
+              '&:active': {
+                backgroundColor: 'primary.dark',
+                borderColor: 'primary.dark',
               },
             }}
           >

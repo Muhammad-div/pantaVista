@@ -203,8 +203,35 @@ const SupplierActions = ({ open, onClose, supplier }: SupplierActionsProps) => {
                   justifyContent: 'flex-start',
                   textTransform: 'none',
                   py: 1.5,
+                  px: 2,
                   borderRadius: '8px',
                   fontWeight: action.variant === 'contained' ? 600 : 500,
+                  fontSize: '14px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  minHeight: '48px',
+                  '&:hover': {
+                    transform: 'translateY(-1px)',
+                    boxShadow: action.variant === 'contained' 
+                      ? '0 4px 12px rgba(59, 130, 246, 0.3)' 
+                      : '0 2px 8px rgba(0, 0, 0, 0.1)',
+                  },
+                  '&.MuiButton-outlined': {
+                    borderColor: 'divider',
+                    color: 'text.primary',
+                    '&:hover': {
+                      borderColor: 'primary.main',
+                      backgroundColor: 'action.hover',
+                      color: 'primary.main',
+                    },
+                  },
+                  '&.MuiButton-contained': {
+                    boxShadow: '0 2px 4px rgba(59, 130, 246, 0.2)',
+                    '&:hover': {
+                      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+                    },
+                  },
                 }}
                 onClick={() => {
                   if (action.label === 'Show Supplier') {
