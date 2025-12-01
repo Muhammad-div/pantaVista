@@ -20,6 +20,7 @@ import {
   ShoppingCart as ShoppingCartIcon,
   Description as DescriptionIcon,
 } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
 import type { Supplier } from '../pages/Suppliers'
 import './SupplierActions.css'
 
@@ -30,6 +31,8 @@ interface SupplierActionsProps {
 }
 
 const SupplierActions = ({ open, onClose, supplier }: SupplierActionsProps) => {
+  const navigate = useNavigate()
+
   if (!supplier) return null
 
   const actionButtons = [
@@ -204,8 +207,13 @@ const SupplierActions = ({ open, onClose, supplier }: SupplierActionsProps) => {
                   fontWeight: action.variant === 'contained' ? 600 : 500,
                 }}
                 onClick={() => {
-                  // Handle action click
-                  console.log(`Action: ${action.label}`, supplier)
+                  if (action.label === 'Show Supplier') {
+                    onClose()
+                    navigate(`/suppliers/${supplier.id}`)
+                  } else {
+                    // Handle other action clicks
+                    console.log(`Action: ${action.label}`, supplier)
+                  }
                 }}
               >
                 {action.label}

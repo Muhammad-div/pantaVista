@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import DashboardLayout from './components/DashboardLayout'
 import Login from './pages/Login'
 import Suppliers from './pages/Suppliers'
+import ShowSupplier from './pages/ShowSupplier'
+import POSList from './pages/POSList'
 import Dashboard from './pages/Dashboard'
 import Regions from './pages/Regions'
 import Persons from './pages/Persons'
@@ -45,6 +47,8 @@ function App() {
       >
         <Route index element={<Navigate to="/suppliers" replace />} />
         <Route path="suppliers" element={<Suppliers />} />
+        <Route path="suppliers/:id" element={<ShowSupplier />} />
+        <Route path="suppliers/:id/pos-list" element={<POSList />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="regions" element={<Regions />} />
         <Route path="persons" element={<Persons />} />

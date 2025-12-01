@@ -29,6 +29,7 @@ import {
   ChevronRight as ChevronRightIcon,
 } from '@mui/icons-material'
 import { useState } from 'react'
+import SettingsSidebar from './SettingsSidebar'
 import './DashboardLayout.css'
 
 const DRAWER_WIDTH = 280
@@ -46,6 +47,7 @@ const DashboardLayout = () => {
   const navigate = useNavigate()
   const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
+  const [settingsSidebarOpen, setSettingsSidebarOpen] = useState(false)
 
   const navItems: NavItem[] = [
     {
@@ -136,9 +138,19 @@ const DashboardLayout = () => {
     handleUserMenuClose()
   }
 
+  const handleSettingsClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setSettingsSidebarOpen(true)
+  }
+
+  const handleCloseSettingsSidebar = () => {
+    setSettingsSidebarOpen(false)
+  }
+
   const renderNavItem = (item: NavItem, isBottomNav = false) => {
     const isActive = location.pathname === item.path
     const isHovered = hoveredItem === item.path
+    const isSettings = item.path === '/settings'
 
     return (
       <Box
@@ -149,8 +161,9 @@ const DashboardLayout = () => {
       >
         <ListItem disablePadding>
           <ListItemButton
-            component={Link}
-            to={item.path}
+            component={isSettings ? 'div' : Link}
+            to={isSettings ? undefined : item.path}
+            onClick={isSettings ? handleSettingsClick : undefined}
             selected={isActive}
             className={`nav-item ${isActive ? 'active' : ''} ${
               isHovered ? 'hovered' : ''
@@ -348,6 +361,12 @@ const DashboardLayout = () => {
           <Outlet />
         </Box>
       </Box>
+
+      {/* Settings Sidebar */}
+      <SettingsSidebar
+        open={settingsSidebarOpen}
+        onClose={handleCloseSettingsSidebar}
+      />
     </Box>
   )
 }
