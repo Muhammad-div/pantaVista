@@ -9,7 +9,6 @@ import {
   Paper,
   Tabs,
   Tab,
-  Grid,
 } from '@mui/material'
 import {
   Home as HomeIcon,
@@ -206,9 +205,9 @@ const ShowSupplier = () => {
         </Box>
 
         {/* Content Grid */}
-        <Grid container spacing={3} className="content-grid">
+        <Box className="content-grid" sx={{ display: 'flex', gap: 3, flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
           {/* Left Column - Address and Image */}
-          <Grid item xs={12} md={8}>
+          <Box sx={{ flex: { xs: '1 1 100%', md: '1 1 66.666%' }, minWidth: 0 }}>
             {/* Address Section */}
             <Paper elevation={0} className="address-card">
               <Box className="address-field">
@@ -372,10 +371,10 @@ const ShowSupplier = () => {
                 </Box>
               )}
             </Paper>
-          </Grid>
+          </Box>
 
           {/* Right Column - Contact */}
-          <Grid item xs={12} md={4}>
+          <Box sx={{ flex: { xs: '1 1 100%', md: '1 1 33.333%' }, minWidth: 0 }}>
             <Paper elevation={0} className="contact-card">
               <Box className="address-field">
                 <Typography variant="caption" className="field-label">
@@ -404,8 +403,8 @@ const ShowSupplier = () => {
                 </Typography>
               </Box>
             </Paper>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
 
       {/* Edit Supplier Sidebar */}
