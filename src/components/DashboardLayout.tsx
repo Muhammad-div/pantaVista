@@ -14,6 +14,7 @@ import {
   Divider,
   Paper,
   Collapse,
+  IconButton,
 } from '@mui/material'
 import {
   ShoppingCart as ShoppingCartIcon,
@@ -27,8 +28,11 @@ import {
   Settings as SettingsIcon,
   AccountCircle as AccountCircleIcon,
   ChevronRight as ChevronRightIcon,
+  DarkMode as DarkModeIcon,
+  LightMode as LightModeIcon,
 } from '@mui/icons-material'
 import { useState } from 'react'
+import { useTheme } from '../contexts/ThemeContext'
 import SettingsSidebar from './SettingsSidebar'
 import './DashboardLayout.css'
 
@@ -45,6 +49,7 @@ interface NavItem {
 const DashboardLayout = () => {
   const location = useLocation()
   const navigate = useNavigate()
+  const { mode, toggleTheme } = useTheme()
   const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const [settingsSidebarOpen, setSettingsSidebarOpen] = useState(false)
@@ -287,8 +292,8 @@ const DashboardLayout = () => {
           '& .MuiDrawer-paper': {
             width: DRAWER_WIDTH,
             boxSizing: 'border-box',
-            borderRight: '1px solid #e5e7eb',
-            backgroundColor: '#ffffff',
+            borderRight: (theme) => `1px solid ${theme.palette.divider}`,
+            backgroundColor: 'background.paper',
             overflow: 'visible',
             display: 'flex',
             flexDirection: 'column',
@@ -320,20 +325,39 @@ const DashboardLayout = () => {
         <Box className="top-header">
           <Box className="header-content">
             <Box sx={{ flex: 1 }} />
-            <Box
-              className="user-menu-trigger"
-              onClick={handleUserMenuOpen}
-              sx={{ cursor: 'pointer' }}
-            >
-              <Avatar sx={{ width: 32, height: 32, bgcolor: '#3b82f6' }}>
-                <AccountCircleIcon />
-              </Avatar>
-              <Typography variant="body2" sx={{ ml: 1, fontWeight: 500 }}>
-                User
-              </Typography>
-              <Typography variant="body2" sx={{ ml: 0.5 }}>
-                ▼
-              </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <IconButton
+                onClick={toggleTheme}
+                sx={{
+                  color: 'text.secondary',
+                  '&:hover': {
+                    backgroundColor: 'action.hover',
+                  },
+                  transition: 'all 0.2s ease',
+                }}
+                aria-label="toggle theme"
+              >
+                {mode === 'dark' ? (
+                  <LightModeIcon sx={{ fontSize: 20 }} />
+                ) : (
+                  <DarkModeIcon sx={{ fontSize: 20 }} />
+                )}
+              </IconButton>
+              <Box
+                className="user-menu-trigger"
+                onClick={handleUserMenuOpen}
+                sx={{ cursor: 'pointer' }}
+              >
+                <Avatar sx={{ width: 32, height: 32, bgcolor: '#3b82f6' }}>
+                  <AccountCircleIcon />
+                </Avatar>
+                <Typography variant="body2" sx={{ ml: 1, fontWeight: 500 }}>
+                  User
+                </Typography>
+                <Typography variant="body2" sx={{ ml: 0.5 }}>
+                  ▼
+                </Typography>
+              </Box>
             </Box>
           </Box>
         </Box>
