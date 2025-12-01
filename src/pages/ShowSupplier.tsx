@@ -9,10 +9,7 @@ import {
   Paper,
   Tabs,
   Tab,
-  TextField,
   Grid,
-  Avatar,
-  IconButton,
 } from '@mui/material'
 import {
   Home as HomeIcon,
@@ -25,7 +22,6 @@ import {
   Public as PublicIcon,
   CloudUpload as CloudUploadIcon,
 } from '@mui/icons-material'
-import type { Supplier } from './Suppliers'
 import EditSupplierSidebar from '../components/EditSupplierSidebar'
 import './ShowSupplier.css'
 
