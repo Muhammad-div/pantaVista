@@ -30,6 +30,8 @@ import {
   ChevronRight as ChevronRightIcon,
   DarkMode as DarkModeIcon,
   LightMode as LightModeIcon,
+  Menu as MenuIcon,
+  ChevronLeft as ChevronLeftIcon,
 } from '@mui/icons-material'
 import { useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
@@ -37,6 +39,7 @@ import SettingsSidebar from './SettingsSidebar'
 import './DashboardLayout.css'
 
 const DRAWER_WIDTH = 280
+const DRAWER_WIDTH_COLLAPSED = 72
 
 interface NavItem {
   path: string
@@ -53,6 +56,7 @@ const DashboardLayout = () => {
   const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const [settingsSidebarOpen, setSettingsSidebarOpen] = useState(false)
+  const [sidebarExpanded, setSidebarExpanded] = useState(true)
 
   const navItems: NavItem[] = [
     {
@@ -109,12 +113,6 @@ const DashboardLayout = () => {
       path: '/workspace',
       label: 'Workspace',
       icon: <GridViewIcon />,
-      hasSubmenu: true,
-      submenuItems: [
-        { path: '/workspace/projects', label: 'Projects' },
-        { path: '/workspace/tasks', label: 'Tasks' },
-        { path: '/workspace/calendar', label: 'Calendar' },
-      ],
     },
     {
       path: '/settings',
@@ -152,6 +150,10 @@ const DashboardLayout = () => {
     setSettingsSidebarOpen(false)
   }
 
+  const toggleSidebar = () => {
+    setSidebarExpanded(!sidebarExpanded)
+  }
+
   const renderNavItem = (item: NavItem, isBottomNav = false) => {
     const isActive = location.pathname === item.path
     const isHovered = hoveredItem === item.path
@@ -161,7 +163,7 @@ const DashboardLayout = () => {
       <Box
         key={item.path}
         className={`nav-item-wrapper ${isBottomNav ? 'bottom-nav' : ''}`}
-        onMouseEnter={() => item.hasSubmenu && setHoveredItem(item.path)}
+        onMouseEnter={() => item.hasSubmenu && sidebarExpanded && setHoveredItem(item.path)}
         onMouseLeave={() => setHoveredItem(null)}
       >
         <ListItem disablePadding>
@@ -172,8 +174,9 @@ const DashboardLayout = () => {
             selected={isActive}
             className={`nav-item ${isActive ? 'active' : ''} ${
               isHovered ? 'hovered' : ''
-            }`}
+            } ${!sidebarExpanded ? 'collapsed' : ''}`}
             sx={{
+              justifyContent: sidebarExpanded ? 'flex-start' : 'center',
               '&.Mui-selected': {
                 backgroundColor: 'var(--nav-active-bg, #2563eb)',
                 color: '#ffffff',
@@ -188,27 +191,33 @@ const DashboardLayout = () => {
                 },
               },
             }}
+            title={!sidebarExpanded ? item.label : undefined}
           >
             <ListItemIcon
               sx={{
                 color: isActive ? '#ffffff' : 'var(--text-secondary, #6b7280)',
-                minWidth: 40,
+                minWidth: sidebarExpanded ? 40 : 0,
+                justifyContent: 'center',
                 transition: 'color 0.2s ease',
               }}
             >
               {item.icon}
             </ListItemIcon>
-            <ListItemText
-              primary={item.label}
-              sx={{
-                '& .MuiListItemText-primary': {
-                  fontWeight: isActive ? 600 : 500,
-                  color: isActive ? '#ffffff' : 'var(--text-primary, #374151)',
-                  transition: 'color 0.2s ease',
-                },
-              }}
-            />
-            {item.hasSubmenu && (
+            {sidebarExpanded && (
+              <ListItemText
+                primary={item.label}
+                sx={{
+                  opacity: sidebarExpanded ? 1 : 0,
+                  transition: 'opacity 0.2s ease',
+                  '& .MuiListItemText-primary': {
+                    fontWeight: isActive ? 600 : 500,
+                    color: isActive ? '#ffffff' : 'var(--text-primary, #374151)',
+                    transition: 'color 0.2s ease',
+                  },
+                }}
+              />
+            )}
+            {item.hasSubmenu && sidebarExpanded && (
               <ChevronRightIcon
                 sx={{
                   color: isActive ? '#ffffff' : 'var(--text-tertiary, #9ca3af)',
@@ -220,15 +229,16 @@ const DashboardLayout = () => {
           </ListItemButton>
         </ListItem>
 
-        {item.hasSubmenu && (
+        {item.hasSubmenu && sidebarExpanded && (
           <Box
             className="submenu-container"
             sx={{
               position: 'absolute',
-              left: DRAWER_WIDTH,
+              left: sidebarExpanded ? DRAWER_WIDTH : DRAWER_WIDTH_COLLAPSED,
               top: 0,
               zIndex: 1000,
               pointerEvents: isHovered ? 'auto' : 'none',
+              transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
           >
             <Collapse
@@ -284,32 +294,64 @@ const DashboardLayout = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', width: '100%', height: '100vh', overflow: 'hidden' }}>
       <Drawer
         variant="permanent"
         sx={{
-          width: DRAWER_WIDTH,
+          width: sidebarExpanded ? DRAWER_WIDTH : DRAWER_WIDTH_COLLAPSED,
           flexShrink: 0,
+          transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           '& .MuiDrawer-paper': {
-            width: DRAWER_WIDTH,
+            width: sidebarExpanded ? DRAWER_WIDTH : DRAWER_WIDTH_COLLAPSED,
             boxSizing: 'border-box',
             borderRight: (theme) => `1px solid ${theme.palette.divider}`,
             backgroundColor: 'background.paper',
             overflow: 'visible',
             display: 'flex',
             flexDirection: 'column',
-            transition: 'background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
+            transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
             boxShadow: mode === 'light' 
               ? '2px 0 8px rgba(15, 23, 42, 0.04), 4px 0 12px rgba(15, 23, 42, 0.02)'
               : undefined,
+            position: 'relative',
+            height: '100%',
+            margin: 0,
+            padding: 0,
           },
         }}
       >
         <Box className="sidebar-header">
-          <Typography variant="h5" className="logo-text">
-            <span className="logo-panta">panta</span>
-            <span className="logo-vista">Vista</span>
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: sidebarExpanded ? 'space-between' : 'center', width: '100%', gap: 1 }}>
+            <Typography 
+              variant="h5" 
+              className="logo-text" 
+              sx={{ 
+                opacity: sidebarExpanded ? 1 : 0,
+                width: sidebarExpanded ? 'auto' : 0,
+                overflow: 'hidden',
+                transition: 'opacity 0.3s ease, width 0.3s ease',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <span className="logo-panta">panta</span>
+              <span className="logo-vista">Vista</span>
+            </Typography>
+            <IconButton
+              onClick={toggleSidebar}
+              sx={{
+                color: 'text.secondary',
+                padding: '8px',
+                flexShrink: 0,
+                '&:hover': {
+                  backgroundColor: 'action.hover',
+                },
+                transition: 'all 0.2s ease',
+              }}
+              aria-label={sidebarExpanded ? 'collapse sidebar' : 'expand sidebar'}
+            >
+              {sidebarExpanded ? <ChevronLeftIcon /> : <MenuIcon />}
+            </IconButton>
+          </Box>
         </Box>
 
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -326,7 +368,14 @@ const DashboardLayout = () => {
         </Box>
       </Drawer>
 
-      <Box component="main" className="main-content">
+      <Box 
+        component="main" 
+        className="main-content"
+        sx={{
+          flexGrow: 1,
+          transition: 'margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
+      >
         <Box className="top-header">
           <Box className="header-content">
             <Box sx={{ flex: 1 }} />

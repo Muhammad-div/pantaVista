@@ -147,6 +147,7 @@ const EditSupplierSidebar = ({
       anchor="right"
       open={open}
       onClose={onClose}
+      transitionDuration={300}
       PaperProps={{
         sx: {
           width: { xs: '100%', sm: 600 },

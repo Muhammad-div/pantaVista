@@ -10,10 +10,6 @@ import {
 } from '@mui/material'
 import {
   Close as CloseIcon,
-  Settings as SettingsIcon,
-  ContentCopy as CopyIcon,
-  Print as PrintIcon,
-  FileDownload as ExportIcon,
   Visibility as VisibilityIcon,
   Add as AddIcon,
   Person as PersonIcon,
@@ -36,26 +32,6 @@ const SupplierActions = ({ open, onClose, supplier }: SupplierActionsProps) => {
   if (!supplier) return null
 
   const actionButtons = [
-    {
-      label: 'Settings',
-      icon: <SettingsIcon />,
-      variant: 'outlined' as const,
-    },
-    {
-      label: 'Copy',
-      icon: <CopyIcon />,
-      variant: 'outlined' as const,
-    },
-    {
-      label: 'Print',
-      icon: <PrintIcon />,
-      variant: 'outlined' as const,
-    },
-    {
-      label: 'Export',
-      icon: <ExportIcon />,
-      variant: 'outlined' as const,
-    },
     {
       label: 'Show Supplier',
       icon: <VisibilityIcon />,
@@ -90,10 +66,12 @@ const SupplierActions = ({ open, onClose, supplier }: SupplierActionsProps) => {
       anchor="right"
       open={open}
       onClose={onClose}
+      transitionDuration={300}
       PaperProps={{
         sx: {
           width: { xs: '100%', sm: 480 },
-          boxShadow: '-4px 0 24px rgba(0, 0, 0, 0.1)',
+          boxShadow: '-4px 0 24px rgba(0, 0, 0, 0.15)',
+          transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important',
         },
       }}
     >

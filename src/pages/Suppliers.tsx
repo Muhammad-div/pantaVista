@@ -15,10 +15,18 @@ import {
   InputAdornment,
   Breadcrumbs,
   Link,
+  IconButton,
+  Menu,
+  MenuItem,
 } from '@mui/material'
 import {
   Home as HomeIcon,
   Search as SearchIcon,
+  MoreVert as MoreVertIcon,
+  Settings as SettingsIcon,
+  ContentCopy as CopyIcon,
+  Print as PrintIcon,
+  FileDownload as ExportIcon,
 } from '@mui/icons-material'
 import SupplierActions from '../components/SupplierActions'
 import './Suppliers.css'
@@ -143,6 +151,7 @@ const Suppliers = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null)
   const [actionsOpen, setActionsOpen] = useState(false)
+  const [actionsMenuAnchor, setActionsMenuAnchor] = useState<null | HTMLElement>(null)
 
   const filteredSuppliers = useMemo(() => {
     if (!searchQuery) return sampleSuppliers
@@ -184,6 +193,20 @@ const Suppliers = () => {
   const handleCloseActions = () => {
     setActionsOpen(false)
     setSelectedSupplier(null)
+  }
+
+  const handleActionsMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setActionsMenuAnchor(event.currentTarget)
+  }
+
+  const handleActionsMenuClose = () => {
+    setActionsMenuAnchor(null)
+  }
+
+  const handleActionClick = (action: string) => {
+    console.log(`Action: ${action}`)
+    handleActionsMenuClose()
+    // Handle action logic here
   }
 
   return (
@@ -232,10 +255,24 @@ const Suppliers = () => {
                 },
               }}
             />
-            <Box className="table-stats">
+            <Box className="table-stats" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Typography variant="body2" color="text.secondary">
                 Total: <strong>{filteredSuppliers.length}</strong> suppliers
               </Typography>
+              <IconButton
+                onClick={handleActionsMenuOpen}
+                sx={{
+                  color: 'text.secondary',
+                  padding: '4px',
+                  '&:hover': {
+                    backgroundColor: 'action.hover',
+                  },
+                  transition: 'all 0.2s ease',
+                }}
+                aria-label="supplier actions menu"
+              >
+                <MoreVertIcon sx={{ fontSize: 20 }} />
+              </IconButton>
             </Box>
           </Box>
 
@@ -331,6 +368,87 @@ const Suppliers = () => {
         onClose={handleCloseActions}
         supplier={selectedSupplier}
       />
+
+      {/* Supplier Actions Menu */}
+      <Menu
+        anchorEl={actionsMenuAnchor}
+        open={Boolean(actionsMenuAnchor)}
+        onClose={handleActionsMenuClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        PaperProps={{
+          sx: {
+            mt: 1.5,
+            minWidth: 200,
+            borderRadius: '12px',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08)',
+            border: '1px solid',
+            borderColor: 'divider',
+            overflow: 'hidden',
+            animation: 'menuSlideIn 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+            '@keyframes menuSlideIn': {
+              from: {
+                opacity: 0,
+                transform: 'translateY(-8px) scale(0.95)',
+              },
+              to: {
+                opacity: 1,
+                transform: 'translateY(0) scale(1)',
+              },
+            },
+            '& .MuiMenuItem-root': {
+              px: 2,
+              py: 1.5,
+              gap: 1.5,
+              transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+              '&:hover': {
+                backgroundColor: 'action.hover',
+                transform: 'translateX(4px)',
+              },
+              '&:first-of-type': {
+                borderTopLeftRadius: '12px',
+                borderTopRightRadius: '12px',
+              },
+              '&:last-of-type': {
+                borderBottomLeftRadius: '12px',
+                borderBottomRightRadius: '12px',
+              },
+            },
+          },
+        }}
+        transitionDuration={200}
+      >
+        <MenuItem onClick={() => handleActionClick('Settings')}>
+          <SettingsIcon sx={{ fontSize: 20, color: 'text.secondary', transition: 'color 0.2s ease' }} />
+          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.primary' }}>
+            Settings
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={() => handleActionClick('Copy')}>
+          <CopyIcon sx={{ fontSize: 20, color: 'text.secondary', transition: 'color 0.2s ease' }} />
+          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.primary' }}>
+            Copy
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={() => handleActionClick('Print')}>
+          <PrintIcon sx={{ fontSize: 20, color: 'text.secondary', transition: 'color 0.2s ease' }} />
+          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.primary' }}>
+            Print
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={() => handleActionClick('Export')}>
+          <ExportIcon sx={{ fontSize: 20, color: 'text.secondary', transition: 'color 0.2s ease' }} />
+          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.primary' }}>
+            Export
+          </Typography>
+        </MenuItem>
+      </Menu>
     </>
   )
 }
