@@ -2,15 +2,7 @@ import { useState, useMemo } from 'react'
 import {
   Box,
   Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TablePagination,
   Typography,
-  Chip,
   TextField,
   InputAdornment,
   Breadcrumbs,
@@ -28,6 +20,14 @@ import {
   Print as PrintIcon,
   FileDownload as ExportIcon,
 } from '@mui/icons-material'
+import { Grid, GridColumn, GridToolbar } from '@progress/kendo-react-grid'
+import {
+  process,
+} from '@progress/kendo-data-query'
+import type {
+  State,
+  DataResult,
+} from '@progress/kendo-data-query'
 import SupplierActions from '../components/SupplierActions'
 import './Suppliers.css'
 
@@ -40,6 +40,14 @@ export interface Supplier {
   city: string
   phoneNumber: string
   accessRight: 'granted' | 'denied'
+}
+
+// Transform accessRight to display text for better filtering/sorting
+const transformSuppliers = (suppliers: Supplier[]) => {
+  return suppliers.map(s => ({
+    ...s,
+    accessRightDisplay: s.accessRight === 'granted' ? 'Access granted' : 'Access denied'
+  }))
 }
 
 const sampleSuppliers: Supplier[] = [
@@ -146,12 +154,21 @@ const sampleSuppliers: Supplier[] = [
 ]
 
 const Suppliers = () => {
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null)
   const [actionsOpen, setActionsOpen] = useState(false)
   const [actionsMenuAnchor, setActionsMenuAnchor] = useState<null | HTMLElement>(null)
+  
+  const [dataState, setDataState] = useState<State>({
+    sort: [{ field: 'shortName', dir: 'asc' }],
+    skip: 0,
+    take: 10,
+    filter: {
+      logic: 'and',
+      filters: [],
+    },
+    group: [],
+  })
 
   const filteredSuppliers = useMemo(() => {
     if (!searchQuery) return sampleSuppliers
@@ -167,27 +184,35 @@ const Suppliers = () => {
     )
   }, [searchQuery])
 
-  const handleChangePage = (_event: unknown, newPage: number) => {
-    setPage(newPage)
+  const transformedSuppliers = useMemo(() => {
+    return transformSuppliers(filteredSuppliers)
+  }, [filteredSuppliers])
+
+  const dataResult: DataResult = useMemo(() => {
+    return process(transformedSuppliers, dataState)
+  }, [transformedSuppliers, dataState])
+
+  const dataStateChange = (event: any) => {
+    setDataState(event.dataState)
   }
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
-  }
-
-  const paginatedSuppliers = useMemo(() => {
-    return filteredSuppliers.slice(
-      page * rowsPerPage,
-      page * rowsPerPage + rowsPerPage
-    )
-  }, [filteredSuppliers, page, rowsPerPage])
-
-  const handleRowClick = (supplier: Supplier) => {
-    setSelectedSupplier(supplier)
-    setActionsOpen(true)
+  const handleRowClick = (event: any) => {
+    const supplier = event.dataItem as any
+    if (supplier) {
+      // Convert back to original Supplier format
+      const originalSupplier: Supplier = {
+        id: supplier.id,
+        shortName: supplier.shortName,
+        supplierNo: supplier.supplierNo,
+        street: supplier.street,
+        zipCode: supplier.zipCode,
+        city: supplier.city,
+        phoneNumber: supplier.phoneNumber,
+        accessRight: supplier.accessRight,
+      }
+      setSelectedSupplier(originalSupplier)
+      setActionsOpen(true)
+    }
   }
 
   const handleCloseActions = () => {
@@ -208,6 +233,7 @@ const Suppliers = () => {
     handleActionsMenuClose()
     // Handle action logic here
   }
+
 
   return (
     <>
@@ -257,7 +283,7 @@ const Suppliers = () => {
             />
             <Box className="table-stats" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Typography variant="body2" color="text.secondary">
-                Total: <strong>{filteredSuppliers.length}</strong> suppliers
+                Total: <strong>{dataResult.total || filteredSuppliers.length}</strong> suppliers
               </Typography>
               <IconButton
                 onClick={handleActionsMenuOpen}
@@ -276,90 +302,82 @@ const Suppliers = () => {
             </Box>
           </Box>
 
-          <TableContainer>
-            <Table stickyHeader>
-              <TableHead>
-                <TableRow>
-                  <TableCell className="table-header-cell">Short Name</TableCell>
-                  <TableCell className="table-header-cell">Supplier No</TableCell>
-                  <TableCell className="table-header-cell">Street</TableCell>
-                  <TableCell className="table-header-cell">Zip Code</TableCell>
-                  <TableCell className="table-header-cell">City</TableCell>
-                  <TableCell className="table-header-cell">Phone Number</TableCell>
-                  <TableCell className="table-header-cell">Access Right</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {paginatedSuppliers.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
-                      <Typography color="text.secondary">
-                        No suppliers found matching your search.
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  paginatedSuppliers.map((supplier) => (
-                    <TableRow
-                      key={supplier.id}
-                      hover
-                      onClick={() => handleRowClick(supplier)}
-                      sx={{
-                        cursor: 'pointer',
-                        transition: 'background-color 0.2s ease',
-                        '&:nth-of-type(even)': {
-                          backgroundColor: 'var(--table-row-even)',
-                        },
-                        '&:hover': {
-                          backgroundColor: 'var(--table-row-hover)',
-                        },
-                      }}
-                    >
-                      <TableCell>{supplier.shortName}</TableCell>
-                      <TableCell>{supplier.supplierNo}</TableCell>
-                      <TableCell>{supplier.street}</TableCell>
-                      <TableCell>{supplier.zipCode}</TableCell>
-                      <TableCell>{supplier.city}</TableCell>
-                      <TableCell>{supplier.phoneNumber}</TableCell>
-                      <TableCell>
-                        <Chip
-                          label={
-                            supplier.accessRight === 'granted'
-                              ? 'Access granted'
-                              : 'Access denied'
-                          }
-                          color={
-                            supplier.accessRight === 'granted'
-                              ? 'success'
-                              : 'error'
-                          }
-                          size="small"
-                          sx={{
-                            fontWeight: 500,
-                            borderRadius: '6px',
-                          }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
-          <TablePagination
-            component="div"
-            count={filteredSuppliers.length}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            rowsPerPageOptions={[5, 10, 25, 50]}
-            sx={{
-              borderTop: '1px solid',
-              borderColor: 'divider',
-            }}
-          />
+          <Box sx={{ p: 2 }}>
+            <Grid
+              style={{ height: '600px' }}
+              data={dataResult}
+              sortable={true}
+              filterable={true}
+              groupable={true}
+              pageable={{
+                buttonCount: 5,
+                pageSizes: [5, 10, 25, 50],
+              }}
+              resizable={true}
+              reorderable={true}
+              onDataStateChange={dataStateChange}
+              onRowClick={handleRowClick}
+              className="kendo-suppliers-grid"
+            >
+              <GridToolbar />
+              <GridColumn
+                field="shortName"
+                title="Short Name"
+                width="150px"
+                groupable={true}
+                filterable={true}
+                sortable={true}
+              />
+              <GridColumn
+                field="supplierNo"
+                title="Supplier No"
+                width="120px"
+                groupable={true}
+                filterable={true}
+                sortable={true}
+              />
+              <GridColumn
+                field="street"
+                title="Street"
+                width="200px"
+                groupable={true}
+                filterable={true}
+                sortable={true}
+              />
+              <GridColumn
+                field="zipCode"
+                title="Zip Code"
+                width="120px"
+                groupable={true}
+                filterable={true}
+                sortable={true}
+              />
+              <GridColumn
+                field="city"
+                title="City"
+                width="150px"
+                groupable={true}
+                filterable={true}
+                sortable={true}
+              />
+              <GridColumn
+                field="phoneNumber"
+                title="Phone Number"
+                width="180px"
+                groupable={true}
+                filterable={true}
+                sortable={true}
+              />
+              <GridColumn
+                field="accessRightDisplay"
+                title="Access Right"
+                width="150px"
+                groupable={true}
+                filterable={true}
+                sortable={true}
+              />
+            </Grid>
+          </Box>
         </Paper>
       </Box>
 
