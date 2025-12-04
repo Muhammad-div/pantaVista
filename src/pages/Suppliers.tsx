@@ -357,7 +357,7 @@ const Suppliers = () => {
               <GridColumn
                 field="shortName"
                 title="Short Name"
-                width="300px"
+                width="260px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -365,7 +365,7 @@ const Suppliers = () => {
               <GridColumn
                 field="supplierNo"
                 title="Supplier No"
-                width="300px"
+                width="260px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -373,7 +373,7 @@ const Suppliers = () => {
               <GridColumn
                 field="street"
                 title="Street"
-                width="300px"
+                width="260px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -381,7 +381,7 @@ const Suppliers = () => {
               <GridColumn
                 field="zipCode"
                 title="Zip Code"
-                width="300px"
+                width="260px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -389,7 +389,7 @@ const Suppliers = () => {
               <GridColumn
                 field="city"
                 title="City"
-                width="300px"
+                width="260px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -397,7 +397,7 @@ const Suppliers = () => {
               <GridColumn
                 field="phoneNumber"
                 title="Phone Number"
-                width="300px"
+                width="260px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -405,7 +405,7 @@ const Suppliers = () => {
               <GridColumn
                 field="accessRightDisplay"
                 title="Access Right"
-                width="300px"
+                width="260px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
