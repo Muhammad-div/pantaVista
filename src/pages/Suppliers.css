@@ -114,22 +114,6 @@
   border-top: 1px solid var(--divider-color, #e2e8f0);
 }
 
-.kendo-suppliers-grid .k-grouping-header {
-  background-color: var(--bg-hover, #f3f4f6);
-  border: 1px solid var(--border-color, #cbd5e1);
-  border-radius: 8px;
-  padding: 8px 12px;
-  margin: 8px 16px;
-}
-
-.kendo-suppliers-grid .k-grouping-header .k-group-indicator {
-  background-color: var(--bg-paper, #ffffff);
-  border: 1px solid var(--border-color, #cbd5e1);
-  border-radius: 6px;
-  padding: 4px 8px;
-  margin: 2px;
-}
-
 .kendo-suppliers-grid .k-filter-row th {
   padding: 8px;
 }
