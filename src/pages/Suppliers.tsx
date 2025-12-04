@@ -167,6 +167,7 @@ const Suppliers = () => {
       logic: 'and',
       filters: [],
     },
+    group: [],
   })
 
   const filteredSuppliers = useMemo(() => {
@@ -301,12 +302,46 @@ const Suppliers = () => {
             </Box>
           </Box>
 
-          <Box sx={{ p: 2 }}>
+          <Box sx={{ p: 2, width: '100%' }}>
+            {/* Premium Feature Indicator - Grouping */}
+            <Box
+              sx={{
+                mb: 2,
+                p: 2,
+                backgroundColor: 'var(--bg-hover, #f3f4f6)',
+                border: '2px dashed var(--border-color, #cbd5e1)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                opacity: 0.6,
+                cursor: 'not-allowed',
+              }}
+              title="Grouping is a premium feature. Upgrade to KendoReact Premium to enable this feature."
+            >
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                }}
+              >
+                <span>🔒</span>
+                <span>Drag a column header here to group by that column</span>
+                <span style={{ marginLeft: '8px', fontSize: '10px', color: '#9ca3af' }}>
+                  (Premium Feature)
+                </span>
+              </Typography>
+            </Box>
             <Grid
-              style={{ height: '600px' }}
+              style={{ height: '600px', width: '100%' }}
               data={dataResult}
               sortable={true}
               filterable={true}
+              groupable={false}
               pageable={{
                 buttonCount: 5,
                 pageSizes: [5, 10, 25, 50],
@@ -322,6 +357,7 @@ const Suppliers = () => {
                 field="shortName"
                 title="Short Name"
                 width="150px"
+                groupable={false}
                 filterable={true}
                 sortable={true}
               />
@@ -329,6 +365,7 @@ const Suppliers = () => {
                 field="supplierNo"
                 title="Supplier No"
                 width="120px"
+                groupable={false}
                 filterable={true}
                 sortable={true}
               />
@@ -336,6 +373,7 @@ const Suppliers = () => {
                 field="street"
                 title="Street"
                 width="200px"
+                groupable={false}
                 filterable={true}
                 sortable={true}
               />
@@ -343,6 +381,7 @@ const Suppliers = () => {
                 field="zipCode"
                 title="Zip Code"
                 width="120px"
+                groupable={false}
                 filterable={true}
                 sortable={true}
               />
@@ -350,6 +389,7 @@ const Suppliers = () => {
                 field="city"
                 title="City"
                 width="150px"
+                groupable={false}
                 filterable={true}
                 sortable={true}
               />
@@ -357,6 +397,7 @@ const Suppliers = () => {
                 field="phoneNumber"
                 title="Phone Number"
                 width="180px"
+                groupable={false}
                 filterable={true}
                 sortable={true}
               />
@@ -364,6 +405,7 @@ const Suppliers = () => {
                 field="accessRightDisplay"
                 title="Access Right"
                 width="150px"
+                groupable={false}
                 filterable={true}
                 sortable={true}
               />
