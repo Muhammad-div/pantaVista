@@ -306,11 +306,12 @@ const Suppliers = () => {
             {/* Premium Feature Indicator - Grouping */}
             <Box
               sx={{
-                mb: 2,
+                mb: 0,
                 p: 2,
                 backgroundColor: 'var(--bg-hover, #f3f4f6)',
                 border: '2px dashed var(--border-color, #cbd5e1)',
-                borderRadius: '8px',
+                borderRadius: '8px 8px 0 0',
+                borderBottom: 'none',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -356,7 +357,7 @@ const Suppliers = () => {
               <GridColumn
                 field="shortName"
                 title="Short Name"
-                width="150px"
+                width="300px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -364,7 +365,7 @@ const Suppliers = () => {
               <GridColumn
                 field="supplierNo"
                 title="Supplier No"
-                width="120px"
+                width="300px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -372,7 +373,7 @@ const Suppliers = () => {
               <GridColumn
                 field="street"
                 title="Street"
-                width="200px"
+                width="300px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -380,7 +381,7 @@ const Suppliers = () => {
               <GridColumn
                 field="zipCode"
                 title="Zip Code"
-                width="120px"
+                width="300px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -388,7 +389,7 @@ const Suppliers = () => {
               <GridColumn
                 field="city"
                 title="City"
-                width="150px"
+                width="300px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -396,7 +397,7 @@ const Suppliers = () => {
               <GridColumn
                 field="phoneNumber"
                 title="Phone Number"
-                width="180px"
+                width="300px"
                 groupable={false}
                 filterable={true}
                 sortable={true}
@@ -404,7 +405,7 @@ const Suppliers = () => {
               <GridColumn
                 field="accessRightDisplay"
                 title="Access Right"
-                width="150px"
+                width="300px"
                 groupable={false}
                 filterable={true}
                 sortable={true}

@@ -94,7 +94,18 @@
 
 .kendo-suppliers-grid .k-grid-table {
   width: 100%;
-  table-layout: auto;
+  table-layout: fixed;
+}
+
+.kendo-suppliers-grid .k-grid-header-wrap,
+.kendo-suppliers-grid .k-grid-content-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.kendo-suppliers-grid .k-grid-header,
+.kendo-suppliers-grid .k-grid-content {
+  min-width: 100%;
 }
 
 .kendo-suppliers-grid .k-grid-content tr {
@@ -120,6 +131,7 @@
   padding: 12px 16px;
   background-color: var(--bg-paper, #ffffff);
   border-bottom: 1px solid var(--divider-color, #e2e8f0);
+  border-top: 1px solid var(--divider-color, #e2e8f0);
 }
 
 .kendo-suppliers-grid .k-pager {
