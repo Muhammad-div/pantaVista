@@ -140,6 +140,43 @@ export function getUserMessages(doc: Document): UserMessage[] {
 }
 
 /**
+ * Extract system messages from XML response
+ */
+export function getSystemMessages(doc: Document): UserMessage[] {
+  const messages: UserMessage[] = [];
+  
+  // Find all MESSAGEAREA elements
+  const messageAreas = findElements(doc, 'MESSAGEAREA');
+  
+  // Find the SYSTEM_MESSAGES message area
+  const systemMessageArea = messageAreas.find(
+    (area) => getAttribute(area, 'NAME') === 'SYSTEM_MESSAGES'
+  );
+  
+  if (!systemMessageArea) {
+    return messages;
+  }
+  
+  const msgElements = findElements(systemMessageArea, 'MSG');
+  
+  msgElements.forEach((msg) => {
+    const name = getAttribute(msg, 'NAME');
+    const criticalLevel = getTextContent(findElement(msg, 'CRITICALLEVEL'));
+    const caption = getTextContent(findElement(msg, 'CAPTION'));
+    const description = getTextContent(findElement(msg, 'DESCRIPTION'));
+    
+    messages.push({
+      name: name || '',
+      criticalLevel,
+      caption,
+      description: description || undefined,
+    });
+  });
+  
+  return messages;
+}
+
+/**
  * Extract captions from PRE_APP_INIT response
  */
 export interface PreAppInitCaptions {
@@ -347,6 +384,7 @@ export interface LoginConfirmation {
   accessRight?: string;
   orgRole?: string;
   userRoles?: string[];
+  isSupplier?: boolean; // True if user has ORGANISATION_ROLE:SUPPLIER
 }
 
 export function extractLoginConfirmation(doc: Document): LoginConfirmation | null {
@@ -414,6 +452,12 @@ export function extractLoginConfirmation(doc: Document): LoginConfirmation | nul
           const orgRoleEl = findElement(group, 'ORGAROLE');
           if (orgRoleEl) {
             confirmation.orgRole = getAttribute(orgRoleEl, 'SYSNAME');
+            // Check if user is supplier
+            const orgRoleSysname = getAttribute(orgRoleEl, 'SYSNAME');
+            if (orgRoleSysname === 'ORGANISATION_ROLE:SUPPLIER') {
+              // Store supplier flag for menu permissions
+              confirmation.isSupplier = true;
+            }
           }
         }
       });
@@ -457,20 +501,52 @@ export interface Supplier {
 export function extractSupplierList(doc: Document): Supplier[] {
   const suppliers: Supplier[] = [];
   
-  // Find ENTITY NAME="T.SUP.SMALL.LIST" or similar
-  const entities = findElements(doc, 'ENTITY');
-  const supplierEntity = entities.find(
-    (entity) => {
-      const name = getAttribute(entity, 'NAME');
-      return name === 'T.SUP.SMALL.LIST' || 
-             name === 'T.SUPPLIER.LIST' || 
-             name === 'SUPPLIER.LIST' ||
-             name?.includes('SUPPLIER') && name?.includes('LIST');
+  // Find MESSAGEAREA first, then look for ENTITY within DATAFIELDS
+  const messageAreas = findElements(doc, 'MESSAGEAREA');
+  let supplierEntity = null;
+  
+  // Look for supplier-related MESSAGEAREA (e.g., "T.SUP.LIST", "SUPPLIER.LIST")
+  for (const messageArea of messageAreas) {
+    const messageAreaName = getAttribute(messageArea, 'NAME');
+    if (messageAreaName?.includes('SUPPLIER') || messageAreaName?.includes('SUP')) {
+      const datafields = findElement(messageArea, 'DATAFIELDS');
+      if (datafields) {
+        const entities = findElements(datafields, 'ENTITY');
+        supplierEntity = entities.find(
+          (entity) => {
+            const name = getAttribute(entity, 'NAME');
+            return name === 'T.SUP.SMALL.LIST' || 
+                   name === 'T.SUPPLIER.LIST' || 
+                   name === 'T.SUP.LIST' ||
+                   name === 'SUPPLIER.LIST' ||
+                   (name?.includes('SUPPLIER') && name?.includes('LIST')) ||
+                   (name?.includes('SUP') && name?.includes('LIST'));
+          }
+        );
+        if (supplierEntity) break;
+      }
     }
-  );
+  }
+  
+  // Fallback: search all entities if not found in MESSAGEAREA
+  if (!supplierEntity) {
+    const entities = findElements(doc, 'ENTITY');
+    supplierEntity = entities.find(
+      (entity) => {
+        const name = getAttribute(entity, 'NAME');
+        return name === 'T.SUP.SMALL.LIST' || 
+               name === 'T.SUPPLIER.LIST' || 
+               name === 'T.SUP.LIST' ||
+               name === 'SUPPLIER.LIST' ||
+               (name?.includes('SUPPLIER') && name?.includes('LIST')) ||
+               (name?.includes('SUP') && name?.includes('LIST'));
+      }
+    );
+  }
   
   if (!supplierEntity) {
-    console.warn('extractSupplierList: Supplier entity not found');
+    console.warn('extractSupplierList: Supplier entity not found. Available entities:', 
+      Array.from(doc.getElementsByTagName('ENTITY')).map(el => getAttribute(el, 'NAME')));
     return suppliers;
   }
   
@@ -538,5 +614,283 @@ export function extractSupplierList(doc: Document): Supplier[] {
   
   console.log('extractSupplierList result:', suppliers);
   return suppliers;
+}
+
+/**
+ * Extract POS (Point-of-Sale) list from GET_T_POS_SMALL_LIST response
+ */
+export interface POSItem {
+  id: string;
+  pvno: string; // POS number
+  displayName: string;
+  address: string; // ADDRESS1
+  city: string;
+  pcode: string; // Postal code
+  phone?: string; // PHONE1
+}
+
+export function extractPosSmallList(doc: Document): POSItem[] {
+  const posList: POSItem[] = [];
+  
+  // Find ENTITY NAME="T.POS.SMALL.LIST" or similar
+  const entities = findElements(doc, 'ENTITY');
+  const posEntity = entities.find(
+    (entity) => {
+      const name = getAttribute(entity, 'NAME');
+      return name === 'T.POS.SMALL.LIST' || 
+             name === 'T.POS.LIST' ||
+             name === 'POS.SMALL.LIST' ||
+             (name?.includes('POS') && name?.includes('LIST'));
+    }
+  );
+  
+  if (!posEntity) {
+    console.warn('extractPosSmallList: POS entity not found. Available entities:', 
+      entities.map(el => getAttribute(el, 'NAME')));
+    return posList;
+  }
+  
+  // Navigate through SETS -> SET -> ATTRIBUTEGROUP
+  const sets = findElements(posEntity, 'SET');
+  
+  sets.forEach((set, index) => {
+    const setId = getAttribute(set, 'SET_ID') || `${index}`;
+    const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
+    
+    attributeGroups.forEach((group) => {
+      const pvno = getTextContent(findElement(group, 'PVNO'));
+      const displayName = getTextContent(findElement(group, 'DISPLAYNAME'));
+      const address = getTextContent(findElement(group, 'ADDRESS1'));
+      const city = getTextContent(findElement(group, 'CITY'));
+      const pcode = getTextContent(findElement(group, 'PCODE'));
+      const phone = getTextContent(findElement(group, 'PHONE1'));
+      
+      if (pvno || displayName) {
+        posList.push({
+          id: setId,
+          pvno: pvno || '',
+          displayName: displayName || '',
+          address: address || '',
+          city: city || '',
+          pcode: pcode || '',
+          phone: phone || undefined,
+        });
+      }
+    });
+  });
+  
+  console.log('extractPosSmallList result:', posList);
+  return posList;
+}
+
+/**
+ * Extract NEXT_DATA_LEVEL from GET_T_POS_SMALL_LIST response
+ * Returns the next data level to use, or 0 if no more levels available
+ */
+export function extractNextDataLevel(doc: Document): number {
+  // Find MESSAGEAREA and look for MSG with NAME="BASE.COMMON.NEXT_DATA_LEVEL"
+  const messageAreas = findElements(doc, 'MESSAGEAREA');
+  
+  for (const messageArea of messageAreas) {
+    const msgElements = findElements(messageArea, 'MSG');
+    
+    for (const msg of msgElements) {
+      const name = getAttribute(msg, 'NAME');
+      if (name === 'BASE.COMMON.NEXT_DATA_LEVEL') {
+        const caption = getTextContent(findElement(msg, 'CAPTION'));
+        const nextLevel = parseInt(caption || '0', 10);
+        console.log('extractNextDataLevel: Found next data level:', nextLevel);
+        return nextLevel;
+      }
+    }
+  }
+  
+  console.warn('extractNextDataLevel: NEXT_DATA_LEVEL message not found');
+  return 0;
+}
+
+/**
+ * Menu item interface for dynamic menu
+ */
+export interface MenuItem {
+  id: string;
+  name: string; // Internal identifier (e.g., 'activities', 'orders')
+  label: string; // Display text from CAPTION
+  tooltip?: string; // Tooltip text
+  path: string; // Route path
+  icon?: string; // Icon identifier (for future use)
+  permission?: string; // Permission key (e.g., 'showActivity', 'showOrder')
+}
+
+/**
+ * Permissions interface
+ */
+export interface MenuPermissions {
+  showActivity: boolean;
+  showOrder: boolean;
+  showPOS: boolean;
+}
+
+/**
+ * App Init Menu Captions interface
+ */
+export interface AppInitMenuCaptions {
+  activities?: string;
+  activitiesTooltip?: string;
+  orders?: string;
+  ordersTooltip?: string;
+  dailyAgenda?: string;
+  dailyAgendaTooltip?: string;
+  exchangeData?: string;
+  exchangeDataTooltip?: string;
+  [key: string]: string | undefined;
+}
+
+/**
+ * Extract menu captions from GET_T_APP_INIT response
+ */
+export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
+  const captions: AppInitMenuCaptions = {};
+  
+  console.log('extractAppInitMenuCaptions: Starting extraction...');
+  
+  // Find ENTITY elements and look for CAPTION elements
+  const entities = findElements(doc, 'ENTITY');
+  console.log('extractAppInitMenuCaptions: Found', entities.length, 'ENTITY elements');
+  
+  entities.forEach((entity, entityIndex) => {
+    const entityName = getAttribute(entity, 'NAME');
+    console.log(`extractAppInitMenuCaptions: Processing ENTITY[${entityIndex}] NAME="${entityName}"`);
+    
+    const sets = findElements(entity, 'SET');
+    console.log(`extractAppInitMenuCaptions: Found`, sets.length, 'SET elements in ENTITY', entityName);
+    
+    sets.forEach((set, setIndex) => {
+      const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
+      console.log(`extractAppInitMenuCaptions: Found`, attributeGroups.length, 'ATTRIBUTEGROUP elements in SET', setIndex);
+      
+      attributeGroups.forEach((group, groupIndex) => {
+        const groupName = getAttribute(group, 'NAME');
+        console.log(`extractAppInitMenuCaptions: Processing ATTRIBUTEGROUP[${groupIndex}] NAME="${groupName}"`);
+        
+        const captionElements = findElements(group, 'CAPTION');
+        console.log(`extractAppInitMenuCaptions: Found`, captionElements.length, 'CAPTION elements in ATTRIBUTEGROUP', groupName);
+        
+        captionElements.forEach((caption, captionIndex) => {
+          const name = getAttribute(caption, 'NAME');
+          const text = getTextContent(caption);
+          
+          console.log(`extractAppInitMenuCaptions: CAPTION[${captionIndex}] NAME="${name}" TEXT="${text}"`);
+          
+          if (name && text) {
+            switch (name) {
+              case 'MENU:ACTIVITIES':
+                captions.activities = text;
+                break;
+              case 'MENU_TOOLTIP:ACTIVITIES':
+                captions.activitiesTooltip = text;
+                break;
+              case 'MENU:ORDERS':
+                captions.orders = text;
+                break;
+              case 'MENU_TOOLTIP:ORDERS':
+                captions.ordersTooltip = text;
+                break;
+              case 'MENU_DAILYAGENDA':
+                captions.dailyAgenda = text;
+                break;
+              case 'MENU_TOOLTIP:DAILYAGENDA':
+                captions.dailyAgendaTooltip = text;
+                break;
+              case 'MENU:EXCHANGEDATA':
+                captions.exchangeData = text;
+                break;
+              case 'MENU_TOOLTIP:EXCHANGEDATA':
+                captions.exchangeDataTooltip = text;
+                break;
+              default:
+                // Store other captions for future use
+                captions[name] = text;
+                break;
+            }
+          }
+        });
+      });
+    });
+  });
+  
+  console.log('extractAppInitMenuCaptions result:', captions);
+  return captions;
+}
+
+/**
+ * Extract permissions from GET_T_APP_INIT response
+ * Permissions are determined by INTERACTION_NAME elements
+ */
+export function extractAppInitPermissions(doc: Document): MenuPermissions {
+  const permissions: MenuPermissions = {
+    showActivity: false,
+    showOrder: false,
+    showPOS: false,
+  };
+  
+  console.log('extractAppInitPermissions: Starting extraction...');
+  
+  // Check if user is a supplier (has supplier role)
+  // This is typically indicated by a specific entity or field
+  const entities = findElements(doc, 'ENTITY');
+  console.log('extractAppInitPermissions: Found', entities.length, 'ENTITY elements');
+  
+  let isSupplier = false;
+  
+  // Look for supplier-related indicators
+  entities.forEach((entity, index) => {
+    const entityName = getAttribute(entity, 'NAME');
+    console.log(`extractAppInitPermissions: ENTITY[${index}] NAME="${entityName}"`);
+    
+    if (entityName?.includes('SUPPLIER') || entityName?.includes('SUP')) {
+      console.log('extractAppInitPermissions: Found supplier-related entity:', entityName);
+      // Additional check might be needed here
+    }
+  });
+  
+  // Extract INTERACTION_NAME elements to determine permissions
+  const interactionNames: string[] = [];
+  
+  entities.forEach((entity, entityIndex) => {
+    const interactionNameElements = findElements(entity, 'INTERACTION_NAME');
+    console.log(`extractAppInitPermissions: Found`, interactionNameElements.length, 'INTERACTION_NAME elements in ENTITY', entityIndex);
+    
+    interactionNameElements.forEach((el, elIndex) => {
+      const interactionName = getTextContent(el);
+      console.log(`extractAppInitPermissions: INTERACTION_NAME[${elIndex}]="${interactionName}"`);
+      if (interactionName) {
+        interactionNames.push(interactionName);
+      }
+    });
+  });
+  
+  // Determine permissions based on interaction names
+  if (isSupplier) {
+    console.log('extractAppInitPermissions: User is supplier, setting showPOS=true');
+    permissions.showPOS = true;
+    permissions.showActivity = false;
+    permissions.showOrder = false;
+  } else {
+    // Check for activity and order permissions
+    if (interactionNames.includes('SET_T_ACTIVITY_INPUT_CREATE')) {
+      console.log('extractAppInitPermissions: Found SET_T_ACTIVITY_INPUT_CREATE, setting showActivity=true');
+      permissions.showActivity = true;
+    }
+    if (interactionNames.includes('SET_T_ORDER_INPUT_CREATE')) {
+      console.log('extractAppInitPermissions: Found SET_T_ORDER_INPUT_CREATE, setting showOrder=true');
+      permissions.showOrder = true;
+    }
+  }
+  
+  console.log('extractAppInitPermissions result:', permissions);
+  console.log('extractAppInitPermissions: Found interaction names:', interactionNames);
+  
+  return permissions;
 }
 

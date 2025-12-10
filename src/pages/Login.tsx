@@ -105,6 +105,9 @@ const Login = () => {
     setLoading(true)
 
     try {
+      console.log('Login attempt - Username:', username);
+      console.log('Login attempt - Password length:', password.length);
+      console.log('Login attempt - Password (first 3 chars):', password.substring(0, 3) + '...');
       const result = await loginApi(username, password)
       
       if (result.success) {

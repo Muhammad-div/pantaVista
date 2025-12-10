@@ -3,7 +3,7 @@
  * Backend URL: https://api.pantavista.net
  */
 
-import { parseXML, getMessageName, getUserMessages, extractPreAppInitCaptions, extractLoginTemplate, extractLoginConfirmation, extractSupplierList, getToken, getLanguage, type PreAppInitCaptions, type LoginTemplateField, type LoginConfirmation, type Supplier, type UserMessage } from '../utils/xmlParser';
+import { parseXML, getMessageName, getUserMessages, getSystemMessages, extractPreAppInitCaptions, extractLoginTemplate, extractLoginConfirmation, extractSupplierList, extractPosSmallList, extractNextDataLevel, extractAppInitMenuCaptions, extractAppInitPermissions, getToken, getLanguage, type PreAppInitCaptions, type LoginTemplateField, type LoginConfirmation, type Supplier, type POSItem, type UserMessage, type AppInitMenuCaptions, type MenuPermissions } from '../utils/xmlParser';
 
 const API_BASE_URL = 'https://api.pantavista.net';
 
@@ -30,8 +30,10 @@ function detectLanguage(): { full: string; short: string } {
   const navLang = navigator.language || (navigator as any).browserLanguage || 'en';
   
   if (navLang.toLowerCase().includes('de')) {
+    console.log('🌍 Language detected: German (browser:', navLang + ')');
     return { full: 'GERMAN', short: 'DE' };
   }
+  console.log('🌍 Language detected: English (browser:', navLang + ')');
   return { full: 'ENGLISH', short: 'EN' };
 }
 
@@ -123,7 +125,7 @@ export async function getPreAppInit(): Promise<ApiResponse<PreAppInitCaptions>> 
     <IPADDRESS />
     <USERAGENT />
     <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
-    <ORIGINATOR>PVNG.WEB.UI</ORIGINATOR>
+    <ORIGINATOR>PV.TC.WEB.UI</ORIGINATOR>
   </ENVELOPE_DATA>
   <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${lang.short}">
     <BNO_REQUEST VERSION="1.00">
@@ -211,7 +213,7 @@ export async function getLoginTemplate(): Promise<ApiResponse<{ username?: Login
     <IPADDRESS />
     <USERAGENT />
     <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
-    <ORIGINATOR>PVNG.WEB.UI</ORIGINATOR>
+    <ORIGINATOR>PV.TC.WEB.UI</ORIGINATOR>
   </ENVELOPE_DATA>
   <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
     <BNO_REQUEST VERSION="1.00">
@@ -274,33 +276,13 @@ export async function login(
 
     const lang = detectLanguage();
     const prevToken = getStoredToken() || '';
-    const storedLang = getStoredLanguage();
-    
-    // Extract language code from stored language (e.g., "LANGUAGE:ENGLISH" -> "EN")
-    // Note: German uses "GE" not "DE" in APPLICATION_REQUEST
-    let langCode = lang.short;
-    if (storedLang.includes(':')) {
-      const parts = storedLang.split(':');
-      if (parts.length > 1) {
-        const langName = parts[1].toUpperCase();
-        // Map language names to correct codes
-        if (langName === 'GERMAN' || langName.startsWith('GER')) {
-          langCode = 'GE';
-        } else if (langName === 'ENGLISH' || langName.startsWith('ENG')) {
-          langCode = 'EN';
-        } else {
-          langCode = langName.substring(0, 2);
-        }
-      }
-    } else if (lang.full === 'GERMAN') {
-      langCode = 'GE';
-    }
     
     // Hash password with SHA256
+    // Trim password to remove any accidental whitespace
+    const trimmedPassword = password.trim();
     const { SHA256 } = await import('../utils/sha256');
-    const hashedPassword = SHA256(password);
+    const hashedPassword = SHA256(trimmedPassword).toUpperCase(); // Backend expects uppercase
     console.log('Password hash:', hashedPassword);
-    console.log('Password length:', hashedPassword.length);
     
     const xmlPayload = `<?xml version="1.0" encoding="utf-8"?>
 <ENVELOPE NAME="PV.ENVELOPE" VERSION="1.00" CREATE="">
@@ -311,7 +293,7 @@ export async function login(
     <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
     <ORIGINATOR>PVNG.WEB.UI</ORIGINATOR>
   </ENVELOPE_DATA>
-  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
+  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="EN">
     <BNO_REQUEST VERSION="1.00">
       <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
       <BNO_GROUP>LOGIN</BNO_GROUP>
@@ -321,7 +303,7 @@ export async function login(
       <BNO_PARAMETERS />
     </BNO_REQUEST>
   </APPLICATION_REQUEST>
-  <MESSAGE NAME="SET_T_LOGIN" VERSION="1.00">
+  <MESSAGE NAME="SET_LOGIN" VERSION="1.00">
     <MESSAGEAREA NAME="INTERACTIONUSER.LOGIN" VERSION="1.00">
       <DATAFIELDS>
         <ENTITIES>
@@ -351,14 +333,18 @@ export async function login(
     if (messageName === 'SET_LOGIN' || messageName === 'SET_T_LOGIN') {
       const messages = getUserMessages(doc);
       console.log('User messages:', messages);
+      console.log('User messages details:', JSON.stringify(messages, null, 2));
       
       // Check for error messages (critical level 1 = error)
       const errorMessages = messages.filter((msg) => msg.criticalLevel === '1');
       console.log('Error messages:', errorMessages);
+      console.log('Error messages details:', JSON.stringify(errorMessages, null, 2));
       if (errorMessages.length > 0) {
+        const errorCaption = errorMessages[0]?.caption || 'Login failed';
+        console.log('Login failed with error:', errorCaption);
         return {
           success: false,
-          error: errorMessages[0]?.caption || 'Login failed',
+          error: errorCaption,
           messages,
         };
       }
@@ -395,6 +381,14 @@ export async function login(
         }
         if (confirmation.username) {
           localStorage.setItem('pv.username', confirmation.username);
+        }
+        
+        // Store supplier role for menu permissions
+        if (confirmation.isSupplier !== undefined) {
+          localStorage.setItem('pv.isSupplier', String(confirmation.isSupplier));
+        }
+        if (confirmation.orgRole) {
+          localStorage.setItem('pv.orgRole', confirmation.orgRole);
         }
         
         return {
@@ -464,7 +458,26 @@ export async function getSupplierList(): Promise<ApiResponse<Supplier[]>> {
         };
       }
       
-      const langCode = lang.short;
+      const storedLang = getStoredLanguage();
+      
+      let langCode = lang.short;
+      if (storedLang.includes(':')) {
+        const parts = storedLang.split(':');
+        if (parts.length > 1) {
+          const langName = parts[1].toUpperCase();
+          if (langName === 'GERMAN') {
+            langCode = 'GE';
+          } else if (langName === 'ENGLISH') {
+            langCode = 'EN';
+          } else {
+            langCode = langName.substring(0, 2);
+          }
+        }
+      } else if (lang.full === 'GERMAN') {
+        langCode = 'GE';
+      } else if (lang.full === 'ENGLISH') {
+        langCode = 'EN';
+      }
       
       const xmlPayload = `<?xml version="1.0" encoding="utf-8"?>
 <ENVELOPE NAME="PV.ENVELOPE" VERSION="1.00" CREATE="">
@@ -492,9 +505,48 @@ export async function getSupplierList(): Promise<ApiResponse<Supplier[]>> {
       const doc = parseXML(xmlResponse);
       const messageName = getMessageName(doc);
       
-      if (messageName === 'GET_SUPPLIER_LIST' || messageName?.includes('SUPPLIER')) {
+      // Check for error messages first
+      const messages = getUserMessages(doc);
+      const systemMessages = getSystemMessages(doc);
+      
+      // Combine user and system messages for error checking
+      const allMessages = [...messages, ...systemMessages];
+      
+      // Check for critical errors (CL >= 6) - these are system errors
+      const criticalErrors = allMessages.filter((msg) => {
+        const cl = parseInt(msg.criticalLevel || '0', 10);
+        return cl >= 6;
+      });
+      
+      if (criticalErrors.length > 0) {
+        // Prefer user message if available, otherwise use system message
+        const userErrorMsg = messages.find((msg) => {
+          const cl = parseInt(msg.criticalLevel || '0', 10);
+          return cl >= 6;
+        });
+        const errorMsg = userErrorMsg?.caption || criticalErrors[0]?.caption || 'Failed to get supplier list';
+        console.error('getSupplierList: Critical error:', errorMsg);
+        return {
+          success: false,
+          error: errorMsg,
+          messages: allMessages,
+        };
+      }
+      
+      // Check for regular error messages (CL = 1)
+      const errorMessages = allMessages.filter((msg) => msg.criticalLevel === '1');
+      if (errorMessages.length > 0) {
+        const errorMsg = errorMessages[0]?.caption || 'Failed to get supplier list';
+        console.error('getSupplierList: Error:', errorMsg);
+        return {
+          success: false,
+          error: errorMsg,
+          messages: allMessages,
+        };
+      }
+      
+      if (messageName === 'GET_SUPPLIER_LIST' || messageName?.includes('SUPPLIER') || messageName === 'IDF.MESSAGES') {
         const suppliers = extractSupplierList(doc);
-        const messages = getUserMessages(doc);
         
         return {
           success: true,
@@ -506,6 +558,297 @@ export async function getSupplierList(): Promise<ApiResponse<Supplier[]>> {
       throw new Error(`Unexpected message type: ${messageName}`);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to get supplier list';
+      return {
+        success: false,
+        error: errorMessage,
+      };
+    } finally {
+      // Remove from pending requests after completion
+      pendingRequests.delete(requestKey);
+    }
+  })();
+  
+  pendingRequests.set(requestKey, requestPromise);
+  return requestPromise;
+}
+
+/**
+ * GET_T_POS_SMALL_LIST - Get list of Point-of-Sale (POS) data
+ * @param dataLevel - The data level to fetch (starts at 1)
+ */
+export async function getPosSmallList(dataLevel: number = 1): Promise<ApiResponse<{ posList: POSItem[]; nextDataLevel: number }>> {
+  const requestKey = `GET_T_POS_SMALL_LIST_${dataLevel}`;
+  
+  // If there's already a pending request for this data level, return it
+  if (pendingRequests.has(requestKey)) {
+    console.log('getPosSmallList: Reusing pending request');
+    return pendingRequests.get(requestKey);
+  }
+  
+  const requestPromise = (async () => {
+    try {
+      const lang = detectLanguage();
+      const token = getStoredToken();
+      
+      if (!token) {
+        return {
+          success: false,
+          error: 'Authentication required. Please login first.',
+        };
+      }
+      
+      const storedLang = getStoredLanguage();
+      
+      let langCode = lang.short;
+      if (storedLang.includes(':')) {
+        const parts = storedLang.split(':');
+        if (parts.length > 1) {
+          const langName = parts[1].toUpperCase();
+          if (langName === 'GERMAN') {
+            langCode = 'GE';
+          } else if (langName === 'ENGLISH') {
+            langCode = 'EN';
+          } else {
+            langCode = langName.substring(0, 2);
+          }
+        }
+      } else if (lang.full === 'GERMAN') {
+        langCode = 'GE';
+      } else if (lang.full === 'ENGLISH') {
+        langCode = 'EN';
+      }
+      
+      const xmlPayload = `<?xml version="1.0" encoding="utf-8"?>
+<ENVELOPE NAME="PV.ENVELOPE" VERSION="1.00" CREATE="">
+  <ENVELOPE_DATA>
+    <TOKEN>${token}</TOKEN>
+    <IPADDRESS />
+    <USERAGENT />
+    <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
+    <ORIGINATOR>PVNG.WEB.UI</ORIGINATOR>
+  </ENVELOPE_DATA>
+  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
+    <BNO_REQUEST VERSION="1.00">
+      <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
+      <BNO_GROUP>LOGIN</BNO_GROUP>
+      <BNO_INTERACTION_NAME>GET_T_POS_SMALL_LIST</BNO_INTERACTION_NAME>
+      <BNO_INTERACTION_VERSION>1.00</BNO_INTERACTION_VERSION>
+      <BNO_INTERACTION_MODE>INTERACTION_MODE:VIEW</BNO_INTERACTION_MODE>
+      <BNO_PARAMETERS>
+        <BNO_PARAM NAME="DATA_LEVEL">
+          <VALUE>${dataLevel}</VALUE>
+        </BNO_PARAM>
+      </BNO_PARAMETERS>
+    </BNO_REQUEST>
+  </APPLICATION_REQUEST>
+</ENVELOPE>`;
+
+      console.log('getPosSmallList: Making API request with DATA_LEVEL:', dataLevel);
+      const xmlResponse = await makeXMLRequest(xmlPayload);
+      const doc = parseXML(xmlResponse);
+      const messageName = getMessageName(doc);
+      
+      // Check for error messages first
+      const messages = getUserMessages(doc);
+      const systemMessages = getSystemMessages(doc);
+      const allMessages = [...messages, ...systemMessages];
+      
+      // Check for critical errors (CL >= 6)
+      const criticalErrors = allMessages.filter((msg) => {
+        const cl = parseInt(msg.criticalLevel || '0', 10);
+        return cl >= 6;
+      });
+      
+      if (criticalErrors.length > 0) {
+        const userErrorMsg = messages.find((msg) => {
+          const cl = parseInt(msg.criticalLevel || '0', 10);
+          return cl >= 6;
+        });
+        const errorMsg = userErrorMsg?.caption || criticalErrors[0]?.caption || 'Failed to get POS list';
+        console.error('getPosSmallList: Critical error:', errorMsg);
+        return {
+          success: false,
+          error: errorMsg,
+          messages: allMessages,
+        };
+      }
+      
+      // Check for regular error messages (CL = 1)
+      const errorMessages = allMessages.filter((msg) => msg.criticalLevel === '1');
+      if (errorMessages.length > 0) {
+        const errorMsg = errorMessages[0]?.caption || 'Failed to get POS list';
+        console.error('getPosSmallList: Error:', errorMsg);
+        return {
+          success: false,
+          error: errorMsg,
+          messages: allMessages,
+        };
+      }
+      
+      if (messageName === 'GET_T_POS_SMALL_LIST' || messageName?.includes('POS')) {
+        const posList = extractPosSmallList(doc);
+        const nextDataLevel = extractNextDataLevel(doc);
+        
+        return {
+          success: true,
+          data: {
+            posList,
+            nextDataLevel: nextDataLevel || 0,
+          },
+          messages: allMessages,
+        };
+      }
+      
+      throw new Error(`Unexpected message type: ${messageName}`);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get POS list';
+      return {
+        success: false,
+        error: errorMessage,
+      };
+    } finally {
+      // Remove from pending requests after completion
+      pendingRequests.delete(requestKey);
+    }
+  })();
+  
+  pendingRequests.set(requestKey, requestPromise);
+  return requestPromise;
+}
+
+/**
+ * GET_T_APP_INIT - Get application initialization data including menu items and permissions
+ */
+export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitMenuCaptions; permissions: MenuPermissions }>> {
+  const requestKey = 'GET_T_APP_INIT';
+  
+  // If there's already a pending request, return it
+  if (pendingRequests.has(requestKey)) {
+    console.log('getAppInit: Reusing pending request');
+    return pendingRequests.get(requestKey);
+  }
+  
+  const requestPromise = (async () => {
+    try {
+      const lang = detectLanguage();
+      const token = getStoredToken();
+      
+      if (!token) {
+        return {
+          success: false,
+          error: 'Authentication required. Please login first.',
+        };
+      }
+      
+      const storedLang = getStoredLanguage();
+      
+      let langCode = lang.short;
+      if (storedLang.includes(':')) {
+        const parts = storedLang.split(':');
+        if (parts.length > 1) {
+          const langName = parts[1].toUpperCase();
+          if (langName === 'GERMAN') {
+            langCode = 'GE';
+          } else if (langName === 'ENGLISH') {
+            langCode = 'EN';
+          } else {
+            langCode = langName.substring(0, 2);
+          }
+        }
+      } else if (lang.full === 'GERMAN') {
+        langCode = 'GE';
+      } else if (lang.full === 'ENGLISH') {
+        langCode = 'EN';
+      }
+      
+      const xmlPayload = `<?xml version="1.0" encoding="utf-8"?>
+<ENVELOPE NAME="PV.ENVELOPE" VERSION="1.00" CREATE="">
+  <ENVELOPE_DATA>
+    <TOKEN>${token}</TOKEN>
+    <IPADDRESS />
+    <USERAGENT />
+    <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
+    <ORIGINATOR>PVNG.WEB.UI</ORIGINATOR>
+  </ENVELOPE_DATA>
+  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
+    <BNO_REQUEST VERSION="1.00">
+      <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
+      <BNO_GROUP>LOGIN</BNO_GROUP>
+      <BNO_INTERACTION_NAME>GET_T_APP_INIT</BNO_INTERACTION_NAME>
+      <BNO_INTERACTION_VERSION>1.00</BNO_INTERACTION_VERSION>
+      <BNO_INTERACTION_MODE>INTERACTION_MODE:VIEW</BNO_INTERACTION_MODE>
+      <BNO_PARAMETERS />
+    </BNO_REQUEST>
+  </APPLICATION_REQUEST>
+</ENVELOPE>`;
+
+      console.log('getAppInit: Making API request');
+      const xmlResponse = await makeXMLRequest(xmlPayload);
+      console.log('getAppInit: Raw XML Response:', xmlResponse);
+      const doc = parseXML(xmlResponse);
+      const messageName = getMessageName(doc);
+      console.log('getAppInit: Message name:', messageName);
+      
+      // Check for error messages first
+      const messages = getUserMessages(doc);
+      const systemMessages = getSystemMessages(doc);
+      const allMessages = [...messages, ...systemMessages];
+      
+      // Check for critical errors (CL >= 6)
+      const criticalErrors = allMessages.filter((msg) => {
+        const cl = parseInt(msg.criticalLevel || '0', 10);
+        return cl >= 6;
+      });
+      
+      if (criticalErrors.length > 0) {
+        const userErrorMsg = messages.find((msg) => {
+          const cl = parseInt(msg.criticalLevel || '0', 10);
+          return cl >= 6;
+        });
+        const errorMsg = userErrorMsg?.caption || criticalErrors[0]?.caption || 'Failed to get app init';
+        console.error('getAppInit: Critical error:', errorMsg);
+        return {
+          success: false,
+          error: errorMsg,
+          messages: allMessages,
+        };
+      }
+      
+      // Check for regular error messages (CL = 1)
+      const errorMessages = allMessages.filter((msg) => msg.criticalLevel === '1');
+      if (errorMessages.length > 0) {
+        const errorMsg = errorMessages[0]?.caption || 'Failed to get app init';
+        console.error('getAppInit: Error:', errorMsg);
+        return {
+          success: false,
+          error: errorMsg,
+          messages: allMessages,
+        };
+      }
+      
+      if (messageName === 'GET_T_APP_INIT' || messageName?.includes('APP_INIT')) {
+        console.log('getAppInit: Extracting menu captions and permissions...');
+        const menuCaptions = extractAppInitMenuCaptions(doc);
+        const permissions = extractAppInitPermissions(doc);
+        
+        console.log('getAppInit: Extracted menu captions:', menuCaptions);
+        console.log('getAppInit: Extracted permissions:', permissions);
+        
+        return {
+          success: true,
+          data: {
+            menuCaptions,
+            permissions,
+          },
+          messages: allMessages,
+        };
+      }
+      
+      console.warn('getAppInit: Unexpected message name:', messageName);
+      
+      throw new Error(`Unexpected message type: ${messageName}`);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get app init';
       return {
         success: false,
         error: errorMessage,
@@ -558,7 +901,7 @@ export async function requestNewPassword(username: string): Promise<ApiResponse<
     <IPADDRESS />
     <USERAGENT />
     <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
-    <ORIGINATOR>PVNG.WEB.UI</ORIGINATOR>
+    <ORIGINATOR>PV.TC.WEB.UI</ORIGINATOR>
   </ENVELOPE_DATA>
   <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
     <BNO_REQUEST VERSION="1.00">

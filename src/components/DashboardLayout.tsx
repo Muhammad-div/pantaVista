@@ -17,24 +17,21 @@ import {
   IconButton,
 } from '@mui/material'
 import {
-  ShoppingCart as ShoppingCartIcon,
-  Public as PublicIcon,
-  Person as PersonIcon,
-  Inventory as InventoryIcon,
-  Description as DescriptionIcon,
-  SwapVert as SwapVertIcon,
-  Business as BusinessIcon,
-  GridView as GridViewIcon,
-  Settings as SettingsIcon,
   AccountCircle as AccountCircleIcon,
   ChevronRight as ChevronRightIcon,
   DarkMode as DarkModeIcon,
   LightMode as LightModeIcon,
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
+  Assignment as ActivitiesIcon,
+  ShoppingBag as OrdersIcon,
+  Store as POSIcon,
+  CalendarToday as AgendaIcon,
+  Sync as ExchangeDataIcon,
 } from '@mui/icons-material'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
+import { useMenu } from '../contexts/MenuContext'
 import SettingsSidebar from './SettingsSidebar'
 import './DashboardLayout.css'
 
@@ -53,79 +50,82 @@ const DashboardLayout = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { mode, toggleTheme } = useTheme()
+  const { menuCaptions, permissions, loading: menuLoading } = useMenu()
   const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const [settingsSidebarOpen, setSettingsSidebarOpen] = useState(false)
   const [sidebarExpanded, setSidebarExpanded] = useState(true)
 
-  const navItems: NavItem[] = [
-    {
-      path: '/suppliers',
-      label: 'Suppliers',
-      icon: <ShoppingCartIcon />,
-    },
-    {
-      path: '/regions',
-      label: 'Regions',
-      icon: <PublicIcon />,
-    },
-    {
-      path: '/persons',
-      label: 'Persons',
-      icon: <PersonIcon />,
-      hasSubmenu: true,
-      submenuItems: [
-        { path: '/persons/contacts', label: 'Contacts' },
-        { path: '/persons/employees', label: 'Employees' },
-        { path: '/persons/customers', label: 'Customers' },
-      ],
-    },
-    {
-      path: '/products',
-      label: 'Products',
-      icon: <InventoryIcon />,
-    },
-    {
-      path: '/documents',
-      label: 'Documents',
-      icon: <DescriptionIcon />,
-    },
-    {
-      path: '/transactions',
-      label: 'Transactions',
-      icon: <SwapVertIcon />,
-      hasSubmenu: true,
-      submenuItems: [
-        { path: '/transactions/sales', label: 'Sales' },
-        { path: '/transactions/purchases', label: 'Purchases' },
-        { path: '/transactions/payments', label: 'Payments' },
-      ],
-    },
-    {
-      path: '/pentaree',
-      label: 'Pentaree',
-      icon: <BusinessIcon />,
-    },
-  ]
+  // Build dynamic menu items based on permissions and captions from backend
+  // Only show items if we have valid API data (no fallbacks)
+  const navItems: NavItem[] = useMemo(() => {
+    // Don't show anything if we don't have permissions data yet
+    if (!permissions || menuLoading) {
+      return []
+    }
+    
+    const items: NavItem[] = []
+    
+    // Activities - shown if permission.showActivity is true AND we have caption
+    if (permissions.showActivity && menuCaptions?.activities) {
+      items.push({
+        path: '/activities',
+        label: menuCaptions.activities,
+        icon: <ActivitiesIcon />,
+      })
+    }
+    
+    // Orders - shown if permission.showOrder is true AND we have caption
+    if (permissions.showOrder && menuCaptions?.orders) {
+      items.push({
+        path: '/orders',
+        label: menuCaptions.orders,
+        icon: <OrdersIcon />,
+      })
+    }
+    
+    // POS - shown if permission.showPOS is true AND we have caption
+    if (permissions.showPOS && menuCaptions?.pos) {
+      items.push({
+        path: '/pos',
+        label: menuCaptions.pos,
+        icon: <POSIcon />,
+      })
+    }
+    
+    return items
+  }, [permissions, menuCaptions, menuLoading])
 
-  const bottomNavItems: NavItem[] = [
-    {
-      path: '/workspace',
-      label: 'Workspace',
-      icon: <GridViewIcon />,
-    },
-    {
-      path: '/settings',
-      label: 'Settings',
-      icon: <SettingsIcon />,
-      hasSubmenu: true,
-      submenuItems: [
-        { path: '/settings/general', label: 'General' },
-        { path: '/settings/security', label: 'Security' },
-        { path: '/settings/notifications', label: 'Notifications' },
-      ],
-    },
-  ]
+  // Bottom menu items (Daily Agenda, Exchange Data, Settings)
+  // Only show if we have valid API data
+  const bottomNavItems: NavItem[] = useMemo(() => {
+    // Don't show anything if we don't have permissions data yet
+    if (!permissions || menuLoading) {
+      return []
+    }
+    
+    const items: NavItem[] = []
+    
+    // Daily Agenda - shown if not supplier AND we have caption
+    if (!permissions.showPOS && menuCaptions?.dailyAgenda) {
+      items.push({
+        path: '/agenda',
+        label: menuCaptions.dailyAgenda,
+        icon: <AgendaIcon />,
+      })
+    }
+    
+    // Exchange Data - shown if we have caption
+    if (menuCaptions?.exchangeData) {
+      items.push({
+        path: '/exchange-data',
+        label: menuCaptions.exchangeData,
+        icon: <ExchangeDataIcon />,
+      })
+    }
+    
+    return items
+  }, [permissions, menuCaptions, menuLoading])
 
   const handleUserMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setUserMenuAnchor(event.currentTarget)
@@ -355,16 +355,34 @@ const DashboardLayout = () => {
         </Box>
 
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-          <List className="sidebar-nav" sx={{ flex: 1, overflowY: 'auto' }}>
-            {navItems.map((item) => renderNavItem(item))}
-          </List>
+          {menuLoading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+              <Typography variant="body2" color="text.secondary">
+                Loading menu...
+              </Typography>
+            </Box>
+          ) : navItems.length === 0 && bottomNavItems.length === 0 ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+              <Typography variant="body2" color="text.secondary">
+                No menu items available
+              </Typography>
+            </Box>
+          ) : (
+            <>
+              <List className="sidebar-nav" sx={{ flex: 1, overflowY: 'auto' }}>
+                {navItems.map((item) => renderNavItem(item))}
+              </List>
 
-          <Box sx={{ mt: 'auto' }}>
-            <Divider sx={{ my: 1 }} />
-            <List className="sidebar-nav-bottom">
-              {bottomNavItems.map((item) => renderNavItem(item, true))}
-            </List>
-          </Box>
+              {bottomNavItems.length > 0 && (
+                <Box sx={{ mt: 'auto' }}>
+                  <Divider sx={{ my: 1 }} />
+                  <List className="sidebar-nav-bottom">
+                    {bottomNavItems.map((item) => renderNavItem(item, true))}
+                  </List>
+                </Box>
+              )}
+            </>
+          )}
         </Box>
       </Drawer>
 

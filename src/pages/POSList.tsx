@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -17,6 +17,8 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  CircularProgress,
+  Alert,
 } from '@mui/material'
 import {
   Home as HomeIcon,
@@ -27,6 +29,8 @@ import {
   MoreVert as MoreVertIcon,
   ArrowDropDown as ArrowDropDownIcon,
 } from '@mui/icons-material'
+import { getPosSmallList } from '../services/api'
+import type { POSItem as ApiPOSItem } from '../utils/xmlParser'
 import './POSList.css'
 
 interface POSItem {
@@ -139,8 +143,87 @@ const POSList = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(3)
   const [optionsAnchor, setOptionsAnchor] = useState<null | HTMLElement>(null)
+  const [posList, setPosList] = useState<POSItem[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [loadingMore, setLoadingMore] = useState(false)
 
   const supplierName = 'Despec' // This would come from the supplier data
+
+  // Fetch POS list from API
+  useEffect(() => {
+    let isMounted = true
+    
+    const fetchPOSList = async (level: number = 1) => {
+      if (level === 1) {
+        setLoading(true)
+      } else {
+        setLoadingMore(true)
+      }
+      setError(null)
+      
+      try {
+        const response = await getPosSmallList(level)
+        
+        if (isMounted) {
+          if (response.success && response.data) {
+            // Map API POS data to component POSItem interface
+            const mappedPOS: POSItem[] = response.data.posList.map((apiPOS: ApiPOSItem, index: number) => ({
+              id: parseInt(apiPOS.id) || index + 1,
+              posId: apiPOS.pvno || '',
+              cusNo: '', // Not available in small list
+              shortName: apiPOS.displayName || '',
+              distributorChannel: '', // Not available in small list
+              headquarter: '', // Not available in small list
+              zipcode: apiPOS.pcode || '',
+              city: apiPOS.city || '',
+            }))
+            
+            if (level === 1) {
+              setPosList(mappedPOS)
+            } else {
+              // Append to existing list when loading more
+              setPosList(prev => [...prev, ...mappedPOS])
+            }
+            
+            // If there's a next data level, automatically load it
+            if (response.data.nextDataLevel > 0 && response.data.nextDataLevel !== level) {
+              // Load next level after a short delay to avoid overwhelming the server
+              if (response.data?.nextDataLevel) {
+                setTimeout(() => {
+                  fetchPOSList(response.data!.nextDataLevel)
+                }, 500)
+              }
+            }
+          } else {
+            setError(response.error || 'Failed to load POS list')
+            if (level === 1) {
+              setPosList(samplePOSData) // Fallback to sample data
+            }
+          }
+        }
+      } catch (err) {
+        if (isMounted) {
+          const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred'
+          setError(errorMessage)
+          if (level === 1) {
+            setPosList(samplePOSData) // Fallback to sample data
+          }
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false)
+          setLoadingMore(false)
+        }
+      }
+    }
+
+    fetchPOSList(1)
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage)
@@ -154,11 +237,11 @@ const POSList = () => {
   }
 
   const paginatedPOS = useMemo(() => {
-    return samplePOSData.slice(
+    return posList.slice(
       page * rowsPerPage,
       page * rowsPerPage + rowsPerPage
     )
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, posList])
 
   const handleOptionsClick = (event: React.MouseEvent<HTMLElement>) => {
     setOptionsAnchor(event.currentTarget)
@@ -306,8 +389,17 @@ const POSList = () => {
 
         {/* Table */}
         <Paper elevation={0} className="pos-table-card">
-          <TableContainer>
-            <Table stickyHeader>
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
+              <CircularProgress />
+            </Box>
+          ) : error ? (
+            <Alert severity="error" sx={{ m: 2 }}>
+              {error}
+            </Alert>
+          ) : (
+            <TableContainer>
+              <Table stickyHeader>
               <TableHead>
                 <TableRow>
                   <TableCell className="pos-table-header">
@@ -404,26 +496,35 @@ const POSList = () => {
                 )}
               </TableBody>
             </Table>
-          </TableContainer>
 
-          {/* Pagination */}
-          <TablePagination
-            component="div"
-            count={samplePOSData.length}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            rowsPerPageOptions={[3, 5, 10, 25, 50]}
-            labelRowsPerPage="Items per page:"
-            sx={{
-              borderTop: '1px solid',
-              borderColor: 'divider',
-              '& .MuiTablePagination-toolbar': {
-                padding: '12px 16px',
-              },
-            }}
-          />
+            {/* Pagination */}
+            <TablePagination
+                component="div"
+                count={posList.length}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                rowsPerPageOptions={[3, 5, 10, 25, 50]}
+                labelRowsPerPage="Items per page:"
+                sx={{
+                  borderTop: '1px solid',
+                  borderColor: 'divider',
+                  '& .MuiTablePagination-toolbar': {
+                    padding: '12px 16px',
+                  },
+                }}
+            />
+            {loadingMore && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 2 }}>
+                <CircularProgress size={24} />
+                <Typography variant="body2" sx={{ ml: 2 }}>
+                  Loading more POS data...
+                </Typography>
+              </Box>
+            )}
+          </TableContainer>
+          )}
         </Paper>
       </Box>
     </Box>
