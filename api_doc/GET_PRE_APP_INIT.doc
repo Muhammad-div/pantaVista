@@ -1,0 +1,1303 @@
+Date: Tue, 9 Dec 2025 20:48:55 +0000 (UTC)
+Message-ID: <1461780578.637.1765313335403@1ae77e36bbe7>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_636_309054392.1765313335402"
+
+------=_Part_636_309054392.1765313335402
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>GET_PRE_APP_INIT</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font: var(--ds-font-body-small, Arial, Helvetica, FreeSans, sans-se=
+rif);
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        page-break-after: avoid;
+    }
+
+    pre {
+        font: var(--ds-font-code, Monaco, "Courier New", monospace);
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>GET_PRE_APP_INIT</h1>
+    <div class=3D"Section1">
+        <div class=3D"contentLayout2">
+<style>[data-colorid=3Dvr64whzx2o]{color:#6554c0} html[data-color-mode=3Dda=
+rk] [data-colorid=3Dvr64whzx2o]{color:#503fab}[data-colorid=3Dxobxunr8rt]{c=
+olor:#6554c0} html[data-color-mode=3Ddark] [data-colorid=3Dxobxunr8rt]{colo=
+r:#503fab}[data-colorid=3Dxw2um63lz2]{color:#6554c0} html[data-color-mode=
+=3Ddark] [data-colorid=3Dxw2um63lz2]{color:#503fab}[data-colorid=3Dzma6v6iq=
+5p]{color:#6554c0} html[data-color-mode=3Ddark] [data-colorid=3Dzma6v6iq5p]=
+{color:#503fab}[data-colorid=3Dtswft7gh1s]{color:#6554c0} html[data-color-m=
+ode=3Ddark] [data-colorid=3Dtswft7gh1s]{color:#503fab}[data-colorid=3Dusb8g=
+420zl]{color:#6554c0} html[data-color-mode=3Ddark] [data-colorid=3Dusb8g420=
+zl]{color:#503fab}[data-colorid=3Dzs7b6zmxeq]{color:#6554c0} html[data-colo=
+r-mode=3Ddark] [data-colorid=3Dzs7b6zmxeq]{color:#503fab}[data-colorid=3Dzt=
+wzsvr6q1]{color:#6554c0} html[data-color-mode=3Ddark] [data-colorid=3Dztwzs=
+vr6q1]{color:#503fab}[data-colorid=3Dpkzfgzwu3x]{color:#6554c0} html[data-c=
+olor-mode=3Ddark] [data-colorid=3Dpkzfgzwu3x]{color:#503fab}</style>
+<div class=3D"columnLayout two-right-sidebar" data-layout=3D"two-right-side=
+bar">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<h1 id=3D"GET_PRE_APP_INIT-Overview">Overview</h1>
+<p style=3D"margin-left: 30.0px;"><strong>Returns captions, labels, hints f=
+or building UI welcome and login page</strong></p>
+<h1 id=3D"GET_PRE_APP_INIT-BusinessLogic">Business Logic</h1>
+<div class=3D"rw_ui_expand_content">
+<style>[data-colorid=3Dlppg4xe7hw]{color:#333333} html[data-color-mode=3Dda=
+rk] [data-colorid=3Dlppg4xe7hw]{color:#cccccc}[data-colorid=3De81psjp9us]{c=
+olor:#ababab} html[data-color-mode=3Ddark] [data-colorid=3De81psjp9us]{colo=
+r:#545454}</style>
+<div style=3D"display: none;" class=3D"rw_ui_expand_content_expanded">
+true
+</div>
+<div style=3D"display: none;" class=3D"rw_ui_expand_content_title">
+Business Logic
+</div>
+<div style=3D"margin: 10.0px 0;">
+<div>
+<img src=3D"https://static.dg.refinedtheme.refinedwiki.com/refinedtheme-for=
+-cloud/macro-icons/expand.png" style=3D"height: 20.0px;width: 20.0px;float:=
+ left;margin: 10.0px;"> <span data-colorid=3D"lppg4xe7hw" style=3D"display:=
+ block;padding: 10.0px 10.0px 10.0px 40.0px;font-size: 11.0pt;line-height: =
+20.0px;"> Business Logic </span>
+<div data-colorid=3D"e81psjp9us" style=3D"margin-left: 30.0px;font-style: i=
+talic;">
+Add your content below this macro.
+</div>
+</div>
+</div>
+</div>
+<h1 id=3D"GET_PRE_APP_INIT-Data">Data</h1>
+<div class=3D"ap-container" id=3D"ap-com.refinedwiki.confluence.cloud.refin=
+edtheme__ui-expand2633989462045986979">
+<div class=3D"ap-content " id=3D"embedded-com.refinedwiki.confluence.cloud.=
+refinedtheme__ui-expand2633989462045986979"></div>
+<script nonce=3D"dd8ff4b72fb04b52a1db7ea39683f1f3" class=3D"ap-iframe-body-=
+script">//<![CDATA[
+
+  (function(){
+    var data =3D {
+    "addon_key":"com.refinedwiki.confluence.cloud.refinedtheme",
+    "uniqueKey":"com.refinedwiki.confluence.cloud.refinedtheme__ui-expand26=
+33989462045986979",
+    "key":"ui-expand",
+     "moduleType":"dynamicContentMacros",      "moduleLocation":"content", =
+        "cp":"/wiki",
+            "general":"",
+    "w":"",
+    "h":"",
+    "url":"https://refinedtheme-production-eu.refinedwiki.com/macros/ui-exp=
+and-server?title=3DData&expanded=3D&pageId=3D80085007&pageVersion=3D8&macro=
+Id=3D9e9682ad1881ea014ba9b9b3586b1808b7196207b9916019390d56221356ff9e&trunc=
+ated=3Dfalse&macroBody=3D%3Cp+%2F%3E&xdm_e=3Dhttps%3A%2F%2Finvenit.atlassia=
+n.net&xdm_c=3Dchannel-com.refinedwiki.confluence.cloud.refinedtheme__ui-exp=
+and2633989462045986979&cp=3D%2Fwiki&xdm_deprecated_addon_key_do_not_use=3Dc=
+om.refinedwiki.confluence.cloud.refinedtheme&lic=3Dactive&userAccess=3Dtrue=
+&cv=3D1000.0.0-95b70ecb409d&traceId=3Dc3c3a86fb158ab38682b76588d3ad881&span=
+Id=3Df37c43bee7d9e1a7&traceSampled=3D0&jwt=3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUz=
+I1NiJ9.eyJzdWIiOiI3MTIwMjA6YzEzYjQ3MzMtYmNiMS00YTBlLWE1NGMtNmI3YTEwMmZjYmJi=
+IiwicXNoIjoiODkxNjM2OGFlMjMyZGZiYTJkNzRhZTU1ZTgwYjY3ZTJiMDRjMDZkZWY5MTk1OTU=
+1ZWY2ZWYzZmM1MjcxYWFhZiIsImlzcyI6ImFmYWJmOWRkLTdkZGMtMzA4Ny05YjY5LWE3OGNkMm=
+MxOTJkNiIsImNvbnRleHQiOnt9LCJleHAiOjE3NjUzMTM1MTUsImlhdCI6MTc2NTMxMzMzNX0.j=
+GFFzzMrg_Q7vMavsXYjxbQwLu3ngqCnzpmIa5EccuA",
+     "contextJwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3MTIwMj=
+A6YzEzYjQ3MzMtYmNiMS00YTBlLWE1NGMtNmI3YTEwMmZjYmJiIiwicXNoIjoiY29udGV4dC1xc=
+2giLCJpc3MiOiJhZmFiZjlkZC03ZGRjLTMwODctOWI2OS1hNzhjZDJjMTkyZDYiLCJjb250ZXh0=
+Ijp7ImxpY2Vuc2UiOnsiYWN0aXZlIjp0cnVlfSwiY29uZmx1ZW5jZSI6eyJlZGl0b3IiOnsidmV=
+yc2lvbiI6InYyIn0sIm1hY3JvIjp7Im91dHB1dFR5cGUiOiJ3b3JkIiwiaGFzaCI6IjllOTY4Mm=
+FkMTg4MWVhMDE0YmE5YjliMzU4NmIxODA4YjcxOTYyMDdiOTkxNjAxOTM5MGQ1NjIyMTM1NmZmO=
+WUiLCJpZCI6IjllOTY4MmFkMTg4MWVhMDE0YmE5YjliMzU4NmIxODA4YjcxOTYyMDdiOTkxNjAx=
+OTM5MGQ1NjIyMTM1NmZmOWUifSwidHJhY2luZyI6eyJ0cmFjZUlkIjoiYzNjM2E4NmZiMTU4YWI=
+zODY4MmI3NjU4OGQzYWQ4ODEiLCJzcGFuSWQiOiJmMzdjNDNiZWU3ZDllMWE3Iiwic2FtcGxlZC=
+I6IjAifSwiY29udGVudCI6eyJ0eXBlIjoicGFnZSIsInZlcnNpb24iOiI4IiwiaWQiOiI4MDA4N=
+TAwNyJ9LCJzcGFjZSI6eyJrZXkiOiJQVkRFVkJOTyIsImlkIjoiMTU0MDEwNSJ9fSwidXJsIjp7=
+ImRpc3BsYXlVcmwiOiJodHRwczpcL1wvaW52ZW5pdC5hdGxhc3NpYW4ubmV0XC93aWtpIn19LCJ=
+leHAiOjE3NjUzMTQyMzUsImlhdCI6MTc2NTMxMzMzNX0.t4HLbIyKj546M2g38lvpOR4eXXuruN=
+ONDjhFJvkhOBg",    "structuredContext": "{\"license\":{\"active\":true},\"c=
+onfluence\":{\"editor\":{\"version\":\"v2\"},\"macro\":{\"outputType\":\"wo=
+rd\",\"hash\":\"9e9682ad1881ea014ba9b9b3586b1808b7196207b9916019390d5622135=
+6ff9e\",\"id\":\"9e9682ad1881ea014ba9b9b3586b1808b7196207b9916019390d562213=
+56ff9e\"},\"tracing\":{\"traceId\":\"c3c3a86fb158ab38682b76588d3ad881\",\"s=
+panId\":\"f37c43bee7d9e1a7\",\"sampled\":\"0\"},\"content\":{\"type\":\"pag=
+e\",\"version\":\"8\",\"id\":\"80085007\"},\"space\":{\"key\":\"PVDEVBNO\",=
+\"id\":\"1540105\"}},\"url\":{\"displayUrl\":\"https://invenit.atlassian.ne=
+t/wiki\"}}",
+    "contentClassifier":"content",
+    "productCtx":"{\"page.id\":\"80085007\",\"macro.hash\":\"9e9682ad1881ea=
+014ba9b9b3586b1808b7196207b9916019390d56221356ff9e\",\"space.key\":\"PVDEVB=
+NO\",\"tracing.sampled\":\"0\",\"page.type\":\"page\",\"content.version\":\=
+"8\",\"page.title\":\"GET_PRE_APP_INIT\",\"macro.localId\":\"64de5995-99c9-=
+4109-a2f3-9f1b40bb4a10\",\"macro.body\":\"\u003cp /\u003e\",\": =3D | RAW |=
+ =3D :\":\"title=3DData\",\"space.id\":\"1540105\",\"title\":\"Data\",\"mac=
+ro.truncated\":\"false\",\"content.type\":\"page\",\"output.type\":\"word\"=
+,\"page.version\":\"8\",\"macro.fragmentLocalId\":\"\",\"content.id\":\"800=
+85007\",\"tracing.traceId\":\"c3c3a86fb158ab38682b76588d3ad881\",\"macro.id=
+\":\"9e9682ad1881ea014ba9b9b3586b1808b7196207b9916019390d56221356ff9e\",\"t=
+racing.spanId\":\"f37c43bee7d9e1a7\",\"user.isExternalCollaborator\":\"fals=
+e\",\"editor.version\":\"v2\"}",
+    "timeZone":"Asia/Calcutta",
+    "origin":"https://refinedtheme-production-eu.refinedwiki.com",
+    "hostOrigin":"https://invenit.atlassian.net",
+    "sandbox":"allow-downloads allow-forms allow-modals allow-popups allow-=
+popups-to-escape-sandbox allow-scripts allow-same-origin allow-top-navigati=
+on-by-user-activation allow-storage-access-by-user-activation",            =
+"apiMigrations": {
+        "gdpr": true
+    }
+}
+;
+    if(window.AP && window.AP.subCreate) {
+      window._AP.appendConnectAddon(data);
+    } else {
+      require(['ac/create'], function(create){
+        create.appendConnectAddon(data);
+      });
+    }
+
+    // For Confluence App Analytics. This code works in conjunction with CF=
+E's ConnectSupport.js.
+    // Here, we add a listener to the initial HTML page that stores events =
+if the ConnectSupport component
+    // has not mounted yet. In CFE, we process the missed event data and di=
+sable this initial listener.
+    const __MAX_EVENT_ARRAY_SIZE__ =3D 20;
+    const connectAppAnalytics =3D "ecosystem.confluence.connect.analytics";
+    window.connectHost && window.connectHost.onIframeEstablished((eventData=
+) =3D> {
+      if (!window.__CONFLUENCE_CONNECT_SUPPORT_LOADED__) {
+        let events =3D JSON.parse(window.localStorage.getItem(connectAppAna=
+lytics)) || [];
+        if (events.length >=3D __MAX_EVENT_ARRAY_SIZE__) {
+          events.shift();
+        }
+        events.push(eventData);
+        window.localStorage.setItem(connectAppAnalytics, JSON.stringify(eve=
+nts));
+      }
+    });
+
+  }());
+
+//]]>
+</script>
+</div>
+<h1 id=3D"GET_PRE_APP_INIT-XML">XML</h1>
+<h5 id=3D"GET_PRE_APP_INIT-XML-IN"><strong>XML-IN</strong></h5>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: xml; gutter: false; theme: Confluence" data-theme=3D"Confluence">&lt;ENVE=
+LOPE NAME=3D"PV.ENVELOPE" VERSION=3D"1.00" CREATE=3D""&gt;
+  &lt;ENVELOPE_DATA&gt;
+    &lt;TOKEN /&gt;
+    &lt;IPADDRESS /&gt;
+    &lt;USERAGENT /&gt;
+    &lt;LANGUAGE&gt;LANGUAGE:ENGLISH&lt;/LANGUAGE&gt;
+    &lt;ORIGINATOR&gt;PVNG.WEB.UI&lt;/ORIGINATOR&gt;
+  &lt;/ENVELOPE_DATA&gt;
+  &lt;APPLICATION_REQUEST VERSION=3D"1.00" LANGUAGE=3D"DE"&gt;
+    &lt;BNO_REQUEST VERSION=3D"1.00"&gt;
+      &lt;BNO_PRODUCTION_MODE&gt;TRUE&lt;/BNO_PRODUCTION_MODE&gt;
+      &lt;BNO_GROUP&gt;LOGIN&lt;/BNO_GROUP&gt;
+      &lt;BNO_INTERACTION_NAME&gt;GET_PRE_APP_INIT&lt;/BNO_INTERACTION_NAME=
+&gt;
+      &lt;BNO_INTERACTION_VERSION&gt;1.00&lt;/BNO_INTERACTION_VERSION&gt;
+      &lt;BNO_INTERACTION_MODE&gt;INTERACTION_MODE:VIEW&lt;/BNO_INTERACTION=
+_MODE&gt;
+      &lt;BNO_PARAMETERS&gt;
+        &lt;BNO_PARAM NAME=3D"LINGO"&gt;
+          &lt;VALUE&gt;EN&lt;/VALUE&gt;
+        &lt;/BNO_PARAM&gt;
+      &lt;/BNO_PARAMETERS&gt;
+    &lt;/BNO_REQUEST&gt;
+  &lt;/APPLICATION_REQUEST&gt;
+&lt;/ENVELOPE&gt;</pre>
+</div>
+</div>
+<p></p>
+<h5 id=3D"GET_PRE_APP_INIT-XML-OUT">XML-OUT</h5>
+<div id=3D"expander-1245731699" class=3D"expand-container">
+<div id=3D"expander-control-1245731699" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">XML-OUT (relevant tags only)</span>
+</div>
+<div id=3D"expander-content-1245731699" class=3D"expand-content">
+<p>&lt;?xml version=3D"1.0" encoding=3D"utf-8"?&gt;<br>
+&lt;ENVELOPE NAME=3D"IDF.ENVELOPE" VERSION=3D"1.00" CREATE=3D"4/22/2025 1:0=
+2:44 AM"&gt;<br>
+ &lt;ENVELOPE_DATA&gt;<br>
+ &lt;SENDER /&gt;<br>
+ &lt;ANSWERON /&gt;<br>
+ &lt;TOKEN /&gt;<br>
+ &lt;LANGUAGE&gt;LANGUAGE:ENGLISH&lt;/LANGUAGE&gt;<br>
+ &lt;IPADDRESS /&gt;<br>
+ &lt;USERAGENT /&gt;<br>
+ &lt;/ENVELOPE_DATA&gt;<br>
+ &lt;MESSAGE NAME=3D"GET_PRE_APP_INIT" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"UI.PRE_DATA" VERSION=3D"1.00"&gt;<br>
+ &lt;METAFIELDS&gt;<br>
+ &lt;ENTITIES&gt;<br>
+ &lt;ENTITY NAME=3D"LINGO_DATA" VERSION=3D"1.00"&gt;&lt;/ENTITY&gt;<br>
+ &lt;ENTITY NAME=3D"UI.TEXT.DATA" VERSION=3D"1.00"&gt;&lt;/ENTITY&gt;<br>
+ &lt;/ENTITIES&gt;<br>
+ &lt;/METAFIELDS&gt;<br>
+ &lt;DATAFIELDS&gt;<br>
+ &lt;ENTITIES&gt;<br>
+ &lt;ENTITY NAME=3D"LINGO_DATA" VERSION=3D"1.00"&gt;&lt;/ENTITY&gt;<br>
+ &lt;ENTITY NAME=3D"UI.IMAGE.DATA" VERSION=3D"1.00"&gt;<br>
+ &lt;SETS&gt;<br>
+ &lt;SET SORT=3D"2" SET_ID=3D"9060b6b2-1df5-4b4d-9166-4399d490b96b" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.IMAGE.ITEM" KEY=3D"69" KEYVERSION=3D"AAAAAAC=
+j4HU=3D"&gt;<br>
+ &lt;<strong>IMAGE</strong>&gt;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3D&lt;/IM=
+AGE&gt;<br>
+ &lt;IMAGE_IDENTIFIER&gt;ICON:LOGIN&lt;/IMAGE_IDENTIFIER&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;/SETS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;ENTITY NAME=3D"UI.TEXT.DATA" VERSION=3D"1.00"&gt;<br>
+ &lt;SETS&gt;<br>
+ &lt;SET SORT=3D"2" SET_ID=3D"ce784041-4de8-42af-bbc2-a9611c88dbdd" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"151" KEYVERSION=3D"AAAAAAC=
+4oG0=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"TEXT.WELCOME.HEADER"&gt;Welcome at pa=
+ntaVista CRM!&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"3" SET_ID=3D"61337ab5-40e3-4022-ab1f-8c08e5f3da96" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"152" KEYVERSION=3D"AAAAAAC=
+4oHA=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"TEXT.WELCOME.INFO"&gt;Please enter yo=
+ur username and password to log in ..&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"4" SET_ID=3D"9530ce1b-b618-4ddb-854c-e0981d5e80ab" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"153" KEYVERSION=3D"AAAAAAC=
+4oHM=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"TEXT.RESEND.HEADER"&gt;You have forgo=
+tten your password? No problem!&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"5" SET_ID=3D"619b3acb-753c-4c49-b20c-4dc9bdb0f596" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"154" KEYVERSION=3D"AAAAAAC=
+4oHY=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"<a class=3D"external-link" href=3D"ht=
+tp://TEXT.RESEND.INFO" rel=3D"nofollow">TEXT.RESEND.INFO</a>"&gt;Enter your=
+ username and we will send you a new one.&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"6" SET_ID=3D"1719555c-1500-4650-b204-8d8bc7ce9f65" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"155" KEYVERSION=3D"AAAAAAC=
+4oHk=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"TEXT.RESEND.TITLE"&gt;Request new pas=
+sword&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"7" SET_ID=3D"a2b7eb22-dcd7-4460-95de-6f73349ec27b" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"156" KEYVERSION=3D"AAAAAAC=
+4oHw=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"TEXT.WELCOME.TITLE"&gt;Login&lt;/CAPT=
+ION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"8" SET_ID=3D"c24f3e12-ac39-4287-afcf-c23f315f70cf" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"157" KEYVERSION=3D"AAAAAAC=
+4oH8=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"BUTTON.LOGIN"&gt;Login&lt;/CAPTION&gt=
+;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"9" SET_ID=3D"baafd6cf-c7e7-48ea-a7da-fdbae89fac77" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"158" KEYVERSION=3D"AAAAAAC=
+4oII=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"BUTTON.RESEND"&gt;Send password&lt;/C=
+APTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"10" SET_ID=3D"6b9e4f3f-2ce0-4594-b553-bb8a98cc2000" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"159" KEYVERSION=3D"AAAAAAC=
+4oIU=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"LABEL.USER"&gt;Username&lt;/CAPTION&g=
+t;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"11" SET_ID=3D"f12f6731-3779-40b8-a9d2-26b5992c0869" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"160" KEYVERSION=3D"AAAAAAC=
+4oIg=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"<a class=3D"external-link" href=3D"ht=
+tp://LABEL.PW" rel=3D"nofollow">LABEL.PW</a>"&gt;Password&lt;/CAPTION&gt;<b=
+r>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"12" SET_ID=3D"9d896b0a-b8e8-49c3-abc4-e779982f3405" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"161" KEYVERSION=3D"AAAAAAC=
+4oIs=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"LABEL.LOSTPW"&gt;Forgot password?&lt;=
+/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"13" SET_ID=3D"a4f47c13-d721-473e-bbe0-686895d53ae1" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"162" KEYVERSION=3D"AAAAAAC=
+4oI4=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"TOOLTIP.USER"&gt;Enter your user name=
+. This was sent to you via e-mail.&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"14" SET_ID=3D"b0b5652d-9ad8-49ee-94b7-fc9f733b360b" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"163" KEYVERSION=3D"AAAAAAC=
+4oJE=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"<a class=3D"external-link" href=3D"ht=
+tp://TOOLTIP.PW" rel=3D"nofollow">TOOLTIP.PW</a>"&gt;Enter your password. T=
+his was sent to you via e-mail.&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"15" SET_ID=3D"5a9fc08a-8011-4e3b-b610-a3ae950a327e" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"164" KEYVERSION=3D"AAAAAAD=
+E4y4=3D"&gt;<br>
+ &lt;<strong>CAPTION</strong> NAME=3D"TOOLTIP.LOSTPW"&gt;Use this link if y=
+ou forgot your password. We will send you a new one to your e-mail address!=
+&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;/SETS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;/ENTITIES&gt;<br>
+ &lt;/DATAFIELDS&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;/MESSAGE&gt;<br>
+ &lt;MESSAGE NAME=3D"IDF.MESSAGES" VERSION=3D"1.0"&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"SYSTEM_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;<br><strong><span data-colorid=3D"zs7b6zmxeq">&lt;MSG NAME=
+=3D"FACADE.CENTER.CALL_BNO_OK"&gt;</span></strong><br><strong><span data-co=
+lorid=3D"pkzfgzwu3x"> &lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;</span></=
+strong><br><strong><span data-colorid=3D"xobxunr8rt"> &lt;CAPTION&gt;</span=
+></strong><br><strong><span data-colorid=3D"usb8g420zl"> &lt;![CDATA[The BN=
+O was called successfully from facade!]]&gt;</span></strong><br><strong><sp=
+an data-colorid=3D"ztwzsvr6q1"> &lt;/CAPTION&gt;</span></strong><br><strong=
+><span data-colorid=3D"xw2um63lz2"> &lt;DESCRIPTION&gt;Aufruf des BNO war o=
+k.&lt;/DESCRIPTION&gt;</span></strong><br><strong><span data-colorid=3D"vr6=
+4whzx2o"> &lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;</span></strong><br><strong><s=
+pan data-colorid=3D"zma6v6iq5p"> &lt;DATAREFERENCE USED=3D"NO" /&gt;</span>=
+</strong><br><strong><span data-colorid=3D"tswft7gh1s"> &lt;/MSG&gt;</span>=
+</strong><br>
+ &lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"USER_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;&lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;/MESSAGE&gt;<br>
+&lt;/ENVELOPE&gt;</p>
+</div>
+</div>
+<div id=3D"expander-156655554" class=3D"expand-container">
+<div id=3D"expander-control-156655554" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">XML-OUT (long)</span>
+</div>
+<div id=3D"expander-content-156655554" class=3D"expand-content">
+<h5 id=3D"GET_PRE_APP_INIT-<?xmlversion=3D&quot;1.0&quot;encoding=3D&quot;u=
+tf-8&quot;?><ENVELOPENAME=3D&quot;IDF.ENVELOPE&quot;VERSION=3D&quot;1.00&qu=
+ot;CREATE=3D&quot;4/22/20251:02:44AM&quot;><ENVELOPE_DATA><SENDER/><ANSWERO=
+N/><TOKEN/><LANGUAGE>LANGUAGE:ENGLISH</LANGUAGE><IPADDRESS/><USERAGENT/></E=
+NVELOPE_DATA><MESSAGENAME">&lt;?xml version=3D"1.0" encoding=3D"utf-8"?&gt;=
+<br>
+&lt;ENVELOPE NAME=3D"IDF.ENVELOPE" VERSION=3D"1.00" CREATE=3D"4/22/2025 1:0=
+2:44 AM"&gt;<br>
+ &lt;ENVELOPE_DATA&gt;<br>
+ &lt;SENDER /&gt;<br>
+ &lt;ANSWERON /&gt;<br>
+ &lt;TOKEN /&gt;<br>
+ &lt;LANGUAGE&gt;LANGUAGE:ENGLISH&lt;/LANGUAGE&gt;<br>
+ &lt;IPADDRESS /&gt;<br>
+ &lt;USERAGENT /&gt;<br>
+ &lt;/ENVELOPE_DATA&gt;<br>
+ &lt;MESSAGE NAME=3D"GET_PRE_APP_INIT" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"UI.PRE_DATA" VERSION=3D"1.00"&gt;<br>
+ &lt;METAFIELDS&gt;<br>
+ &lt;ENTITIES&gt;<br>
+ &lt;ENTITY NAME=3D"LINGO_DATA" VERSION=3D"1.00"&gt;<br>
+ &lt;DATARANGE&gt;<br>
+ &lt;START /&gt;<br>
+ &lt;END /&gt;<br>
+ &lt;CUR_PAGE /&gt;<br>
+ &lt;PAGE_ENTRIES /&gt;<br>
+ &lt;TOTAL_PAGES /&gt;<br>
+ &lt;TOTAL_ENTRIES /&gt;<br>
+ &lt;SORT_LIST&gt;<br>
+ &lt;SORT SORT=3D""&gt;<br>
+ &lt;NAME&gt;&lt;/NAME&gt;<br>
+ &lt;SORTTYPE&gt;&lt;/SORTTYPE&gt;<br>
+ &lt;/SORT&gt;<br>
+ &lt;/SORT_LIST&gt;<br>
+ &lt;FILTER_LIST&gt;<br>
+ &lt;FILTER&gt;<br>
+ &lt;NAME&gt;&lt;/NAME&gt;<br>
+ &lt;FILTERTYPE&gt;&lt;/FILTERTYPE&gt;<br>
+ &lt;BEGIN_VALUE&gt;&lt;/BEGIN_VALUE&gt;<br>
+ &lt;END_VALUE&gt;&lt;/END_VALUE&gt;<br>
+ &lt;/FILTER&gt;<br>
+ &lt;/FILTER_LIST&gt;<br>
+ &lt;/DATARANGE&gt;<br>
+ &lt;LIST_PROPERTIES&gt;<br>
+ &lt;NAME /&gt;<br>
+ &lt;/LIST_PROPERTIES&gt;<br>
+ &lt;FIELDS&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"LINGO_DATA"&gt;<br>
+ &lt;FIELD NAME=3D"LANGUAGE" LUGROUPKEY=3D"17" PARENTGROUPKEY=3D""&gt;<br>
+ &lt;CAPTION&gt;Language&lt;/CAPTION&gt;<br>
+ &lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;<br>
+ &lt;MAXLENGTH /&gt;<br>
+ &lt;DEFAULTVALUE&gt;LANGUAGE:GERMAN&lt;/DEFAULTVALUE&gt;<br>
+ &lt;VISIBLE /&gt;<br>
+ &lt;EDITABLE /&gt;<br>
+ &lt;POSITION /&gt;<br>
+ &lt;COLUMNWIDTH /&gt;<br>
+ &lt;DATATYPE&gt;DATATYPE:SYSNAME&lt;/DATATYPE&gt;<br>
+ &lt;EDITHINT&gt;Bitte w=C3=A4hlen Sie die Sprache aus!&lt;/EDITHINT&gt;<br=
+>
+ &lt;HELPDESCRIPTION&gt;Shows you the language!&lt;/HELPDESCRIPTION&gt;<br>
+ &lt;SYSTEMCOLUMN /&gt;<br>
+ &lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;<br>
+ &lt;FREEZE /&gt;<br>
+ &lt;LOOKUPITEMS&gt;<br>
+ &lt;LOOKUPITEM SORT=3D"1" LUITEMKEY=3D"63" PARENTITEMKEY=3D""&gt;<br>
+ &lt;NAME&gt;LANGUAGE:GERMAN&lt;/NAME&gt;<br>
+ &lt;CAPTION_LONG&gt;German&lt;/CAPTION_LONG&gt;<br>
+ &lt;CAPTION_SHORT&gt;German&lt;/CAPTION_SHORT&gt;<br>
+ &lt;CARGO&gt;<br>
+ &lt;ENSIGN&gt;FLAG:DE&lt;/ENSIGN&gt;<br>
+ &lt;UI_LANGUAGE&gt;TRUE&lt;/UI_LANGUAGE&gt;<br>
+ &lt;/CARGO&gt;<br>
+ &lt;/LOOKUPITEM&gt;<br>
+ &lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"64" PARENTITEMKEY=3D""&gt;<br>
+ &lt;NAME&gt;LANGUAGE:ENGLISH&lt;/NAME&gt;<br>
+ &lt;CAPTION_LONG&gt;English&lt;/CAPTION_LONG&gt;<br>
+ &lt;CAPTION_SHORT&gt;English&lt;/CAPTION_SHORT&gt;<br>
+ &lt;CARGO&gt;<br>
+ &lt;ENSIGN&gt;FLAG:UK&lt;/ENSIGN&gt;<br>
+ &lt;UI_LANGUAGE&gt;TRUE&lt;/UI_LANGUAGE&gt;<br>
+ &lt;/CARGO&gt;<br>
+ &lt;/LOOKUPITEM&gt;<br>
+ &lt;/LOOKUPITEMS&gt;<br>
+ &lt;/FIELD&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/FIELDS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;ENTITY NAME=3D"UI.IMAGE.DATA" VERSION=3D"1.00"&gt;<br>
+ &lt;DATARANGE&gt;<br>
+ &lt;START /&gt;<br>
+ &lt;END /&gt;<br>
+ &lt;CUR_PAGE /&gt;<br>
+ &lt;PAGE_ENTRIES /&gt;<br>
+ &lt;TOTAL_PAGES /&gt;<br>
+ &lt;TOTAL_ENTRIES /&gt;<br>
+ &lt;SORT_LIST&gt;<br>
+ &lt;SORT SORT=3D""&gt;<br>
+ &lt;NAME&gt;&lt;/NAME&gt;<br>
+ &lt;SORTTYPE&gt;&lt;/SORTTYPE&gt;<br>
+ &lt;/SORT&gt;<br>
+ &lt;/SORT_LIST&gt;<br>
+ &lt;FILTER_LIST&gt;<br>
+ &lt;FILTER&gt;<br>
+ &lt;NAME&gt;&lt;/NAME&gt;<br>
+ &lt;FILTERTYPE&gt;&lt;/FILTERTYPE&gt;<br>
+ &lt;BEGIN_VALUE&gt;&lt;/BEGIN_VALUE&gt;<br>
+ &lt;END_VALUE&gt;&lt;/END_VALUE&gt;<br>
+ &lt;/FILTER&gt;<br>
+ &lt;/FILTER_LIST&gt;<br>
+ &lt;/DATARANGE&gt;<br>
+ &lt;LIST_PROPERTIES&gt;<br>
+ &lt;NAME /&gt;<br>
+ &lt;/LIST_PROPERTIES&gt;<br>
+ &lt;FIELDS&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.IMAGE.ITEM"&gt;<br>
+ &lt;FIELD NAME=3D"IMAGE"&gt;<br>
+ &lt;CAPTION&gt;Picture&lt;/CAPTION&gt;<br>
+ &lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;<br>
+ &lt;MAXLENGTH /&gt;<br>
+ &lt;DEFAULTVALUE /&gt;<br>
+ &lt;VISIBLE /&gt;<br>
+ &lt;EDITABLE /&gt;<br>
+ &lt;POSITION /&gt;<br>
+ &lt;COLUMNWIDTH /&gt;<br>
+ &lt;DATATYPE&gt;DATATYPE:BLOB&lt;/DATATYPE&gt;<br>
+ &lt;EDITHINT&gt;Select the picture!&lt;/EDITHINT&gt;<br>
+ &lt;HELPDESCRIPTION&gt;Shows you the picture!&lt;/HELPDESCRIPTION&gt;<br>
+ &lt;SYSTEMCOLUMN /&gt;<br>
+ &lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;<br>
+ &lt;FREEZE /&gt;<br>
+ &lt;/FIELD&gt;<br>
+ &lt;FIELD NAME=3D"IMAGE_IDENTIFIER"&gt;<br>
+ &lt;CAPTION&gt;Identifier&lt;/CAPTION&gt;<br>
+ &lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;<br>
+ &lt;MAXLENGTH&gt;200&lt;/MAXLENGTH&gt;<br>
+ &lt;DEFAULTVALUE /&gt;<br>
+ &lt;VISIBLE /&gt;<br>
+ &lt;EDITABLE /&gt;<br>
+ &lt;POSITION /&gt;<br>
+ &lt;COLUMNWIDTH /&gt;<br>
+ &lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;<br>
+ &lt;EDITHINT&gt;Enter the image identification!&lt;/EDITHINT&gt;<br>
+ &lt;HELPDESCRIPTION&gt;Shows you the identification of the picture!&lt;/HE=
+LPDESCRIPTION&gt;<br>
+ &lt;SYSTEMCOLUMN /&gt;<br>
+ &lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;<br>
+ &lt;FREEZE /&gt;<br>
+ &lt;/FIELD&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/FIELDS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;ENTITY NAME=3D"UI.TEXT.DATA" VERSION=3D"1.00"&gt;<br>
+ &lt;DATARANGE&gt;<br>
+ &lt;START /&gt;<br>
+ &lt;END /&gt;<br>
+ &lt;CUR_PAGE /&gt;<br>
+ &lt;PAGE_ENTRIES /&gt;<br>
+ &lt;TOTAL_PAGES /&gt;<br>
+ &lt;TOTAL_ENTRIES /&gt;<br>
+ &lt;SORT_LIST&gt;<br>
+ &lt;SORT SORT=3D""&gt;<br>
+ &lt;NAME&gt;&lt;/NAME&gt;<br>
+ &lt;SORTTYPE&gt;&lt;/SORTTYPE&gt;<br>
+ &lt;/SORT&gt;<br>
+ &lt;/SORT_LIST&gt;<br>
+ &lt;FILTER_LIST&gt;<br>
+ &lt;FILTER&gt;<br>
+ &lt;NAME&gt;&lt;/NAME&gt;<br>
+ &lt;FILTERTYPE&gt;&lt;/FILTERTYPE&gt;<br>
+ &lt;BEGIN_VALUE&gt;&lt;/BEGIN_VALUE&gt;<br>
+ &lt;END_VALUE&gt;&lt;/END_VALUE&gt;<br>
+ &lt;/FILTER&gt;<br>
+ &lt;/FILTER_LIST&gt;<br>
+ &lt;/DATARANGE&gt;<br>
+ &lt;LIST_PROPERTIES&gt;<br>
+ &lt;NAME /&gt;<br>
+ &lt;/LIST_PROPERTIES&gt;<br>
+ &lt;FIELDS&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM"&gt;<br>
+ &lt;FIELD NAME=3D"CAPTION"&gt;<br>
+ &lt;CAPTION&gt;FOR INTERNAL USE ONLY&lt;/CAPTION&gt;<br>
+ &lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;<br>
+ &lt;MAXLENGTH&gt;100&lt;/MAXLENGTH&gt;<br>
+ &lt;DEFAULTVALUE /&gt;<br>
+ &lt;VISIBLE /&gt;<br>
+ &lt;EDITABLE /&gt;<br>
+ &lt;POSITION /&gt;<br>
+ &lt;COLUMNWIDTH /&gt;<br>
+ &lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;<br>
+ &lt;EDITHINT&gt;FOR INTERNAL USE ONLY&lt;/EDITHINT&gt;<br>
+ &lt;HELPDESCRIPTION&gt;FOR INTERNAL USE ONLY&lt;/HELPDESCRIPTION&gt;<br>
+ &lt;SYSTEMCOLUMN /&gt;<br>
+ &lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;<br>
+ &lt;FREEZE /&gt;<br>
+ &lt;/FIELD&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/FIELDS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;/ENTITIES&gt;<br>
+ &lt;/METAFIELDS&gt;<br>
+ &lt;DATAFIELDS&gt;<br>
+ &lt;ENTITIES&gt;<br>
+ &lt;ENTITY NAME=3D"LINGO_DATA" VERSION=3D"1.00"&gt;<br>
+ &lt;SETS&gt;<br>
+ &lt;SET SORT=3D"1" SET_ID=3D"" PARENT_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"LINGO_DATA" KEY=3D"" KEYVERSION=3D""&gt;<br>
+ &lt;LANGUAGE SYSNAME=3D"" CARGO=3D"" /&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;/SETS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;ENTITY NAME=3D"UI.IMAGE.DATA" VERSION=3D"1.00"&gt;<br>
+ &lt;SETS&gt;<br>
+ &lt;SET SORT=3D"2" SET_ID=3D"9060b6b2-1df5-4b4d-9166-4399d490b96b" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.IMAGE.ITEM" KEY=3D"69" KEYVERSION=3D"AAAAAAC=
+j4HU=3D"&gt;<br>
+ &lt;IMAGE&gt;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3D&lt;/IMAGE&gt;<br>
+ &lt;IMAGE_IDENTIFIER&gt;ICON:LOGIN&lt;/IMAGE_IDENTIFIER&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;/SETS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;ENTITY NAME=3D"UI.TEXT.DATA" VERSION=3D"1.00"&gt;<br>
+ &lt;SETS&gt;<br>
+ &lt;SET SORT=3D"2" SET_ID=3D"ce784041-4de8-42af-bbc2-a9611c88dbdd" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"151" KEYVERSION=3D"AAAAAAC=
+4oG0=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"TEXT.WELCOME.HEADER"&gt;Welcome at pantaVista CRM!&lt;=
+/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"3" SET_ID=3D"61337ab5-40e3-4022-ab1f-8c08e5f3da96" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"152" KEYVERSION=3D"AAAAAAC=
+4oHA=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"<a class=3D"external-link" data-card-appearance=3D"inl=
+ine" href=3D"http://TEXT.WELCOME.INFO" rel=3D"nofollow">http://TEXT.WELCOME=
+.INFO</a> "&gt;Please enter your username and password to log in ..&lt;/CAP=
+TION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"4" SET_ID=3D"9530ce1b-b618-4ddb-854c-e0981d5e80ab" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"153" KEYVERSION=3D"AAAAAAC=
+4oHM=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"TEXT.RESEND.HEADER"&gt;You have forgotten your passwor=
+d? No problem!&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"5" SET_ID=3D"619b3acb-753c-4c49-b20c-4dc9bdb0f596" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"154" KEYVERSION=3D"AAAAAAC=
+4oHY=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"<a class=3D"external-link" href=3D"http://TEXT.RESEND.=
+INFO" rel=3D"nofollow">TEXT.RESEND.INFO</a>"&gt;Enter your username and we =
+will send you a new one.&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"6" SET_ID=3D"1719555c-1500-4650-b204-8d8bc7ce9f65" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"155" KEYVERSION=3D"AAAAAAC=
+4oHk=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"TEXT.RESEND.TITLE"&gt;Request new password&lt;/CAPTION=
+&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"7" SET_ID=3D"a2b7eb22-dcd7-4460-95de-6f73349ec27b" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"156" KEYVERSION=3D"AAAAAAC=
+4oHw=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"TEXT.WELCOME.TITLE"&gt;Login&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"8" SET_ID=3D"c24f3e12-ac39-4287-afcf-c23f315f70cf" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"157" KEYVERSION=3D"AAAAAAC=
+4oH8=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"BUTTON.LOGIN"&gt;Login&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"9" SET_ID=3D"baafd6cf-c7e7-48ea-a7da-fdbae89fac77" PARENT_=
+SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"158" KEYVERSION=3D"AAAAAAC=
+4oII=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"BUTTON.RESEND"&gt;Send password&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"10" SET_ID=3D"6b9e4f3f-2ce0-4594-b553-bb8a98cc2000" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"159" KEYVERSION=3D"AAAAAAC=
+4oIU=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"LABEL.USER"&gt;Username&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"11" SET_ID=3D"f12f6731-3779-40b8-a9d2-26b5992c0869" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"160" KEYVERSION=3D"AAAAAAC=
+4oIg=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"<a class=3D"external-link" href=3D"http://LABEL.PW" re=
+l=3D"nofollow">LABEL.PW</a>"&gt;Password&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"12" SET_ID=3D"9d896b0a-b8e8-49c3-abc4-e779982f3405" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"161" KEYVERSION=3D"AAAAAAC=
+4oIs=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"LABEL.LOSTPW"&gt;Forgot password?&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"13" SET_ID=3D"a4f47c13-d721-473e-bbe0-686895d53ae1" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"162" KEYVERSION=3D"AAAAAAC=
+4oI4=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"TOOLTIP.USER"&gt;Enter your user name. This was sent t=
+o you via e-mail.&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"14" SET_ID=3D"b0b5652d-9ad8-49ee-94b7-fc9f733b360b" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"163" KEYVERSION=3D"AAAAAAC=
+4oJE=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"<a class=3D"external-link" href=3D"http://TOOLTIP.PW" =
+rel=3D"nofollow">TOOLTIP.PW</a>"&gt;Enter your password. This was sent to y=
+ou via e-mail.&lt;/CAPTION&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;SET SORT=3D"15" SET_ID=3D"5a9fc08a-8011-4e3b-b610-a3ae950a327e" PARENT=
+_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"UI.TEXT.ITEM" KEY=3D"164" KEYVERSION=3D"AAAAAAD=
+E4y4=3D"&gt;<br>
+ &lt;CAPTION NAME=3D"TOOLTIP.LOSTPW"&gt;Use this link if you forgot your pa=
+ssword. We will send you a new one to your e-mail address!&lt;/CAPTION&gt;<=
+br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;/SETS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;/ENTITIES&gt;<br>
+ &lt;/DATAFIELDS&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;/MESSAGE&gt;<br>
+ &lt;MESSAGE NAME=3D"IDF.MESSAGES" VERSION=3D"1.0"&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"SYSTEM_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;<br>
+ &lt;MSG NAME=3D"FACADE.CENTER.CALL_BNO_OK"&gt;<br>
+ &lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;<br>
+ &lt;CAPTION&gt;<br>
+ &lt;![CDATA[The BNO was called successfully from facade!]]&gt;<br>
+ &lt;/CAPTION&gt;<br>
+ &lt;DESCRIPTION&gt;Aufruf des BNO war ok.&lt;/DESCRIPTION&gt;<br>
+ &lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;<br>
+ &lt;DATAREFERENCE USED=3D"NO" /&gt;<br>
+ &lt;/MSG&gt;<br>
+ &lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"USER_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;&lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;/MESSAGE&gt;<br>
+&lt;/ENVELOPE&gt;</h5>
+</div>
+</div>
+<p></p>
+<h1 id=3D"GET_PRE_APP_INIT-Messages">Messages</h1>
+<div class=3D"ap-container" id=3D"ap-com.refinedwiki.confluence.cloud.refin=
+edtheme__ui-expand7761959327561125097">
+<div class=3D"ap-content " id=3D"embedded-com.refinedwiki.confluence.cloud.=
+refinedtheme__ui-expand7761959327561125097"></div>
+<script nonce=3D"dd8ff4b72fb04b52a1db7ea39683f1f3" class=3D"ap-iframe-body-=
+script">//<![CDATA[
+
+  (function(){
+    var data =3D {
+    "addon_key":"com.refinedwiki.confluence.cloud.refinedtheme",
+    "uniqueKey":"com.refinedwiki.confluence.cloud.refinedtheme__ui-expand77=
+61959327561125097",
+    "key":"ui-expand",
+     "moduleType":"dynamicContentMacros",      "moduleLocation":"content", =
+        "cp":"/wiki",
+            "general":"",
+    "w":"",
+    "h":"",
+    "url":"https://refinedtheme-production-eu.refinedwiki.com/macros/ui-exp=
+and-server?title=3DMessages&expanded=3D&pageId=3D80085007&pageVersion=3D8&m=
+acroId=3D826e7eef-d3c8-471c-8b2f-f5ca14987b21&truncated=3Dtrue&macroBody=3D=
+%3Cp+%2F%3E%3Cdiv+class%3D%22table-wrap%22%3E%3Ctable+data-layout%3D%22defa=
+ult%22+data-local-id%3D%22cb75869c-95f3-4180-9297-3b178f2287fb%22+class%3D%=
+22confluence&xdm_e=3Dhttps%3A%2F%2Finvenit.atlassian.net&xdm_c=3Dchannel-co=
+m.refinedwiki.confluence.cloud.refinedtheme__ui-expand7761959327561125097&c=
+p=3D%2Fwiki&xdm_deprecated_addon_key_do_not_use=3Dcom.refinedwiki.confluenc=
+e.cloud.refinedtheme&lic=3Dactive&userAccess=3Dtrue&cv=3D1000.0.0-95b70ecb4=
+09d&traceId=3D125de1e5538d8072101f8a359c32e8a5&spanId=3D64dbe1abb79556d7&tr=
+aceSampled=3D0&jwt=3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3MTIwM=
+jA6YzEzYjQ3MzMtYmNiMS00YTBlLWE1NGMtNmI3YTEwMmZjYmJiIiwicXNoIjoiNjg5OGE5NDY3=
+YzkyMmZkNDk3NjE3M2E2MDdmMzQ4MTFjNTdhNzY0MzJjOTE5N2M5NzdlMTBkOGQ2YmE5YTlmMCI=
+sImlzcyI6ImFmYWJmOWRkLTdkZGMtMzA4Ny05YjY5LWE3OGNkMmMxOTJkNiIsImNvbnRleHQiOn=
+t9LCJleHAiOjE3NjUzMTM1MTUsImlhdCI6MTc2NTMxMzMzNX0.jRSwotJxWzir3CLWdeo_8xzAk=
+hACp92pFqU9X-NfZ8k",
+     "contextJwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3MTIwMj=
+A6YzEzYjQ3MzMtYmNiMS00YTBlLWE1NGMtNmI3YTEwMmZjYmJiIiwicXNoIjoiY29udGV4dC1xc=
+2giLCJpc3MiOiJhZmFiZjlkZC03ZGRjLTMwODctOWI2OS1hNzhjZDJjMTkyZDYiLCJjb250ZXh0=
+Ijp7ImxpY2Vuc2UiOnsiYWN0aXZlIjp0cnVlfSwiY29uZmx1ZW5jZSI6eyJlZGl0b3IiOnsidmV=
+yc2lvbiI6InYyIn0sIm1hY3JvIjp7Im91dHB1dFR5cGUiOiJ3b3JkIiwiaGFzaCI6IjgyNmU3ZW=
+VmLWQzYzgtNDcxYy04YjJmLWY1Y2ExNDk4N2IyMSIsImlkIjoiODI2ZTdlZWYtZDNjOC00NzFjL=
+ThiMmYtZjVjYTE0OTg3YjIxIn0sInRyYWNpbmciOnsidHJhY2VJZCI6IjEyNWRlMWU1NTM4ZDgw=
+NzIxMDFmOGEzNTljMzJlOGE1Iiwic3BhbklkIjoiNjRkYmUxYWJiNzk1NTZkNyIsInNhbXBsZWQ=
+iOiIwIn0sImNvbnRlbnQiOnsidHlwZSI6InBhZ2UiLCJ2ZXJzaW9uIjoiOCIsImlkIjoiODAwOD=
+UwMDcifSwic3BhY2UiOnsia2V5IjoiUFZERVZCTk8iLCJpZCI6IjE1NDAxMDUifX0sInVybCI6e=
+yJkaXNwbGF5VXJsIjoiaHR0cHM6XC9cL2ludmVuaXQuYXRsYXNzaWFuLm5ldFwvd2lraSJ9fSwi=
+ZXhwIjoxNzY1MzE0MjM1LCJpYXQiOjE3NjUzMTMzMzV9.mz2Ruh4omZwzOOfvGJXT0g6E_aPk0Z=
+jxQ3LsLn1nDvY",    "structuredContext": "{\"license\":{\"active\":true},\"c=
+onfluence\":{\"editor\":{\"version\":\"v2\"},\"macro\":{\"outputType\":\"wo=
+rd\",\"hash\":\"826e7eef-d3c8-471c-8b2f-f5ca14987b21\",\"id\":\"826e7eef-d3=
+c8-471c-8b2f-f5ca14987b21\"},\"tracing\":{\"traceId\":\"125de1e5538d8072101=
+f8a359c32e8a5\",\"spanId\":\"64dbe1abb79556d7\",\"sampled\":\"0\"},\"conten=
+t\":{\"type\":\"page\",\"version\":\"8\",\"id\":\"80085007\"},\"space\":{\"=
+key\":\"PVDEVBNO\",\"id\":\"1540105\"}},\"url\":{\"displayUrl\":\"https://i=
+nvenit.atlassian.net/wiki\"}}",
+    "contentClassifier":"content",
+    "productCtx":"{\"page.id\":\"80085007\",\"macro.hash\":\"826e7eef-d3c8-=
+471c-8b2f-f5ca14987b21\",\"space.key\":\"PVDEVBNO\",\"tracing.sampled\":\"0=
+\",\"page.type\":\"page\",\"content.version\":\"8\",\"page.title\":\"GET_PR=
+E_APP_INIT\",\"macro.localId\":\"eb9a53b6-d970-41e4-babb-3d6d07112c09\",\"m=
+acro.body\":\"\u003cp /\u003e\u003cdiv class=3D\\\"table-wrap\\\"\u003e\u00=
+3ctable data-layout=3D\\\"default\\\" data-local-id=3D\\\"cb75869c-95f3-418=
+0-9297-3b178f2287fb\\\" class=3D\\\"confluence\",\": =3D | RAW | =3D :\":\"=
+title=3DMessages\",\"space.id\":\"1540105\",\"title\":\"Messages\",\"macro.=
+truncated\":\"true\",\"content.type\":\"page\",\"output.type\":\"word\",\"p=
+age.version\":\"8\",\"macro.fragmentLocalId\":\"\",\"content.id\":\"8008500=
+7\",\"tracing.traceId\":\"125de1e5538d8072101f8a359c32e8a5\",\"macro.id\":\=
+"826e7eef-d3c8-471c-8b2f-f5ca14987b21\",\"tracing.spanId\":\"64dbe1abb79556=
+d7\",\"user.isExternalCollaborator\":\"false\",\"editor.version\":\"v2\"}",
+    "timeZone":"Asia/Calcutta",
+    "origin":"https://refinedtheme-production-eu.refinedwiki.com",
+    "hostOrigin":"https://invenit.atlassian.net",
+    "sandbox":"allow-downloads allow-forms allow-modals allow-popups allow-=
+popups-to-escape-sandbox allow-scripts allow-same-origin allow-top-navigati=
+on-by-user-activation allow-storage-access-by-user-activation",            =
+"apiMigrations": {
+        "gdpr": true
+    }
+}
+;
+    if(window.AP && window.AP.subCreate) {
+      window._AP.appendConnectAddon(data);
+    } else {
+      require(['ac/create'], function(create){
+        create.appendConnectAddon(data);
+      });
+    }
+
+    // For Confluence App Analytics. This code works in conjunction with CF=
+E's ConnectSupport.js.
+    // Here, we add a listener to the initial HTML page that stores events =
+if the ConnectSupport component
+    // has not mounted yet. In CFE, we process the missed event data and di=
+sable this initial listener.
+    const __MAX_EVENT_ARRAY_SIZE__ =3D 20;
+    const connectAppAnalytics =3D "ecosystem.confluence.connect.analytics";
+    window.connectHost && window.connectHost.onIframeEstablished((eventData=
+) =3D> {
+      if (!window.__CONFLUENCE_CONNECT_SUPPORT_LOADED__) {
+        let events =3D JSON.parse(window.localStorage.getItem(connectAppAna=
+lytics)) || [];
+        if (events.length >=3D __MAX_EVENT_ARRAY_SIZE__) {
+          events.shift();
+        }
+        events.push(eventData);
+        window.localStorage.setItem(connectAppAnalytics, JSON.stringify(eve=
+nts));
+      }
+    });
+
+  }());
+
+//]]>
+</script>
+</div>
+<p></p>
+</div>
+</div>
+<div class=3D"cell aside" data-type=3D"aside">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+</div>
+</div>
+    </div>
+</body>
+</html>
+------=_Part_636_309054392.1765313335402
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: file:///C:/e94940b60cdb6d074ac4ca4bc2c8bf53e574a406b13d902f58b09f69cb392540
+
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAA3NCSVQICAjb4U/gAAAAFVBMVEX/
+//9wcHBwcHBwcHBwcHBwcHBwcHA3RenHAAAAB3RSTlMAZoiZzN3/SzZomQAAAAlwSFlzAAALEgAA
+CxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAUdEVYdENy
+ZWF0aW9uIFRpbWUANi8xLzEzOKlF0AAAACFJREFUCJljYCATsCgwqIAZTMnMyRAhsTABCIMxkVxT
+GQCLcwHyUKXpLgAAAABJRU5ErkJggg==
+------=_Part_636_309054392.1765313335402--

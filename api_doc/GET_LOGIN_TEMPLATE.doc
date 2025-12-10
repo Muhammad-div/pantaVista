@@ -1,0 +1,655 @@
+Date: Tue, 9 Dec 2025 20:46:57 +0000 (UTC)
+Message-ID: <1167168351.1993.1765313217732@4c57a6d6b8f5>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_1992_536480618.1765313217732"
+
+------=_Part_1992_536480618.1765313217732
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>GET_LOGIN_TEMPLATE</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font: var(--ds-font-body-small, Arial, Helvetica, FreeSans, sans-se=
+rif);
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        page-break-after: avoid;
+    }
+
+    pre {
+        font: var(--ds-font-code, Monaco, "Courier New", monospace);
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>GET_LOGIN_TEMPLATE</h1>
+    <div class=3D"Section1">
+        <div class=3D"contentLayout2">
+<div class=3D"columnLayout two-right-sidebar" data-layout=3D"two-right-side=
+bar">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<h1 id=3D"GET_LOGIN_TEMPLATE-Overview">Overview</h1>
+<p style=3D"margin-left: 30.0px;"><strong>Returns empty XML template for sh=
+owing input fields and providing user credentials</strong></p>
+<h1 id=3D"GET_LOGIN_TEMPLATE-BusinessLogic">Business Logic</h1>
+<p>N/A</p>
+<h1 id=3D"GET_LOGIN_TEMPLATE-Data">Data</h1>
+<p></p>
+<h1 id=3D"GET_LOGIN_TEMPLATE-XML">XML</h1>
+<h5 id=3D"GET_LOGIN_TEMPLATE-XML-IN"><strong>XML-IN</strong></h5>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: xml; gutter: false; theme: Confluence" data-theme=3D"Confluence">&lt;ENVE=
+LOPE NAME=3D"PV.ENVELOPE" VERSION=3D"1.00" CREATE=3D""&gt;
+  &lt;ENVELOPE_DATA&gt;
+    &lt;TOKEN /&gt;
+    &lt;IPADDRESS /&gt;
+    &lt;USERAGENT /&gt;
+    &lt;LANGUAGE&gt;LANGUAGE:ENGLISH&lt;/LANGUAGE&gt;
+    &lt;ORIGINATOR&gt;PVNG.WEB.UI&lt;/ORIGINATOR&gt;
+  &lt;/ENVELOPE_DATA&gt;
+  &lt;APPLICATION_REQUEST VERSION=3D"1.00" LANGUAGE=3D"DE"&gt;
+    &lt;BNO_REQUEST VERSION=3D"1.00"&gt;
+      &lt;BNO_PRODUCTION_MODE&gt;TRUE&lt;/BNO_PRODUCTION_MODE&gt;
+      &lt;BNO_GROUP&gt;LOGIN&lt;/BNO_GROUP&gt;
+      &lt;BNO_INTERACTION_NAME&gt;GET_LOGIN_TEMPLATE&lt;/BNO_INTERACTION_NA=
+ME&gt;
+      &lt;BNO_INTERACTION_VERSION&gt;1.00&lt;/BNO_INTERACTION_VERSION&gt;
+      &lt;BNO_INTERACTION_MODE&gt;INTERACTION_MODE:TEMPLATE&lt;/BNO_INTERAC=
+TION_MODE&gt;
+      &lt;BNO_PARAMETERS /&gt;
+    &lt;/BNO_REQUEST&gt;
+  &lt;/APPLICATION_REQUEST&gt;
+&lt;/ENVELOPE&gt;</pre>
+</div>
+</div>
+<p></p>
+<h5 id=3D"GET_LOGIN_TEMPLATE-XML-OUT">XML-OUT</h5>
+<div id=3D"expander-25339005" class=3D"expand-container">
+<div id=3D"expander-control-25339005" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">XML-OUT (relevant tags only)</span>
+</div>
+<div id=3D"expander-content-25339005" class=3D"expand-content">
+<p>&lt;?xml version=3D"1.0" encoding=3D"utf-8"?&gt;<br>
+&lt;ENVELOPE NAME=3D"IDF.ENVELOPE" VERSION=3D"1.00" CREATE=3D"4/23/2025 2:3=
+7:45 PM"&gt;<br>
+ &lt;ENVELOPE_DATA&gt;<br>
+ &lt;SENDER /&gt;<br>
+ &lt;ANSWERON /&gt;<br>
+ &lt;TOKEN /&gt;<br>
+ &lt;LANGUAGE&gt;LANGUAGE:ENGLISH&lt;/LANGUAGE&gt;<br>
+ &lt;IPADDRESS /&gt;<br>
+ &lt;USERAGENT /&gt;<br>
+ &lt;/ENVELOPE_DATA&gt;<br>
+ &lt;MESSAGE NAME=3D"GET_LOGIN_TEMPLATE" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"INTERACTIONUSER.LOGIN" VERSION=3D"1.00"&gt;<br>
+ &lt;METAFIELDS&gt;<br>
+ &lt;ENTITIES&gt;<br>
+ &lt;ENTITY NAME=3D"LOGINDATA" VERSION=3D"1.00"&gt;<br>
+ &lt;FIELDS&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"LOGINDATA"&gt;<br>
+ &lt;FIELD NAME=3D"PASSWORD"&gt;<br>
+ &lt;CAPTION&gt;<strong>Password</strong>&lt;/CAPTION&gt;<br>
+ &lt;MUSTFILL&gt;<strong>MUSTFILL:TRUE</strong>&lt;/MUSTFILL&gt;<br>
+ &lt;MAXLENGTH&gt;250&lt;/MAXLENGTH&gt;<br>
+ &lt;DEFAULTVALUE /&gt;<br>
+ &lt;VISIBLE /&gt;<br>
+ &lt;EDITABLE /&gt;<br>
+ &lt;POSITION /&gt;<br>
+ &lt;COLUMNWIDTH /&gt;<br>
+ &lt;DATATYPE&gt;DATATYPE:PASSWORD&lt;/DATATYPE&gt;<br>
+ &lt;EDITHINT&gt;<strong>Please enter the password!</strong>&lt;/EDITHINT&g=
+t;<br>
+ &lt;HELPDESCRIPTION&gt;<strong>Shows you the password!</strong>&lt;/HELPDE=
+SCRIPTION&gt;<br>
+ &lt;SYSTEMCOLUMN /&gt;<br>
+ &lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;<br>
+ &lt;FREEZE /&gt;<br>
+ &lt;/FIELD&gt;<br>
+ &lt;FIELD NAME=3D"USERNAME"&gt;<br>
+ &lt;CAPTION&gt;<strong>Username</strong>&lt;/CAPTION&gt;<br>
+ &lt;MUSTFILL&gt;<strong>MUSTFILL:TRUE</strong>&lt;/MUSTFILL&gt;<br>
+ &lt;MAXLENGTH&gt;20&lt;/MAXLENGTH&gt;<br>
+ &lt;DEFAULTVALUE /&gt;<br>
+ &lt;VISIBLE /&gt;<br>
+ &lt;EDITABLE /&gt;<br>
+ &lt;POSITION /&gt;<br>
+ &lt;COLUMNWIDTH /&gt;<br>
+ &lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;<br>
+ &lt;EDITHINT&gt;<strong>Please enter the user name!</strong>&lt;/EDITHINT&=
+gt;<br>
+ &lt;HELPDESCRIPTION&gt;<strong>Shows you the user name!</strong>&lt;/HELPD=
+ESCRIPTION&gt;<br>
+ &lt;SYSTEMCOLUMN /&gt;<br>
+ &lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;<br>
+ &lt;FREEZE /&gt;<br>
+ &lt;/FIELD&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/FIELDS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;/ENTITIES&gt;<br>
+ &lt;/METAFIELDS&gt;<br>
+ &lt;DATAFIELDS&gt;<br>
+ &lt;ENTITIES&gt;<br>
+ &lt;ENTITY NAME=3D"LOGINDATA" VERSION=3D"1.00"&gt;<br>
+ &lt;SETS&gt;<br>
+ &lt;SET SORT=3D"1" SET_ID=3D"" PARENT_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"LOGINDATA" KEY=3D"" KEYVERSION=3D""&gt;<br>
+ &lt;PASSWORD ACTION=3D"" /&gt;<br>
+ &lt;USERNAME ACTION=3D"" /&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;/SETS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;/ENTITIES&gt;<br>
+ &lt;/DATAFIELDS&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;/MESSAGE&gt;<br>
+ &lt;MESSAGE NAME=3D"IDF.MESSAGES" VERSION=3D"1.0"&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"<strong>SYSTEM_MESSAGES</strong>" ID=3D"" VERSION=
+=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;<br>
+ &lt;MSG NAME=3D"<strong>FACADE.CENTER.CALL_BNO_OK</strong>"&gt;<br>
+ &lt;CRITICALLEVEL&gt;<strong>0</strong>&lt;/CRITICALLEVEL&gt;<br>
+ &lt;CAPTION&gt;<br>
+ &lt;![CDATA[The BNO was called successfully from facade!]]&gt;<br>
+ &lt;/CAPTION&gt;<br>
+ &lt;DESCRIPTION&gt;Aufruf des BNO war ok.&lt;/DESCRIPTION&gt;<br>
+ &lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;<br>
+ &lt;DATAREFERENCE USED=3D"NO" /&gt;<br>
+ &lt;/MSG&gt;<br>
+ &lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"USER_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;&lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;/MESSAGE&gt;<br>
+&lt;/ENVELOPE&gt;</p>
+</div>
+</div>
+<div id=3D"expander-1410593014" class=3D"expand-container">
+<div id=3D"expander-control-1410593014" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">XML-OUT (long)</span>
+</div>
+<div id=3D"expander-content-1410593014" class=3D"expand-content">
+<p>&lt;?xml version=3D"1.0" encoding=3D"utf-8"?&gt;<br>
+&lt;ENVELOPE NAME=3D"IDF.ENVELOPE" VERSION=3D"1.00" CREATE=3D"4/23/2025 2:3=
+7:45 PM"&gt;<br>
+ &lt;ENVELOPE_DATA&gt;<br>
+ &lt;SENDER /&gt;<br>
+ &lt;ANSWERON /&gt;<br>
+ &lt;TOKEN /&gt;<br>
+ &lt;LANGUAGE&gt;LANGUAGE:ENGLISH&lt;/LANGUAGE&gt;<br>
+ &lt;IPADDRESS /&gt;<br>
+ &lt;USERAGENT /&gt;<br>
+ &lt;/ENVELOPE_DATA&gt;<br>
+ &lt;MESSAGE NAME=3D"GET_LOGIN_TEMPLATE" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"INTERACTIONUSER.LOGIN" VERSION=3D"1.00"&gt;<br>
+ &lt;METAFIELDS&gt;<br>
+ &lt;ENTITIES&gt;<br>
+ &lt;ENTITY NAME=3D"LOGINDATA" VERSION=3D"1.00"&gt;<br>
+ &lt;DATARANGE&gt;<br>
+ &lt;START /&gt;<br>
+ &lt;END /&gt;<br>
+ &lt;CUR_PAGE /&gt;<br>
+ &lt;PAGE_ENTRIES /&gt;<br>
+ &lt;TOTAL_PAGES /&gt;<br>
+ &lt;TOTAL_ENTRIES /&gt;<br>
+ &lt;SORT_LIST&gt;<br>
+ &lt;SORT SORT=3D""&gt;<br>
+ &lt;NAME&gt;&lt;/NAME&gt;<br>
+ &lt;SORTTYPE&gt;&lt;/SORTTYPE&gt;<br>
+ &lt;/SORT&gt;<br>
+ &lt;/SORT_LIST&gt;<br>
+ &lt;FILTER_LIST&gt;<br>
+ &lt;FILTER&gt;<br>
+ &lt;NAME&gt;&lt;/NAME&gt;<br>
+ &lt;FILTERTYPE&gt;&lt;/FILTERTYPE&gt;<br>
+ &lt;BEGIN_VALUE&gt;&lt;/BEGIN_VALUE&gt;<br>
+ &lt;END_VALUE&gt;&lt;/END_VALUE&gt;<br>
+ &lt;/FILTER&gt;<br>
+ &lt;/FILTER_LIST&gt;<br>
+ &lt;/DATARANGE&gt;<br>
+ &lt;LIST_PROPERTIES&gt;<br>
+ &lt;NAME /&gt;<br>
+ &lt;/LIST_PROPERTIES&gt;<br>
+ &lt;FIELDS&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"LOGINDATA"&gt;<br>
+ &lt;FIELD NAME=3D"PASSWORD"&gt;<br>
+ &lt;CAPTION&gt;Password&lt;/CAPTION&gt;<br>
+ &lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;<br>
+ &lt;MAXLENGTH&gt;250&lt;/MAXLENGTH&gt;<br>
+ &lt;DEFAULTVALUE /&gt;<br>
+ &lt;VISIBLE /&gt;<br>
+ &lt;EDITABLE /&gt;<br>
+ &lt;POSITION /&gt;<br>
+ &lt;COLUMNWIDTH /&gt;<br>
+ &lt;DATATYPE&gt;DATATYPE:PASSWORD&lt;/DATATYPE&gt;<br>
+ &lt;EDITHINT&gt;Please enter the password!&lt;/EDITHINT&gt;<br>
+ &lt;HELPDESCRIPTION&gt;Shows you the password!&lt;/HELPDESCRIPTION&gt;<br>
+ &lt;SYSTEMCOLUMN /&gt;<br>
+ &lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;<br>
+ &lt;FREEZE /&gt;<br>
+ &lt;/FIELD&gt;<br>
+ &lt;FIELD NAME=3D"USERNAME"&gt;<br>
+ &lt;CAPTION&gt;Username&lt;/CAPTION&gt;<br>
+ &lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;<br>
+ &lt;MAXLENGTH&gt;20&lt;/MAXLENGTH&gt;<br>
+ &lt;DEFAULTVALUE /&gt;<br>
+ &lt;VISIBLE /&gt;<br>
+ &lt;EDITABLE /&gt;<br>
+ &lt;POSITION /&gt;<br>
+ &lt;COLUMNWIDTH /&gt;<br>
+ &lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;<br>
+ &lt;EDITHINT&gt;Please enter the user name!&lt;/EDITHINT&gt;<br>
+ &lt;HELPDESCRIPTION&gt;Shows you the user name!&lt;/HELPDESCRIPTION&gt;<br=
+>
+ &lt;SYSTEMCOLUMN /&gt;<br>
+ &lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;<br>
+ &lt;FREEZE /&gt;<br>
+ &lt;/FIELD&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/FIELDS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;/ENTITIES&gt;<br>
+ &lt;/METAFIELDS&gt;<br>
+ &lt;DATAFIELDS&gt;<br>
+ &lt;ENTITIES&gt;<br>
+ &lt;ENTITY NAME=3D"LOGINDATA" VERSION=3D"1.00"&gt;<br>
+ &lt;SETS&gt;<br>
+ &lt;SET SORT=3D"1" SET_ID=3D"" PARENT_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"LOGINDATA" KEY=3D"" KEYVERSION=3D""&gt;<br>
+ &lt;PASSWORD ACTION=3D"" /&gt;<br>
+ &lt;USERNAME ACTION=3D"" /&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;/SETS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;/ENTITIES&gt;<br>
+ &lt;/DATAFIELDS&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;/MESSAGE&gt;<br>
+ &lt;MESSAGE NAME=3D"IDF.MESSAGES" VERSION=3D"1.0"&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"SYSTEM_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;<br>
+ &lt;MSG NAME=3D"FACADE.CENTER.CALL_BNO_OK"&gt;<br>
+ &lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;<br>
+ &lt;CAPTION&gt;<br>
+ &lt;![CDATA[The BNO was called successfully from facade!]]&gt;<br>
+ &lt;/CAPTION&gt;<br>
+ &lt;DESCRIPTION&gt;Aufruf des BNO war ok.&lt;/DESCRIPTION&gt;<br>
+ &lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;<br>
+ &lt;DATAREFERENCE USED=3D"NO" /&gt;<br>
+ &lt;/MSG&gt;<br>
+ &lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"USER_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;&lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;/MESSAGE&gt;<br>
+&lt;/ENVELOPE&gt;</p>
+</div>
+</div>
+<h1 id=3D"GET_LOGIN_TEMPLATE-Messages">Messages</h1>
+<div class=3D"ap-container" id=3D"ap-com.refinedwiki.confluence.cloud.refin=
+edtheme__ui-expand658091042584910413">
+<div class=3D"ap-content " id=3D"embedded-com.refinedwiki.confluence.cloud.=
+refinedtheme__ui-expand658091042584910413"></div>
+<script nonce=3D"9345167aa34344deb8b6a50158f4deb4" class=3D"ap-iframe-body-=
+script">
+  (function(){
+    var data =3D {
+    "addon_key":"com.refinedwiki.confluence.cloud.refinedtheme",
+    "uniqueKey":"com.refinedwiki.confluence.cloud.refinedtheme__ui-expand65=
+8091042584910413",
+    "key":"ui-expand",
+     "moduleType":"dynamicContentMacros",      "moduleLocation":"content", =
+        "cp":"/wiki",
+            "general":"",
+    "w":"",
+    "h":"",
+    "url":"https://refinedtheme-production-eu.refinedwiki.com/macros/ui-exp=
+and-server?title=3DMessages&expanded=3D&pageId=3D83787777&pageVersion=3D1&m=
+acroId=3D826e7eef-d3c8-471c-8b2f-f5ca14987b21&truncated=3Dtrue&macroBody=3D=
+%3Cp+%2F%3E%3Cdiv+class%3D%22table-wrap%22%3E%3Ctable+data-layout%3D%22defa=
+ult%22+data-local-id%3D%22cb75869c-95f3-4180-9297-3b178f2287fb%22+class%3D%=
+22confluence&xdm_e=3Dhttps%3A%2F%2Finvenit.atlassian.net&xdm_c=3Dchannel-co=
+m.refinedwiki.confluence.cloud.refinedtheme__ui-expand658091042584910413&cp=
+=3D%2Fwiki&xdm_deprecated_addon_key_do_not_use=3Dcom.refinedwiki.confluence=
+.cloud.refinedtheme&lic=3Dactive&userAccess=3Dtrue&cv=3D1000.0.0-95b70ecb40=
+9d&traceId=3D30136fc1a767a89a24eb7751bce73a23&spanId=3D6d45c309f9900f0f&tra=
+ceSampled=3D0&jwt=3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3MTIwMj=
+A6YzEzYjQ3MzMtYmNiMS00YTBlLWE1NGMtNmI3YTEwMmZjYmJiIiwicXNoIjoiYmI1YmQ4MWEzM=
+jc1YWM1Yzc0MjE3NGE5MzhiMDg3MjQ1ZWYxMTBlMjdiMWRkZTQwYjcxNWU2NzBkZmZhOWFmMCIs=
+ImlzcyI6ImFmYWJmOWRkLTdkZGMtMzA4Ny05YjY5LWE3OGNkMmMxOTJkNiIsImNvbnRleHQiOnt=
+9LCJleHAiOjE3NjUzMTMzOTcsImlhdCI6MTc2NTMxMzIxN30.IaiITeQsC8nunl6NpVjIuV9PmJ=
+pjK3d5GP5NCx4jrKg",
+     "contextJwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3MTIwMj=
+A6YzEzYjQ3MzMtYmNiMS00YTBlLWE1NGMtNmI3YTEwMmZjYmJiIiwicXNoIjoiY29udGV4dC1xc=
+2giLCJpc3MiOiJhZmFiZjlkZC03ZGRjLTMwODctOWI2OS1hNzhjZDJjMTkyZDYiLCJjb250ZXh0=
+Ijp7ImxpY2Vuc2UiOnsiYWN0aXZlIjp0cnVlfSwiY29uZmx1ZW5jZSI6eyJlZGl0b3IiOnsidmV=
+yc2lvbiI6InYyIn0sIm1hY3JvIjp7Im91dHB1dFR5cGUiOiJ3b3JkIiwiaGFzaCI6IjgyNmU3ZW=
+VmLWQzYzgtNDcxYy04YjJmLWY1Y2ExNDk4N2IyMSIsImlkIjoiODI2ZTdlZWYtZDNjOC00NzFjL=
+ThiMmYtZjVjYTE0OTg3YjIxIn0sInRyYWNpbmciOnsidHJhY2VJZCI6IjMwMTM2ZmMxYTc2N2E4=
+OWEyNGViNzc1MWJjZTczYTIzIiwic3BhbklkIjoiNmQ0NWMzMDlmOTkwMGYwZiIsInNhbXBsZWQ=
+iOiIwIn0sImNvbnRlbnQiOnsidHlwZSI6InBhZ2UiLCJ2ZXJzaW9uIjoiMSIsImlkIjoiODM3OD=
+c3NzcifSwic3BhY2UiOnsia2V5IjoiUFZERVZCTk8iLCJpZCI6IjE1NDAxMDUifX0sInVybCI6e=
+yJkaXNwbGF5VXJsIjoiaHR0cHM6XC9cL2ludmVuaXQuYXRsYXNzaWFuLm5ldFwvd2lraSJ9fSwi=
+ZXhwIjoxNzY1MzE0MTE3LCJpYXQiOjE3NjUzMTMyMTd9.2gAVE4-PM1fkWC9bjZnE3dTG6nUhok=
+oEdPkFK0ZwC88",    "structuredContext": "{\"license\":{\"active\":true},\"c=
+onfluence\":{\"editor\":{\"version\":\"v2\"},\"macro\":{\"outputType\":\"wo=
+rd\",\"hash\":\"826e7eef-d3c8-471c-8b2f-f5ca14987b21\",\"id\":\"826e7eef-d3=
+c8-471c-8b2f-f5ca14987b21\"},\"tracing\":{\"traceId\":\"30136fc1a767a89a24e=
+b7751bce73a23\",\"spanId\":\"6d45c309f9900f0f\",\"sampled\":\"0\"},\"conten=
+t\":{\"type\":\"page\",\"version\":\"1\",\"id\":\"83787777\"},\"space\":{\"=
+key\":\"PVDEVBNO\",\"id\":\"1540105\"}},\"url\":{\"displayUrl\":\"https://i=
+nvenit.atlassian.net/wiki\"}}",
+    "contentClassifier":"content",
+    "productCtx":"{\"page.id\":\"83787777\",\"macro.hash\":\"826e7eef-d3c8-=
+471c-8b2f-f5ca14987b21\",\"space.key\":\"PVDEVBNO\",\"tracing.sampled\":\"0=
+\",\"page.type\":\"page\",\"content.version\":\"1\",\"page.title\":\"GET_LO=
+GIN_TEMPLATE\",\"macro.localId\":\"eb9a53b6-d970-41e4-babb-3d6d07112c09\",\=
+"macro.body\":\"\u003cp /\u003e\u003cdiv class=3D\\\"table-wrap\\\"\u003e\u=
+003ctable data-layout=3D\\\"default\\\" data-local-id=3D\\\"cb75869c-95f3-4=
+180-9297-3b178f2287fb\\\" class=3D\\\"confluence\",\": =3D | RAW | =3D :\":=
+\"title=3DMessages\",\"space.id\":\"1540105\",\"title\":\"Messages\",\"macr=
+o.truncated\":\"true\",\"content.type\":\"page\",\"output.type\":\"word\",\=
+"page.version\":\"1\",\"macro.fragmentLocalId\":\"\",\"content.id\":\"83787=
+777\",\"tracing.traceId\":\"30136fc1a767a89a24eb7751bce73a23\",\"macro.id\"=
+:\"826e7eef-d3c8-471c-8b2f-f5ca14987b21\",\"tracing.spanId\":\"6d45c309f990=
+0f0f\",\"user.isExternalCollaborator\":\"false\",\"editor.version\":\"v2\"}=
+",
+    "timeZone":"Asia/Calcutta",
+    "origin":"https://refinedtheme-production-eu.refinedwiki.com",
+    "hostOrigin":"https://invenit.atlassian.net",
+    "sandbox":"allow-downloads allow-forms allow-modals allow-popups allow-=
+popups-to-escape-sandbox allow-scripts allow-same-origin allow-top-navigati=
+on-by-user-activation allow-storage-access-by-user-activation",            =
+"apiMigrations": {
+        "gdpr": true
+    }
+}
+;
+    if(window.AP && window.AP.subCreate) {
+      window._AP.appendConnectAddon(data);
+    } else {
+      require(['ac/create'], function(create){
+        create.appendConnectAddon(data);
+      });
+    }
+
+    // For Confluence App Analytics. This code works in conjunction with CF=
+E's ConnectSupport.js.
+    // Here, we add a listener to the initial HTML page that stores events =
+if the ConnectSupport component
+    // has not mounted yet. In CFE, we process the missed event data and di=
+sable this initial listener.
+    const __MAX_EVENT_ARRAY_SIZE__ =3D 20;
+    const connectAppAnalytics =3D "ecosystem.confluence.connect.analytics";
+    window.connectHost && window.connectHost.onIframeEstablished((eventData=
+) =3D> {
+      if (!window.__CONFLUENCE_CONNECT_SUPPORT_LOADED__) {
+        let events =3D JSON.parse(window.localStorage.getItem(connectAppAna=
+lytics)) || [];
+        if (events.length >=3D __MAX_EVENT_ARRAY_SIZE__) {
+          events.shift();
+        }
+        events.push(eventData);
+        window.localStorage.setItem(connectAppAnalytics, JSON.stringify(eve=
+nts));
+      }
+    });
+
+  }());
+</script>
+</div>
+<p></p>
+</div>
+</div>
+<div class=3D"cell aside" data-type=3D"aside">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+</div>
+</div>
+    </div>
+</body>
+</html>
+------=_Part_1992_536480618.1765313217732
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: file:///C:/e94940b60cdb6d074ac4ca4bc2c8bf53e574a406b13d902f58b09f69cb392540
+
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAA3NCSVQICAjb4U/gAAAAFVBMVEX/
+//9wcHBwcHBwcHBwcHBwcHBwcHA3RenHAAAAB3RSTlMAZoiZzN3/SzZomQAAAAlwSFlzAAALEgAA
+CxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAUdEVYdENy
+ZWF0aW9uIFRpbWUANi8xLzEzOKlF0AAAACFJREFUCJljYCATsCgwqIAZTMnMyRAhsTABCIMxkVxT
+GQCLcwHyUKXpLgAAAABJRU5ErkJggg==
+------=_Part_1992_536480618.1765313217732--

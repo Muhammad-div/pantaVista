@@ -1,0 +1,534 @@
+Date: Tue, 9 Dec 2025 20:48:43 +0000 (UTC)
+Message-ID: <1728614277.524.1765313323415@04cf593c7ad5>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_523_1667660444.1765313323414"
+
+------=_Part_523_1667660444.1765313323414
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>GET_SUPPLIER_LIST</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font: var(--ds-font-body-small, Arial, Helvetica, FreeSans, sans-se=
+rif);
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        page-break-after: avoid;
+    }
+
+    pre {
+        font: var(--ds-font-code, Monaco, "Courier New", monospace);
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>GET_SUPPLIER_LIST</h1>
+    <div class=3D"Section1">
+        <div class=3D"contentLayout2">
+<style>[data-colorid=3Dnxkzgh2aev]{color:#bf2600} html[data-color-mode=3Dda=
+rk] [data-colorid=3Dnxkzgh2aev]{color:#ff6640}[data-colorid=3Dnz4q9dw6dy]{c=
+olor:#36b37e} html[data-color-mode=3Ddark] [data-colorid=3Dnz4q9dw6dy]{colo=
+r:#4cc994}[data-colorid=3Di5iov4hdx6]{color:#36b37e} html[data-color-mode=
+=3Ddark] [data-colorid=3Di5iov4hdx6]{color:#4cc994}</style>
+<div class=3D"columnLayout fixed-width" data-layout=3D"fixed-width">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<h1 id=3D"GET_SUPPLIER_LIST-Overview">Overview</h1>
+<p style=3D"margin-left: 30.0px;"><strong>Provides a list of suppliers</str=
+ong></p>
+<h1 id=3D"GET_SUPPLIER_LIST-BusinessLogic">Business Logic</h1>
+<p>N/A</p>
+<h1 id=3D"GET_SUPPLIER_LIST-Data">Data</h1>
+<p></p>
+<h1 id=3D"GET_SUPPLIER_LIST-XML-IN">XML-IN</h1>
+<div id=3D"expander-484534234" class=3D"expand-container">
+<div id=3D"expander-control-484534234" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">XML-IN</span>
+</div>
+<div id=3D"expander-content-484534234" class=3D"expand-content">
+<p></p>
+</div>
+</div>
+<h1 id=3D"GET_SUPPLIER_LIST-XML-OUT">XML-OUT</h1>
+<div id=3D"expander-1125171844" class=3D"expand-container">
+<div id=3D"expander-control-1125171844" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">XML-OUT (relevant tags only)</span>
+</div>
+<div id=3D"expander-content-1125171844" class=3D"expand-content">
+<p></p>
+<p></p>
+</div>
+</div>
+<div id=3D"expander-635548080" class=3D"expand-container">
+<div id=3D"expander-control-635548080" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">XML-OUT (complete)</span>
+</div>
+<div id=3D"expander-content-635548080" class=3D"expand-content">
+<p></p>
+</div>
+</div>
+<h1 id=3D"GET_SUPPLIER_LIST-Messages">Messages</h1>
+<h2 id=3D"GET_SUPPLIER_LIST-UserMessages">User Messages</h2>
+<div class=3D"table-wrap">
+<table data-table-width=3D"1559" data-layout=3D"align-start" data-local-id=
+=3D"199f1526-fcb6-4476-a4dd-de5de49f928f" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 1122.0px;">
+<col style=3D"width: 51.0px;">
+<col style=3D"width: 386.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p><strong>Message</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>CL</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Description</strong></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<div id=3D"expander-1856547644" class=3D"expand-container">
+<div id=3D"expander-control-1856547644" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">Login successful</span>
+</div>
+<div id=3D"expander-content-1856547644" class=3D"expand-content">
+<p>&lt;MESSAGEAREA NAME=3D"USER_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;<br>
+ &lt;MSG NAME=3D"<strong>KERNEL.INTERACTIONUSEROPERATION.NEW_LOGIN_SUCCESSF=
+UL</strong>"&gt;<br>
+ &lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;<br>
+ &lt;CAPTION&gt;<br>
+ &lt;![CDATA[<strong><span data-colorid=3D"i5iov4hdx6">Login was successful=
+]</span></strong>]&gt;<br>
+ &lt;/CAPTION&gt;<br>
+ &lt;DESCRIPTION&gt;&lt;/DESCRIPTION&gt;<br>
+ &lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;<br>
+ &lt;DATAREFERENCE USED=3D"NO" /&gt;<br>
+ &lt;/MSG&gt;<br>
+ &lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;</p>
+</div>
+</div></td>
+<td class=3D"confluenceTd">
+<p><strong>0</strong></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<div id=3D"expander-265381837" class=3D"expand-container">
+<div id=3D"expander-control-265381837" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">Last session not correct terminated</span>
+</div>
+<div id=3D"expander-content-265381837" class=3D"expand-content">
+<p>&lt;MESSAGEAREA NAME=3D"USER_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;<br>
+ &lt;MSG NAME=3D"<strong>KERNEL.INTERACTIONUSEROPERATION.NO_LOGOUT_FOUND</s=
+trong>"&gt;<br>
+ &lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;<br>
+ &lt;CAPTION&gt;<br>
+ &lt;![CDATA[<strong><span data-colorid=3D"nz4q9dw6dy">Your last session wa=
+sn't finished correctly or you're already logged in on another computer!</s=
+pan></strong>]]&gt;<br>
+ &lt;/CAPTION&gt;<br>
+ &lt;DESCRIPTION&gt;F=C3=BCr einen alten Login wurde kein passender Logout =
+gefunden!&lt;/DESCRIPTION&gt;<br>
+ &lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;<br>
+ &lt;DATAREFERENCE USED=3D"NO" /&gt;<br>
+ &lt;/MSG&gt;<br>
+ &lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;</p>
+</div>
+</div></td>
+<td class=3D"confluenceTd">
+<p><strong>0</strong></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<div id=3D"expander-157703509" class=3D"expand-container">
+<div id=3D"expander-control-157703509" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">Login credentials incorect</span>
+</div>
+<div id=3D"expander-content-157703509" class=3D"expand-content">
+<p>&lt;MESSAGES&gt;</p>
+<p>&lt;MSG NAME=3D"<strong>KERNEL.INTERACTIONUSEROPERATION.USERNAME_PASSWOR=
+D_INCORRECT</strong>"&gt;</p>
+<p>&lt;CRITICALLEVEL&gt;1&lt;/CRITICALLEVEL&gt;</p>
+<p>&lt;CAPTION&gt;</p>
+<p>&lt;![CDATA[<strong><span data-colorid=3D"nxkzgh2aev">Your username or y=
+our password is incorrect!</span></strong>]]&gt;</p>
+<p>&lt;/CAPTION&gt;</p>
+<p>&lt;DESCRIPTION&gt;Das Passwort passt nicht zum Usernamen!&lt;/DESCRIPTI=
+ON&gt;</p>
+<p>&lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;</p>
+<p>&lt;DATAREFERENCE USED=3D"NO" /&gt;</p>
+<p>&lt;/MSG&gt;</p>
+<p>&lt;/MESSAGES&gt;</p>
+<p>&lt;DEBUG_INFORM</p>
+</div>
+</div></td>
+<td class=3D"confluenceTd">
+<p><strong>1</strong></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id=3D"GET_SUPPLIER_LIST-SystemMessages">System Messages</h2>
+<div class=3D"table-wrap">
+<table data-table-width=3D"1800" data-layout=3D"align-start" data-local-id=
+=3D"250c66fa-7956-4314-bc5f-becd3e8198d4" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 1282.0px;">
+<col style=3D"width: 77.0px;">
+<col style=3D"width: 438.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p><strong>Message</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>CL</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Description</strong></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<div id=3D"expander-683282046" class=3D"expand-container">
+<div id=3D"expander-control-683282046" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">API OK</span>
+</div>
+<div id=3D"expander-content-683282046" class=3D"expand-content">
+<p>&lt;MESSAGEAREA NAME=3D"SYSTEM_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br=
+>
+ &lt;MESSAGES&gt;<br>
+ &lt;MSG NAME=3D"<strong>FACADE.CENTER.CALL_BNO_OK</strong>"&gt;<br>
+ &lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;<br>
+ &lt;CAPTION&gt;<br>
+ &lt;![CDATA[The BNO was called successfully from facade!]]&gt;<br>
+ &lt;/CAPTION&gt;<br>
+ &lt;DESCRIPTION&gt;Aufruf des BNO war ok.&lt;/DESCRIPTION&gt;<br>
+ &lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;<br>
+ &lt;DATAREFERENCE USED=3D"NO" /&gt;<br>
+ &lt;/MSG&gt;<br>
+ &lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;</p>
+</div>
+</div></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p></p>
+<p></p>
+<p></p>
+</div>
+</div>
+</div>
+<div class=3D"columnLayout two-equal" data-layout=3D"two-equal">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+</div>
+<div class=3D"columnLayout two-equal" data-layout=3D"two-equal">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+</div>
+<div class=3D"columnLayout two-equal" data-layout=3D"two-equal">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+</div>
+<div class=3D"columnLayout two-equal" data-layout=3D"two-equal">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+</div>
+</div>
+    </div>
+</body>
+</html>
+------=_Part_523_1667660444.1765313323414
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: file:///C:/e94940b60cdb6d074ac4ca4bc2c8bf53e574a406b13d902f58b09f69cb392540
+
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAA3NCSVQICAjb4U/gAAAAFVBMVEX/
+//9wcHBwcHBwcHBwcHBwcHBwcHA3RenHAAAAB3RSTlMAZoiZzN3/SzZomQAAAAlwSFlzAAALEgAA
+CxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAUdEVYdENy
+ZWF0aW9uIFRpbWUANi8xLzEzOKlF0AAAACFJREFUCJljYCATsCgwqIAZTMnMyRAhsTABCIMxkVxT
+GQCLcwHyUKXpLgAAAABJRU5ErkJggg==
+------=_Part_523_1667660444.1765313323414--

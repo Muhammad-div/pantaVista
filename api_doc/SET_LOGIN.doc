@@ -1,0 +1,1988 @@
+Date: Tue, 9 Dec 2025 20:47:49 +0000 (UTC)
+Message-ID: <2078365945.617.1765313269309@1ae77e36bbe7>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_616_2101281121.1765313269309"
+
+------=_Part_616_2101281121.1765313269309
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>SET_LOGIN</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font: var(--ds-font-body-small, Arial, Helvetica, FreeSans, sans-se=
+rif);
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        page-break-after: avoid;
+    }
+
+    pre {
+        font: var(--ds-font-code, Monaco, "Courier New", monospace);
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>SET_LOGIN</h1>
+    <div class=3D"Section1">
+        <div class=3D"contentLayout2">
+<style>[data-colorid=3Dsmm78w77ym]{color:#bf2600} html[data-color-mode=3Dda=
+rk] [data-colorid=3Dsmm78w77ym]{color:#ff6640}[data-colorid=3Dle7ebd2adh]{c=
+olor:#36b37e} html[data-color-mode=3Ddark] [data-colorid=3Dle7ebd2adh]{colo=
+r:#4cc994}[data-colorid=3Dds9i337lki]{color:#4c9aff} html[data-color-mode=
+=3Ddark] [data-colorid=3Dds9i337lki]{color:#004eb3}[data-colorid=3Dm3x56x8o=
+53]{color:#36b37e} html[data-color-mode=3Ddark] [data-colorid=3Dm3x56x8o53]=
+{color:#4cc994}</style>
+<div class=3D"columnLayout fixed-width" data-layout=3D"fixed-width">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<h1 id=3D"SET_LOGIN-Overview">Overview</h1>
+<p style=3D"margin-left: 30.0px;"><strong>Sending user credentials for logi=
+n to API and receives token or error message</strong></p>
+<h1 id=3D"SET_LOGIN-BusinessLogic">Business Logic</h1>
+<p>N/A</p>
+<h1 id=3D"SET_LOGIN-Data">Data</h1>
+<p></p>
+<h1 id=3D"SET_LOGIN-XML-IN">XML-IN</h1>
+<div id=3D"expander-508230207" class=3D"expand-container">
+<div id=3D"expander-control-508230207" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">XML-IN</span>
+</div>
+<div id=3D"expander-content-508230207" class=3D"expand-content">
+<p>&lt;?xml version=3D"1.0" encoding=3D"utf-8"?&gt;<br>
+&lt;ENVELOPE NAME=3D"PV.ENVELOPE" VERSION=3D"1.00" CREATE=3D""&gt;<br>
+ &lt;ENVELOPE_DATA&gt;<br>
+ &lt;TOKEN&lt;/TOKEN&gt;<br>
+ &lt;IPADDRESS&gt;000.000.000.000&lt;/IPADDRESS&gt;<br>
+ &lt;USERAGENT&gt;BROWSER AGENT&lt;/USERAGENT&gt;<br>
+ &lt;LANGUAGE&gt;LANGUAGE:ENGLISH&lt;/LANGUAGE&gt;<br>
+ &lt;ORIGINATOR&gt;PVNG.WEB.UI&lt;/ORIGINATOR&gt;<br>
+ &lt;/ENVELOPE_DATA&gt;<br>
+ &lt;APPLICATION_REQUEST VERSION=3D"1.00" LANGUAGE=3D"EN"&gt;<br>
+ &lt;BNO_REQUEST VERSION=3D"1.00"&gt;<br>
+ &lt;BNO_PRODUCTION_MODE&gt;TRUE&lt;/BNO_PRODUCTION_MODE&gt;<br>
+ &lt;BNO_GROUP&gt;LOGIN&lt;/BNO_GROUP&gt;<br>
+ &lt;BNO_INTERACTION_NAME&gt;SET_LOGIN&lt;/BNO_INTERACTION_NAME&gt;<br>
+ &lt;BNO_INTERACTION_VERSION&gt;1.00&lt;/BNO_INTERACTION_VERSION&gt;<br>
+ &lt;BNO_INTERACTION_MODE&gt;INTERACTION_MODE:CREATE&lt;/BNO_INTERACTION_MO=
+DE&gt;<br>
+ &lt;BNO_PARAMETERS /&gt;<br>
+ &lt;/BNO_REQUEST&gt;<br>
+ &lt;/APPLICATION_REQUEST&gt;<br>
+ &lt;MESSAGE NAME=3D"SET_T_LOGIN" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGEAREA NAME=3D"INTERACTIONUSER.LOGIN" VERSION=3D"1.00"&gt;<br>
+ &lt;DATAFIELDS&gt;<br>
+ &lt;ENTITIES&gt;<br>
+ &lt;ENTITY NAME=3D"LOGINDATA" VERSION=3D"1.00"&gt;<br>
+ &lt;SETS&gt;<br>
+ &lt;SET SORT=3D"1" SET_ID=3D"" PARENT_SET_ID=3D"" ACTION=3D""&gt;<br>
+ &lt;ATTRIBUTEGROUP NAME=3D"LOGINDATA" KEY=3D"" KEYVERSION=3D""&gt;<br>
+ &lt;PASSWORD ACTION=3D""&gt;<strong>FILL IN ENCRYPTED PASSWORD</strong>&lt=
+;/PASSWORD&gt;<br>
+ &lt;USERNAME ACTION=3D""&gt;<strong>FILL IN USERNAME</strong>&lt;/USERNAME=
+&gt;<br>
+ &lt;/ATTRIBUTEGROUP&gt;<br>
+ &lt;/SET&gt;<br>
+ &lt;/SETS&gt;<br>
+ &lt;/ENTITY&gt;<br>
+ &lt;/ENTITIES&gt;<br>
+ &lt;/DATAFIELDS&gt;<br>
+ &lt;/MESSAGEAREA&gt;<br>
+ &lt;/MESSAGE&gt;<br>
+&lt;/ENVELOPE&gt;</p>
+</div>
+</div>
+<h1 id=3D"SET_LOGIN-XML-OUT">XML-OUT</h1>
+<div id=3D"expander-817776477" class=3D"expand-container">
+<div id=3D"expander-control-817776477" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">XML-OUT (relevant tags only)</span>
+</div>
+<div id=3D"expander-content-817776477" class=3D"expand-content">
+<p>&lt;?xml version=3D"1.0" encoding=3D"utf-8"?&gt;</p>
+<p>&lt;ENVELOPE NAME=3D"IDF.ENVELOPE" VERSION=3D"1.00" CREATE=3D"5/2/2025 1=
+:43:38 AM"&gt;</p>
+<p>&lt;ENVELOPE_DATA&gt;</p>
+<p>&lt;SENDER /&gt;</p>
+<p>&lt;ANSWERON /&gt;</p>
+<p>&lt;TOKEN&gt;<strong>688098a4-dc23-4a33-a331-7aefc818779d</strong>&lt;/T=
+OKEN&gt;</p>
+<p>&lt;LANGUAGE&gt;<strong>LANGUAGE:ENGLISH</strong>&lt;/LANGUAGE&gt; <span=
+ data-colorid=3D"ds9i337lki">=3D&gt; User profile settings, NO browser sett=
+ings.</span></p>
+<p>&lt;IPADDRESS /&gt;</p>
+<p>&lt;USERAGENT /&gt;</p>
+<p>&lt;/ENVELOPE_DATA&gt;</p>
+<p>&lt;MESSAGE NAME=3D"SET_LOGIN" VERSION=3D"1.00"&gt;</p>
+<p>&lt;MESSAGEAREA NAME=3D</p>
+<p>&lt;DATAFIELDS&gt;</p>
+<p>&lt;ENTITIES&gt;</p>
+<p>&lt;ENTITY NAME=3D"LOGINCONFIRMATION" VERSION=3D"1.00"&gt;</p>
+<p>&lt;SETS&gt;</p>
+<p>&lt;SET SORT=3D"1" SET_ID=3D"1" PARENT_SET_ID=3D"" ACTION=3D""&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"<strong>ADDRESSDATA_PERSON</strong>" KEY=3D""=
+ KEYVERSION=3D""&gt;</p>
+<p>&lt;ADDRESS1 /&gt;</p>
+<p>&lt;ADDRESS2 /&gt;</p>
+<p>&lt;BIRTHDAY /&gt;</p>
+<p>&lt;CITY /&gt;</p>
+<p>&lt;COMMENT /&gt;</p>
+<p>&lt;COUNTRY SYSNAME=3D"" CARGO=3D"" /&gt;</p>
+<p>&lt;DEPARTMENT /&gt;</p>
+<p>&lt;DISPLAYNAME&gt;Granderath, Michael&lt;/DISPLAYNAME&gt;</p>
+<p>&lt;DISTRICT /&gt;</p>
+<p>&lt;EMAIL /&gt;</p>
+<p>&lt;FAX /&gt;</p>
+<p>&lt;FIRSTNAME&gt;<strong>Michael</strong>&lt;/FIRSTNAME&gt;</p>
+<p>&lt;LANGUAGE SYSNAME=3D"LANGUAGE:GERMAN" CARGO=3D""&gt;German&lt;/LANGUA=
+GE&gt;</p>
+<p>&lt;LASTNAME&gt;<strong>Granderath</strong>&lt;/LASTNAME&gt;</p>
+<p>&lt;LATITUDE /&gt;</p>
+<p>&lt;LONGITUDE /&gt;</p>
+<p>&lt;MOBILE /&gt;</p>
+<p>&lt;PCODE /&gt;</p>
+<p>&lt;PHONE1 /&gt;</p>
+<p>&lt;PHONE2 /&gt;</p>
+<p>&lt;SALUTATION SYSNAME=3D"SALUTATION:MR" CARGO=3D""&gt;<strong>Mister</s=
+trong>&lt;/SALUTATION&gt;</p>
+<p>&lt;TITLE /&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"LAST_ACCESS_DATA" KEY=3D"" KEYVERSION=3D""&gt=
+;</p>
+<p>&lt;LASTACCESS&gt;<strong>5/2/2025 1:21:10 AM</strong>&lt;/LASTACCESS&gt=
+;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"ORGAROLE" KEY=3D"" KEYVERSION=3D""&gt;</p>
+<p>&lt;ORGAROLE SYSNAME=3D"ORGANISATION_ROLE:PANTAREE" /&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"USERDATA" KEY=3D"12" KEYVERSION=3D""&gt;</p>
+<p>&lt;ACCESSRIGHT_USER SYSNAME=3D"ACCESS_RIGHT:ACCESS_GRANTED" CARGO=3D""&=
+gt;ACCESS_RIGHT:ACCESS_GRANTED&lt;/ACCESSRIGHT_USER&gt;</p>
+<p>&lt;UI_DESIGN SYSNAME=3D"UI_DESIGN:DARK" CARGO=3D""&gt;<strong>UI_DESIGN=
+:DARK</strong>&lt;/UI_DESIGN&gt;</p>
+<p>&lt;UI_LANGUAGE SYSNAME=3D"LANGUAGE:ENGLISH" CARGO=3D""&gt;LANGUAGE:ENGL=
+ISH&lt;/UI_LANGUAGE&gt;</p>
+<p>&lt;USERNAME&gt;michael.granderath&lt;/USERNAME&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;/SET&gt;</p>
+<p>&lt;/SETS&gt;</p>
+<p>&lt;/ENTITY&gt;</p>
+<p>&lt;ENTITY NAME=3D"USERROLES" VERSION=3D"1.00"&gt;</p>
+<p>&lt;SETS&gt;</p>
+<p>&lt;SET SORT=3D"1" SET_ID=3D"2" PARENT_SET_ID=3D"1" ACTION=3D""&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"USERROLE" KEY=3D"" KEYVERSION=3D""&gt;</p>
+<p>&lt;USERROLE SYSNAME=3D"USER_ROLE:PV_REGIONAL_MANAGER"&gt;<strong>Region=
+al manager</strong>&lt;/USERROLE&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;/SET&gt;</p>
+<p>&lt;SET SORT=3D"2" SET_ID=3D"3" PARENT_SET_ID=3D"1" ACTION=3D""&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"USERROLE" KEY=3D"" KEYVERSION=3D""&gt;</p>
+<p>&lt;USERROLE SYSNAME=3D"USER_ROLE:PV_REGIONAL_MANAGER"&gt;Regional manag=
+er&lt;/USERROLE&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;/SET&gt;</p>
+<p>&lt;/SETS&gt;</p>
+<p>&lt;/ENTITY&gt;</p>
+<p>&lt;/ENTITIES&gt;</p>
+<p>&lt;/DATAFIELDS&gt;</p>
+<p>&lt;/MESSAGEAREA&gt;</p>
+<p>&lt;/MESSAGE&gt;</p>
+</div>
+</div>
+<div id=3D"expander-1817198426" class=3D"expand-container">
+<div id=3D"expander-control-1817198426" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">XML-OUT (long)</span>
+</div>
+<div id=3D"expander-content-1817198426" class=3D"expand-content">
+<p>&lt;?xml version=3D"1.0" encoding=3D"utf-8"?&gt;</p>
+<p>&lt;ENVELOPE NAME=3D"IDF.ENVELOPE" VERSION=3D"1.00" CREATE=3D"5/2/2025 1=
+:43:38 AM"&gt;</p>
+<p>&lt;ENVELOPE_DATA&gt;</p>
+<p>&lt;SENDER /&gt;</p>
+<p>&lt;ANSWERON /&gt;</p>
+<p>&lt;TOKEN&gt;688098a4-dc23-4a33-a331-7aefc818779d&lt;/TOKEN&gt;</p>
+<p>&lt;LANGUAGE&gt;LANGUAGE:ENGLISH&lt;/LANGUAGE&gt;</p>
+<p>&lt;IPADDRESS /&gt;</p>
+<p>&lt;USERAGENT /&gt;</p>
+<p>&lt;/ENVELOPE_DATA&gt;</p>
+<p>&lt;MESSAGE NAME=3D"SET_LOGIN" VERSION=3D"1.00"&gt;</p>
+<p>&lt;MESSAGEAREA NAME=3D"INTERACTIONUSER.LOGINCONFIRMATION" VERSION=3D"1.=
+00"&gt;</p>
+<p>&lt;METAFIELDS&gt;</p>
+<p>&lt;ENTITIES&gt;</p>
+<p>&lt;ENTITY NAME=3D"LOGINCONFIRMATION" VERSION=3D"1.00"&gt;</p>
+<p>&lt;DATARANGE&gt;</p>
+<p>&lt;START /&gt;</p>
+<p>&lt;END /&gt;</p>
+<p>&lt;CUR_PAGE /&gt;</p>
+<p>&lt;PAGE_ENTRIES /&gt;</p>
+<p>&lt;TOTAL_PAGES /&gt;</p>
+<p>&lt;TOTAL_ENTRIES /&gt;</p>
+<p>&lt;SORT_LIST&gt;</p>
+<p>&lt;SORT SORT=3D""&gt;</p>
+<p>&lt;NAME&gt;&lt;/NAME&gt;</p>
+<p>&lt;SORTTYPE&gt;&lt;/SORTTYPE&gt;</p>
+<p>&lt;/SORT&gt;</p>
+<p>&lt;/SORT_LIST&gt;</p>
+<p>&lt;FILTER_LIST&gt;</p>
+<p>&lt;FILTER&gt;</p>
+<p>&lt;NAME&gt;&lt;/NAME&gt;</p>
+<p>&lt;FILTERTYPE&gt;&lt;/FILTERTYPE&gt;</p>
+<p>&lt;BEGIN_VALUE&gt;&lt;/BEGIN_VALUE&gt;</p>
+<p>&lt;END_VALUE&gt;&lt;/END_VALUE&gt;</p>
+<p>&lt;/FILTER&gt;</p>
+<p>&lt;/FILTER_LIST&gt;</p>
+<p>&lt;/DATARANGE&gt;</p>
+<p>&lt;LIST_PROPERTIES&gt;</p>
+<p>&lt;NAME /&gt;</p>
+<p>&lt;/LIST_PROPERTIES&gt;</p>
+<p>&lt;FIELDS&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"ADDRESSDATA_COMPANY"&gt;</p>
+<p>&lt;FIELD NAME=3D"ADDRESS1"&gt;</p>
+<p>&lt;CAPTION&gt;Street&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;50&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Bitte geben Sie den Stra=C3=9Fennamen an!&lt;/EDITHINT&g=
+t;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the name ot the address!&lt;/HELPDESCRI=
+PTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"ADDRESS2"&gt;</p>
+<p>&lt;CAPTION&gt;Address addition&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;50&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter an additional address information!&lt;/EDITHINT&gt=
+;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you an additional address information!&lt;/=
+HELPDESCRIPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"CITY"&gt;</p>
+<p>&lt;CAPTION&gt;City&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;50&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter name of the city!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the name ot the city!&lt;/HELPDESCRIPTI=
+ON&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"COMMENT"&gt;</p>
+<p>&lt;CAPTION&gt;Comment&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter a comment!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the comment!&lt;/HELPDESCRIPTION&gt;</p=
+>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"COUNTRY" LUGROUPKEY=3D"20" PARENTGROUPKEY=3D""&gt;</p>
+<p>&lt;CAPTION&gt;Country&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE&gt;COUNTRY:GERMANY&lt;/DEFAULTVALUE&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:SYSNAME&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please select the country!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the country!&lt;/HELPDESCRIPTION&gt;</p=
+>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;LOOKUPITEMS&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"1" LUITEMKEY=3D"70" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:GERMANY&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Germany&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;GE&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:DE&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+49&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"74" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:AUSTRIA&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Austria&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;AU&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:AT&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+43&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"72" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:BELGIUM&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Belgium&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;BE&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:BE&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+32&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"75" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:DENMARK&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Denmark&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;DK&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:DK&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+45&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"76" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:FRANCE&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;France&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;FR&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:FR&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+33&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"360" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:IRELAND&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Ireland&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;IRL&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:IE&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+353&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"77" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:ITALY&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Italy&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;IT&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:IT&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+39&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"78" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:LUXEMBOURG&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Luxembourg&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;LU&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:LU&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+352&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"73" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:NETHERLANDS&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Netherlands&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;NL&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:NL&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+31&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"317" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:SWITZERLAND&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Suisse&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;CH&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:CH&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+41&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"316" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:UNITED_KINGDOM&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;United Kingdom&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;UK&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:UK&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+44&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;/LOOKUPITEMS&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"DISPLAYNAME"&gt;</p>
+<p>&lt;CAPTION&gt;Short name&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;240&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the displayname!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the comment!&lt;/HELPDESCRIPTION&gt;</p=
+>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"DISTRICT"&gt;</p>
+<p>&lt;CAPTION&gt;District of the city&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;100&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the district of the city!&lt;/EDITHINT&gt;<=
+/p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the district of the city!&lt;/HELPDESCR=
+IPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"EMAIL"&gt;</p>
+<p>&lt;CAPTION&gt;E-mail address&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;50&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:EMAIL&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the e-mail address!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the e-mail address!&lt;/HELPDESCRIPTION=
+&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"FAX"&gt;</p>
+<p>&lt;CAPTION&gt;Fax&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:PHONENO&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the fax number!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the fax number!&lt;/HELPDESCRIPTION&gt;=
+</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"LATITUDE"&gt;</p>
+<p>&lt;CAPTION&gt;Latitude&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter the longitude!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the value for latitude!&lt;/HELPDESCRIP=
+TION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"LONGITUDE"&gt;</p>
+<p>&lt;CAPTION&gt;Longitude&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter the latitude!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the value for longitude!&lt;/HELPDESCRI=
+PTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"ORGANISATION1"&gt;</p>
+<p>&lt;CAPTION&gt;Organisation name&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;120&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the name of the organization!&lt;/EDITHINT&=
+gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the name of the organization!&lt;/HELPD=
+ESCRIPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"ORGANISATION2"&gt;</p>
+<p>&lt;CAPTION&gt;Name addition&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;120&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter an additional name!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you an additional name!&lt;/HELPDESCRIPTION=
+&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"PCODE"&gt;</p>
+<p>&lt;CAPTION&gt;ZIP code&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;10&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the zip code!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the zip code!&lt;/HELPDESCRIPTION&gt;</=
+p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"PHONE1"&gt;</p>
+<p>&lt;CAPTION&gt;Phone number&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:PHONENO&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter the phone number in the format + country code-area=
+ code-call number.phone extensiont (+49-221-569775.0)!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the phone number!&lt;/HELPDESCRIPTION&g=
+t;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"PHONE2"&gt;</p>
+<p>&lt;CAPTION&gt;Phone number&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:PHONENO&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter the phone number in the format + country code-area=
+ code-call number.phone extensiont (+49-221-569775.0)!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you another phone number!&lt;/HELPDESCRIPTI=
+ON&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"POBOXADDRESS"&gt;</p>
+<p>&lt;CAPTION&gt;PO Box&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;50&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter the number of the post box!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the mailbox number!&lt;/HELPDESCRIPTION=
+&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"POBOXPCODE"&gt;</p>
+<p>&lt;CAPTION&gt;PB Box ZIP&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;10&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter th ezip code of the post box address!&lt;/EDITHINT=
+&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the zip code of the mailbox number!&lt;=
+/HELPDESCRIPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"ADDRESSDATA_PERSON"&gt;</p>
+<p>&lt;FIELD NAME=3D"ADDRESS1"&gt;</p>
+<p>&lt;CAPTION&gt;Street&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;50&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Bitte geben Sie den Stra=C3=9Fennamen an!&lt;/EDITHINT&g=
+t;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the name ot the address!&lt;/HELPDESCRI=
+PTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"ADDRESS2"&gt;</p>
+<p>&lt;CAPTION&gt;Address addition&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;50&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter an additional address information!&lt;/EDITHINT&gt=
+;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you an additional address information!&lt;/=
+HELPDESCRIPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"BIRTHDAY"&gt;</p>
+<p>&lt;CAPTION&gt;Birthday&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:DATE&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;W=C3=A4hlen Sie den Geburtstag aus!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the birthday!&lt;/HELPDESCRIPTION&gt;</=
+p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"CITY"&gt;</p>
+<p>&lt;CAPTION&gt;City&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;50&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter name of the city!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the name ot the city!&lt;/HELPDESCRIPTI=
+ON&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"COMMENT"&gt;</p>
+<p>&lt;CAPTION&gt;Comment&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter a comment!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the comment!&lt;/HELPDESCRIPTION&gt;</p=
+>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"COUNTRY" LUGROUPKEY=3D"20" PARENTGROUPKEY=3D""&gt;</p>
+<p>&lt;CAPTION&gt;Country&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE&gt;COUNTRY:GERMANY&lt;/DEFAULTVALUE&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:SYSNAME&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please select the country!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the country!&lt;/HELPDESCRIPTION&gt;</p=
+>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;LOOKUPITEMS&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"1" LUITEMKEY=3D"70" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:GERMANY&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Germany&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;GE&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:DE&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+49&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"74" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:AUSTRIA&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Austria&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;AU&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:AT&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+43&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"72" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:BELGIUM&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Belgium&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;BE&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:BE&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+32&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"75" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:DENMARK&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Denmark&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;DK&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:DK&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+45&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"76" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:FRANCE&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;France&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;FR&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:FR&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+33&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"360" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:IRELAND&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Ireland&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;IRL&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:IE&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+353&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"77" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:ITALY&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Italy&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;IT&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:IT&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+39&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"78" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:LUXEMBOURG&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Luxembourg&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;LU&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:LU&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+352&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"73" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:NETHERLANDS&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Netherlands&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;NL&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:NL&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+31&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"317" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:SWITZERLAND&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Suisse&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;CH&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:CH&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+41&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"316" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;COUNTRY:UNITED_KINGDOM&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;United Kingdom&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;UK&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:UK&lt;/ENSIGN&gt;</p>
+<p>&lt;COUNTRY_CODE&gt;+44&lt;/COUNTRY_CODE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;/LOOKUPITEMS&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"DEPARTMENT"&gt;</p>
+<p>&lt;CAPTION&gt;Department&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;50&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Geben Sie den Namen der Abteilung an!&lt;/EDITHINT&gt;</=
+p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the department!&lt;/HELPDESCRIPTION&gt;=
+</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"DISPLAYNAME"&gt;</p>
+<p>&lt;CAPTION&gt;Short name&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;240&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the displayname!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the comment!&lt;/HELPDESCRIPTION&gt;</p=
+>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"DISTRICT"&gt;</p>
+<p>&lt;CAPTION&gt;District of the city&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;100&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the district of the city!&lt;/EDITHINT&gt;<=
+/p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the district of the city!&lt;/HELPDESCR=
+IPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"EMAIL"&gt;</p>
+<p>&lt;CAPTION&gt;E-mail address&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;50&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:EMAIL&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the e-mail address!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the e-mail address!&lt;/HELPDESCRIPTION=
+&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"FAX"&gt;</p>
+<p>&lt;CAPTION&gt;Fax&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:PHONENO&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the fax number!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the fax number!&lt;/HELPDESCRIPTION&gt;=
+</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"FIRSTNAME"&gt;</p>
+<p>&lt;CAPTION&gt;First name&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter firstname!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the firstname!&lt;/HELPDESCRIPTION&gt;<=
+/p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"LANGUAGE" LUGROUPKEY=3D"17" PARENTGROUPKEY=3D""&gt;</p=
+>
+<p>&lt;CAPTION&gt;Language&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE&gt;LANGUAGE:GERMAN&lt;/DEFAULTVALUE&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:SYSNAME&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Bitte w=C3=A4hlen Sie die Sprache aus!&lt;/EDITHINT&gt;<=
+/p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the language!&lt;/HELPDESCRIPTION&gt;</=
+p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;LOOKUPITEMS&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"1" LUITEMKEY=3D"63" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;LANGUAGE:GERMAN&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;German&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;German&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:DE&lt;/ENSIGN&gt;</p>
+<p>&lt;UI_LANGUAGE&gt;TRUE&lt;/UI_LANGUAGE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"64" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;LANGUAGE:ENGLISH&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;English&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;English&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:UK&lt;/ENSIGN&gt;</p>
+<p>&lt;UI_LANGUAGE&gt;TRUE&lt;/UI_LANGUAGE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;/LOOKUPITEMS&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"LASTNAME"&gt;</p>
+<p>&lt;CAPTION&gt;Lastname&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the lastname!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the lastname!&lt;/HELPDESCRIPTION&gt;</=
+p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"LATITUDE"&gt;</p>
+<p>&lt;CAPTION&gt;Latitude&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter the longitude!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the value for latitude!&lt;/HELPDESCRIP=
+TION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"LONGITUDE"&gt;</p>
+<p>&lt;CAPTION&gt;Longitude&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter the latitude!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the value for longitude!&lt;/HELPDESCRI=
+PTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"MOBILE"&gt;</p>
+<p>&lt;CAPTION&gt;Cell phone number&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:PHONENO&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Geben Sie die Mobilnummer im Format +Landesvorwahl-Netzv=
+orwahl-Rufnummer.Durchwahl an (+49-221-569775.0)!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the mobile phone number of the person!&=
+lt;/HELPDESCRIPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"PCODE"&gt;</p>
+<p>&lt;CAPTION&gt;ZIP code&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;10&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the zip code!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the zip code!&lt;/HELPDESCRIPTION&gt;</=
+p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"PHONE1"&gt;</p>
+<p>&lt;CAPTION&gt;Phone number&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:PHONENO&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter the phone number in the format + country code-area=
+ code-call number.phone extensiont (+49-221-569775.0)!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the phone number!&lt;/HELPDESCRIPTION&g=
+t;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"PHONE2"&gt;</p>
+<p>&lt;CAPTION&gt;Phone number&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:PHONENO&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter the phone number in the format + country code-area=
+ code-call number.phone extensiont (+49-221-569775.0)!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you another phone number!&lt;/HELPDESCRIPTI=
+ON&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"SALUTATION" LUGROUPKEY=3D"12" PARENTGROUPKEY=3D""&gt;<=
+/p>
+<p>&lt;CAPTION&gt;Salutation&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:SYSNAME&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please select the salutation!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the salutation!&lt;/HELPDESCRIPTION&gt;=
+</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;LOOKUPITEMS&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"1" LUITEMKEY=3D"48" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;SALUTATION:MR&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Mister&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;Mr.&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"49" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;SALUTATION:MRS&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Mistress&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;Mrs.&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;/LOOKUPITEMS&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"TITLE"&gt;</p>
+<p>&lt;CAPTION&gt;Title&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;30&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Enter the title of the person!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the title!&lt;/HELPDESCRIPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"LAST_ACCESS_DATA"&gt;</p>
+<p>&lt;FIELD NAME=3D"LASTACCESS"&gt;</p>
+<p>&lt;CAPTION&gt;Last login&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:DATETIME&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;The date of the last change is set automatically!&lt;/ED=
+ITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the date and time of your last login!&l=
+t;/HELPDESCRIPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"ORGAROLE"&gt;</p>
+<p>&lt;FIELD NAME=3D"ORGAROLE"&gt;</p>
+<p>&lt;CAPTION&gt;Organization role&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:SYSNAME&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please select the organization role!&lt;/EDITHINT&gt;</p=
+>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the organization role!&lt;/HELPDESCRIPT=
+ION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"USERDATA"&gt;</p>
+<p>&lt;FIELD NAME=3D"ACCESSRIGHT_USER" LUGROUPKEY=3D"5" PARENTGROUPKEY=3D""=
+&gt;</p>
+<p>&lt;CAPTION&gt;Access right&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please select, whether the person is able to login!&lt;/=
+EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you, whether th eperson is able to access t=
+he system!&lt;/HELPDESCRIPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;LOOKUPITEMS&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"1" LUITEMKEY=3D"23" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;ACCESS_RIGHT:ACCESS_GRANTED&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Access granted&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;Access granted&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"24" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;ACCESS_RIGHT:ACCESS_DENIED&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Access denied&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;Access denied&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;/LOOKUPITEMS&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"UI_DESIGN" LUGROUPKEY=3D"69" PARENTGROUPKEY=3D""&gt;</=
+p>
+<p>&lt;CAPTION&gt;Application design&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:FALSE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE&gt;UI_DESIGN:DEFAULT&lt;/DEFAULTVALUE&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;W=C3=A4hlen sie Bitte das Design der Anwendung&lt;/EDITH=
+INT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Das Design der Anwendung&lt;/HELPDESCRIPTION&gt;<=
+/p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;LOOKUPITEMS&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"1" LUITEMKEY=3D"375" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;UI_DESIGN:DARK&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Dark Design&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;Dark Design&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"1" LUITEMKEY=3D"374" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;UI_DESIGN:DEFAULT&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;Default Design&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;Default Design&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;/LOOKUPITEMS&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"UI_LANGUAGE" LUGROUPKEY=3D"17" PARENTGROUPKEY=3D""&gt;=
+</p>
+<p>&lt;CAPTION&gt;User language&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE&gt;LANGUAGE:GERMAN&lt;/DEFAULTVALUE&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please select the language in which the system should be=
+ displayed to th euser!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the language, in which the application =
+is displayed!&lt;/HELPDESCRIPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;LOOKUPITEMS&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"1" LUITEMKEY=3D"63" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;LANGUAGE:GERMAN&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;German&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;German&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:DE&lt;/ENSIGN&gt;</p>
+<p>&lt;UI_LANGUAGE&gt;TRUE&lt;/UI_LANGUAGE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;LOOKUPITEM SORT=3D"2" LUITEMKEY=3D"64" PARENTITEMKEY=3D""&gt;</p>
+<p>&lt;NAME&gt;LANGUAGE:ENGLISH&lt;/NAME&gt;</p>
+<p>&lt;CAPTION_LONG&gt;English&lt;/CAPTION_LONG&gt;</p>
+<p>&lt;CAPTION_SHORT&gt;English&lt;/CAPTION_SHORT&gt;</p>
+<p>&lt;CARGO&gt;</p>
+<p>&lt;ENSIGN&gt;FLAG:UK&lt;/ENSIGN&gt;</p>
+<p>&lt;UI_LANGUAGE&gt;TRUE&lt;/UI_LANGUAGE&gt;</p>
+<p>&lt;/CARGO&gt;</p>
+<p>&lt;/LOOKUPITEM&gt;</p>
+<p>&lt;/LOOKUPITEMS&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;FIELD NAME=3D"USERNAME"&gt;</p>
+<p>&lt;CAPTION&gt;Username&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH&gt;20&lt;/MAXLENGTH&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:ALPHANUMERIC&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please enter the user name!&lt;/EDITHINT&gt;</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you the user name!&lt;/HELPDESCRIPTION&gt;<=
+/p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;/FIELDS&gt;</p>
+<p>&lt;/ENTITY&gt;</p>
+<p>&lt;ENTITY NAME=3D"USERROLES" VERSION=3D"1.00"&gt;</p>
+<p>&lt;DATARANGE&gt;</p>
+<p>&lt;START /&gt;</p>
+<p>&lt;END /&gt;</p>
+<p>&lt;CUR_PAGE /&gt;</p>
+<p>&lt;PAGE_ENTRIES /&gt;</p>
+<p>&lt;TOTAL_PAGES /&gt;</p>
+<p>&lt;TOTAL_ENTRIES /&gt;</p>
+<p>&lt;SORT_LIST&gt;</p>
+<p>&lt;SORT SORT=3D""&gt;</p>
+<p>&lt;NAME&gt;&lt;/NAME&gt;</p>
+<p>&lt;SORTTYPE&gt;&lt;/SORTTYPE&gt;</p>
+<p>&lt;/SORT&gt;</p>
+<p>&lt;/SORT_LIST&gt;</p>
+<p>&lt;FILTER_LIST&gt;</p>
+<p>&lt;FILTER&gt;</p>
+<p>&lt;NAME&gt;&lt;/NAME&gt;</p>
+<p>&lt;FILTERTYPE&gt;&lt;/FILTERTYPE&gt;</p>
+<p>&lt;BEGIN_VALUE&gt;&lt;/BEGIN_VALUE&gt;</p>
+<p>&lt;END_VALUE&gt;&lt;/END_VALUE&gt;</p>
+<p>&lt;/FILTER&gt;</p>
+<p>&lt;/FILTER_LIST&gt;</p>
+<p>&lt;/DATARANGE&gt;</p>
+<p>&lt;LIST_PROPERTIES&gt;</p>
+<p>&lt;NAME /&gt;</p>
+<p>&lt;/LIST_PROPERTIES&gt;</p>
+<p>&lt;FIELDS&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"USERROLE"&gt;</p>
+<p>&lt;FIELD NAME=3D"USERROLE"&gt;</p>
+<p>&lt;CAPTION&gt;Userrole&lt;/CAPTION&gt;</p>
+<p>&lt;MUSTFILL&gt;MUSTFILL:TRUE&lt;/MUSTFILL&gt;</p>
+<p>&lt;MAXLENGTH /&gt;</p>
+<p>&lt;DEFAULTVALUE /&gt;</p>
+<p>&lt;VISIBLE /&gt;</p>
+<p>&lt;EDITABLE /&gt;</p>
+<p>&lt;POSITION /&gt;</p>
+<p>&lt;COLUMNWIDTH /&gt;</p>
+<p>&lt;DATATYPE&gt;DATATYPE:SYSNAME&lt;/DATATYPE&gt;</p>
+<p>&lt;EDITHINT&gt;Please select the user role, to determine to rigths, tha=
+t a user holds. This must not be equal to the member role!&lt;/EDITHINT&gt;=
+</p>
+<p>&lt;HELPDESCRIPTION&gt;Shows you, what role the user holds!&lt;/HELPDESC=
+RIPTION&gt;</p>
+<p>&lt;SYSTEMCOLUMN /&gt;</p>
+<p>&lt;UR&gt;RIGHT:DELETE&lt;/UR&gt;</p>
+<p>&lt;FREEZE /&gt;</p>
+<p>&lt;/FIELD&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;/FIELDS&gt;</p>
+<p>&lt;/ENTITY&gt;</p>
+<p>&lt;/ENTITIES&gt;</p>
+<p>&lt;/METAFIELDS&gt;</p>
+<p>&lt;DATAFIELDS&gt;</p>
+<p>&lt;ENTITIES&gt;</p>
+<p>&lt;ENTITY NAME=3D"LOGINCONFIRMATION" VERSION=3D"1.00"&gt;</p>
+<p>&lt;SETS&gt;</p>
+<p>&lt;SET SORT=3D"1" SET_ID=3D"1" PARENT_SET_ID=3D"" ACTION=3D""&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"ADDRESSDATA_COMPANY" KEY=3D"" KEYVERSION=3D""=
+&gt;</p>
+<p>&lt;ADDRESS1 /&gt;</p>
+<p>&lt;ADDRESS2 /&gt;</p>
+<p>&lt;CITY /&gt;</p>
+<p>&lt;COMMENT /&gt;</p>
+<p>&lt;COUNTRY SYSNAME=3D"" CARGO=3D"" /&gt;</p>
+<p>&lt;DISPLAYNAME&gt;Pantaree Deutschland&lt;/DISPLAYNAME&gt;</p>
+<p>&lt;DISTRICT /&gt;</p>
+<p>&lt;EMAIL /&gt;</p>
+<p>&lt;FAX /&gt;</p>
+<p>&lt;LATITUDE /&gt;</p>
+<p>&lt;LONGITUDE /&gt;</p>
+<p>&lt;ORGANISATION1&gt;Pantaree Deutschland GmbH&lt;/ORGANISATION1&gt;</p>
+<p>&lt;ORGANISATION2&gt;&lt;/ORGANISATION2&gt;</p>
+<p>&lt;PCODE /&gt;</p>
+<p>&lt;PHONE1 /&gt;</p>
+<p>&lt;PHONE2 /&gt;</p>
+<p>&lt;POBOXADDRESS /&gt;</p>
+<p>&lt;POBOXPCODE /&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"ADDRESSDATA_PERSON" KEY=3D"" KEYVERSION=3D""&=
+gt;</p>
+<p>&lt;ADDRESS1 /&gt;</p>
+<p>&lt;ADDRESS2 /&gt;</p>
+<p>&lt;BIRTHDAY /&gt;</p>
+<p>&lt;CITY /&gt;</p>
+<p>&lt;COMMENT /&gt;</p>
+<p>&lt;COUNTRY SYSNAME=3D"" CARGO=3D"" /&gt;</p>
+<p>&lt;DEPARTMENT /&gt;</p>
+<p>&lt;DISPLAYNAME&gt;Granderath, Michael&lt;/DISPLAYNAME&gt;</p>
+<p>&lt;DISTRICT /&gt;</p>
+<p>&lt;EMAIL /&gt;</p>
+<p>&lt;FAX /&gt;</p>
+<p>&lt;FIRSTNAME&gt;Michael&lt;/FIRSTNAME&gt;</p>
+<p>&lt;LANGUAGE SYSNAME=3D"LANGUAGE:GERMAN" CARGO=3D""&gt;German&lt;/LANGUA=
+GE&gt;</p>
+<p>&lt;LASTNAME&gt;Granderath&lt;/LASTNAME&gt;</p>
+<p>&lt;LATITUDE /&gt;</p>
+<p>&lt;LONGITUDE /&gt;</p>
+<p>&lt;MOBILE /&gt;</p>
+<p>&lt;PCODE /&gt;</p>
+<p>&lt;PHONE1 /&gt;</p>
+<p>&lt;PHONE2 /&gt;</p>
+<p>&lt;SALUTATION SYSNAME=3D"SALUTATION:MR" CARGO=3D""&gt;Mister&lt;/SALUTA=
+TION&gt;</p>
+<p>&lt;TITLE /&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"LAST_ACCESS_DATA" KEY=3D"" KEYVERSION=3D""&gt=
+;</p>
+<p>&lt;LASTACCESS&gt;5/2/2025 1:21:10 AM&lt;/LASTACCESS&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"ORGAROLE" KEY=3D"" KEYVERSION=3D""&gt;</p>
+<p>&lt;ORGAROLE SYSNAME=3D"ORGANISATION_ROLE:PANTAREE" /&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"USERDATA" KEY=3D"12" KEYVERSION=3D""&gt;</p>
+<p>&lt;ACCESSRIGHT_USER SYSNAME=3D"ACCESS_RIGHT:ACCESS_GRANTED" CARGO=3D""&=
+gt;ACCESS_RIGHT:ACCESS_GRANTED&lt;/ACCESSRIGHT_USER&gt;</p>
+<p>&lt;UI_DESIGN SYSNAME=3D"UI_DESIGN:DARK" CARGO=3D""&gt;UI_DESIGN:DARK&lt=
+;/UI_DESIGN&gt;</p>
+<p>&lt;UI_LANGUAGE SYSNAME=3D"LANGUAGE:ENGLISH" CARGO=3D""&gt;LANGUAGE:ENGL=
+ISH&lt;/UI_LANGUAGE&gt;</p>
+<p>&lt;USERNAME&gt;michael.granderath&lt;/USERNAME&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;/SET&gt;</p>
+<p>&lt;/SETS&gt;</p>
+<p>&lt;/ENTITY&gt;</p>
+<p>&lt;ENTITY NAME=3D"USERROLES" VERSION=3D"1.00"&gt;</p>
+<p>&lt;SETS&gt;</p>
+<p>&lt;SET SORT=3D"1" SET_ID=3D"2" PARENT_SET_ID=3D"1" ACTION=3D""&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"USERROLE" KEY=3D"" KEYVERSION=3D""&gt;</p>
+<p>&lt;USERROLE SYSNAME=3D"USER_ROLE:PV_REGIONAL_MANAGER"&gt;Regional manag=
+er&lt;/USERROLE&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;/SET&gt;</p>
+<p>&lt;SET SORT=3D"2" SET_ID=3D"3" PARENT_SET_ID=3D"1" ACTION=3D""&gt;</p>
+<p>&lt;ATTRIBUTEGROUP NAME=3D"USERROLE" KEY=3D"" KEYVERSION=3D""&gt;</p>
+<p>&lt;USERROLE SYSNAME=3D"USER_ROLE:PV_REGIONAL_MANAGER"&gt;Regional manag=
+er&lt;/USERROLE&gt;</p>
+<p>&lt;/ATTRIBUTEGROUP&gt;</p>
+<p>&lt;/SET&gt;</p>
+<p>&lt;/SETS&gt;</p>
+<p>&lt;/ENTITY&gt;</p>
+<p>&lt;/ENTITIES&gt;</p>
+<p>&lt;/DATAFIELDS&gt;</p>
+<p>&lt;/MESSAGEAREA&gt;</p>
+<p>&lt;/MESSAGE&gt;</p>
+<p>&lt;MESSAGE NAME=3D"IDF.MESSAGES" VERSION=3D"1.0"&gt;</p>
+<p>&lt;MESSAGEAREA NAME=3D"SYSTEM_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;</p=
+>
+<p>&lt;MESSAGES&gt;</p>
+<p>&lt;MSG NAME=3D"FACADE.CENTER.CALL_BNO_OK"&gt;</p>
+<p>&lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;</p>
+<p>&lt;CAPTION&gt;</p>
+<p>&lt;![CDATA[The BNO was called successfully from facade!]]&gt;</p>
+<p>&lt;/CAPTION&gt;</p>
+<p>&lt;DESCRIPTION&gt;Aufruf des BNO war ok.&lt;/DESCRIPTION&gt;</p>
+<p>&lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;</p>
+<p>&lt;DATAREFERENCE USED=3D"NO" /&gt;</p>
+<p>&lt;/MSG&gt;</p>
+<p>&lt;/MESSAGES&gt;</p>
+<p>&lt;DEBUG_INFORMATION&gt;</p>
+<p>&lt;INFO /&gt;</p>
+<p>&lt;/DEBUG_INFORMATION&gt;</p>
+<p>&lt;/MESSAGEAREA&gt;</p>
+<p>&lt;MESSAGEAREA NAME=3D"USER_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;</p>
+<p>&lt;MESSAGES&gt;</p>
+<p>&lt;MSG NAME=3D"KERNEL.INTERACTIONUSEROPERATION.NO_LOGOUT_FOUND"&gt;</p>
+<p>&lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;</p>
+<p>&lt;CAPTION&gt;</p>
+<p>&lt;![CDATA[Your last session wasn't finished correctly or you're alread=
+y logged in on another computer!]]&gt;</p>
+<p>&lt;/CAPTION&gt;</p>
+<p>&lt;DESCRIPTION&gt;F=C3=BCr einen alten Login wurde kein passender Logou=
+t gefunden!&lt;/DESCRIPTION&gt;</p>
+<p>&lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;</p>
+<p>&lt;DATAREFERENCE USED=3D"NO" /&gt;</p>
+<p>&lt;/MSG&gt;</p>
+<p>&lt;/MESSAGES&gt;</p>
+<p>&lt;DEBUG_INFORMATION&gt;</p>
+<p>&lt;INFO /&gt;</p>
+<p>&lt;/DEBUG_INFORMATION&gt;</p>
+<p>&lt;/MESSAGEAREA&gt;</p>
+<p>&lt;/MESSAGE&gt;</p>
+<p>&lt;/ENVELOPE&gt;</p>
+</div>
+</div>
+<h1 id=3D"SET_LOGIN-Messages">Messages</h1>
+<h2 id=3D"SET_LOGIN-UserMessages">User Messages</h2>
+<div class=3D"table-wrap">
+<table data-table-width=3D"1559" data-layout=3D"align-start" data-local-id=
+=3D"199f1526-fcb6-4476-a4dd-de5de49f928f" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 1122.0px;">
+<col style=3D"width: 51.0px;">
+<col style=3D"width: 386.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p><strong>Message</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>CL</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Description</strong></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<div id=3D"expander-691403863" class=3D"expand-container">
+<div id=3D"expander-control-691403863" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">Login successful</span>
+</div>
+<div id=3D"expander-content-691403863" class=3D"expand-content">
+<p>&lt;MESSAGEAREA NAME=3D"USER_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;<br>
+ &lt;MSG NAME=3D"<strong>KERNEL.INTERACTIONUSEROPERATION.NEW_LOGIN_SUCCESSF=
+UL</strong>"&gt;<br>
+ &lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;<br>
+ &lt;CAPTION&gt;<br>
+ &lt;![CDATA[<strong><span data-colorid=3D"m3x56x8o53">Login was successful=
+]</span></strong>]&gt;<br>
+ &lt;/CAPTION&gt;<br>
+ &lt;DESCRIPTION&gt;&lt;/DESCRIPTION&gt;<br>
+ &lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;<br>
+ &lt;DATAREFERENCE USED=3D"NO" /&gt;<br>
+ &lt;/MSG&gt;<br>
+ &lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;</p>
+</div>
+</div></td>
+<td class=3D"confluenceTd">
+<p><strong>0</strong></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<div id=3D"expander-702645628" class=3D"expand-container">
+<div id=3D"expander-control-702645628" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">Last session not correct terminated</span>
+</div>
+<div id=3D"expander-content-702645628" class=3D"expand-content">
+<p>&lt;MESSAGEAREA NAME=3D"USER_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br>
+ &lt;MESSAGES&gt;<br>
+ &lt;MSG NAME=3D"<strong>KERNEL.INTERACTIONUSEROPERATION.NO_LOGOUT_FOUND</s=
+trong>"&gt;<br>
+ &lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;<br>
+ &lt;CAPTION&gt;<br>
+ &lt;![CDATA[<strong><span data-colorid=3D"le7ebd2adh">Your last session wa=
+sn't finished correctly or you're already logged in on another computer!</s=
+pan></strong>]]&gt;<br>
+ &lt;/CAPTION&gt;<br>
+ &lt;DESCRIPTION&gt;F=C3=BCr einen alten Login wurde kein passender Logout =
+gefunden!&lt;/DESCRIPTION&gt;<br>
+ &lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;<br>
+ &lt;DATAREFERENCE USED=3D"NO" /&gt;<br>
+ &lt;/MSG&gt;<br>
+ &lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;</p>
+</div>
+</div></td>
+<td class=3D"confluenceTd">
+<p><strong>0</strong></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<div id=3D"expander-1624934906" class=3D"expand-container">
+<div id=3D"expander-control-1624934906" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">Login credentials incorect</span>
+</div>
+<div id=3D"expander-content-1624934906" class=3D"expand-content">
+<p>&lt;MESSAGES&gt;</p>
+<p>&lt;MSG NAME=3D"<strong>KERNEL.INTERACTIONUSEROPERATION.USERNAME_PASSWOR=
+D_INCORRECT</strong>"&gt;</p>
+<p>&lt;CRITICALLEVEL&gt;1&lt;/CRITICALLEVEL&gt;</p>
+<p>&lt;CAPTION&gt;</p>
+<p>&lt;![CDATA[<strong><span data-colorid=3D"smm78w77ym">Your username or y=
+our password is incorrect!</span></strong>]]&gt;</p>
+<p>&lt;/CAPTION&gt;</p>
+<p>&lt;DESCRIPTION&gt;Das Passwort passt nicht zum Usernamen!&lt;/DESCRIPTI=
+ON&gt;</p>
+<p>&lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;</p>
+<p>&lt;DATAREFERENCE USED=3D"NO" /&gt;</p>
+<p>&lt;/MSG&gt;</p>
+<p>&lt;/MESSAGES&gt;</p>
+<p>&lt;DEBUG_INFORM</p>
+</div>
+</div></td>
+<td class=3D"confluenceTd">
+<p><strong>1</strong></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id=3D"SET_LOGIN-SystemMessages">System Messages</h2>
+<div class=3D"table-wrap">
+<table data-table-width=3D"1800" data-layout=3D"align-start" data-local-id=
+=3D"250c66fa-7956-4314-bc5f-becd3e8198d4" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 1282.0px;">
+<col style=3D"width: 77.0px;">
+<col style=3D"width: 438.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p><strong>Message</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>CL</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Description</strong></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<div id=3D"expander-1152603274" class=3D"expand-container">
+<div id=3D"expander-control-1152603274" class=3D"expand-control">
+<span class=3D"expand-control-icon"><img style=3D"vertical-align:middle;" c=
+lass=3D"expand-control-image" src=3D"e94940b60cdb6d074ac4ca4bc2c8bf53e574a4=
+06b13d902f58b09f69cb392540" width=3D"16" height=3D"16"></span><span class=
+=3D"expand-control-text">API OK</span>
+</div>
+<div id=3D"expander-content-1152603274" class=3D"expand-content">
+<p>&lt;MESSAGEAREA NAME=3D"SYSTEM_MESSAGES" ID=3D"" VERSION=3D"1.00"&gt;<br=
+>
+ &lt;MESSAGES&gt;<br>
+ &lt;MSG NAME=3D"<strong>FACADE.CENTER.CALL_BNO_OK</strong>"&gt;<br>
+ &lt;CRITICALLEVEL&gt;0&lt;/CRITICALLEVEL&gt;<br>
+ &lt;CAPTION&gt;<br>
+ &lt;![CDATA[The BNO was called successfully from facade!]]&gt;<br>
+ &lt;/CAPTION&gt;<br>
+ &lt;DESCRIPTION&gt;Aufruf des BNO war ok.&lt;/DESCRIPTION&gt;<br>
+ &lt;OCCURANCE&gt;&lt;/OCCURANCE&gt;<br>
+ &lt;DATAREFERENCE USED=3D"NO" /&gt;<br>
+ &lt;/MSG&gt;<br>
+ &lt;/MESSAGES&gt;<br>
+ &lt;DEBUG_INFORMATION&gt;<br>
+ &lt;INFO /&gt;<br>
+ &lt;/DEBUG_INFORMATION&gt;<br>
+ &lt;/MESSAGEAREA&gt;</p>
+</div>
+</div></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p></p>
+<p></p>
+<p></p>
+</div>
+</div>
+</div>
+<div class=3D"columnLayout two-equal" data-layout=3D"two-equal">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+</div>
+<div class=3D"columnLayout two-equal" data-layout=3D"two-equal">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+</div>
+<div class=3D"columnLayout two-equal" data-layout=3D"two-equal">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+</div>
+<div class=3D"columnLayout two-equal" data-layout=3D"two-equal">
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+<div class=3D"cell normal" data-type=3D"normal">
+<div class=3D"innerCell">
+<p></p>
+</div>
+</div>
+</div>
+</div>
+    </div>
+</body>
+</html>
+------=_Part_616_2101281121.1765313269309
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: file:///C:/e94940b60cdb6d074ac4ca4bc2c8bf53e574a406b13d902f58b09f69cb392540
+
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAA3NCSVQICAjb4U/gAAAAFVBMVEX/
+//9wcHBwcHBwcHBwcHBwcHBwcHA3RenHAAAAB3RSTlMAZoiZzN3/SzZomQAAAAlwSFlzAAALEgAA
+CxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAUdEVYdENy
+ZWF0aW9uIFRpbWUANi8xLzEzOKlF0AAAACFJREFUCJljYCATsCgwqIAZTMnMyRAhsTABCIMxkVxT
+GQCLcwHyUKXpLgAAAABJRU5ErkJggg==
+------=_Part_616_2101281121.1765313269309--

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import {
   Box,
   Paper,
@@ -10,6 +10,8 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  CircularProgress,
+  Alert,
 } from '@mui/material'
 import {
   Home as HomeIcon,
@@ -29,6 +31,8 @@ import type {
   DataResult,
 } from '@progress/kendo-data-query'
 import SupplierActions from '../components/SupplierActions'
+import { getSupplierList } from '../services/api'
+import type { Supplier as ApiSupplier } from '../utils/xmlParser'
 import './Suppliers.css'
 
 export interface Supplier {
@@ -158,6 +162,9 @@ const Suppliers = () => {
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null)
   const [actionsOpen, setActionsOpen] = useState(false)
   const [actionsMenuAnchor, setActionsMenuAnchor] = useState<null | HTMLElement>(null)
+  const [suppliers, setSuppliers] = useState<Supplier[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   
   const [dataState, setDataState] = useState<State>({
     sort: [{ field: 'shortName', dir: 'asc' }],
@@ -170,11 +177,50 @@ const Suppliers = () => {
     group: [],
   })
 
+  // Fetch suppliers from API
+  useEffect(() => {
+    const fetchSuppliers = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const response = await getSupplierList()
+        
+        if (response.success && response.data) {
+          // Map API supplier data to component Supplier interface
+          const mappedSuppliers: Supplier[] = response.data.map((apiSupplier: ApiSupplier, index: number) => ({
+            id: parseInt(apiSupplier.id) || index + 1,
+            shortName: apiSupplier.shortName || apiSupplier.displayName || 'Unknown',
+            supplierNo: apiSupplier.supplierNo || apiSupplier.key || '',
+            street: apiSupplier.street || '',
+            zipCode: apiSupplier.zipCode || '',
+            city: apiSupplier.city || '',
+            phoneNumber: apiSupplier.phoneNumber || '',
+            accessRight: apiSupplier.accessRight?.toLowerCase().includes('granted') ? 'granted' : 'denied',
+          }))
+          setSuppliers(mappedSuppliers)
+        } else {
+          setError(response.error || 'Failed to load suppliers')
+          // Fallback to sample data if API fails
+          setSuppliers(sampleSuppliers)
+        }
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred'
+        setError(errorMessage)
+        // Fallback to sample data on error
+        setSuppliers(sampleSuppliers)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchSuppliers()
+  }, [])
+
   const filteredSuppliers = useMemo(() => {
-    if (!searchQuery) return sampleSuppliers
+    if (!searchQuery) return suppliers
 
     const query = searchQuery.toLowerCase()
-    return sampleSuppliers.filter(
+    return suppliers.filter(
       (supplier) =>
         supplier.shortName.toLowerCase().includes(query) ||
         supplier.supplierNo.toLowerCase().includes(query) ||
@@ -182,7 +228,7 @@ const Suppliers = () => {
         supplier.street.toLowerCase().includes(query) ||
         supplier.phoneNumber.includes(query)
     )
-  }, [searchQuery])
+  }, [searchQuery, suppliers])
 
   const transformedSuppliers = useMemo(() => {
     return transformSuppliers(filteredSuppliers)
@@ -303,41 +349,53 @@ const Suppliers = () => {
           </Box>
 
           <Box sx={{ p: 2, width: '100%' }}>
-            {/* Premium Feature Indicator - Grouping */}
-            <Box
-              sx={{
-                mb: 0,
-                p: 2,
-                backgroundColor: 'var(--bg-hover, #f3f4f6)',
-                border: '2px dashed var(--border-color, #cbd5e1)',
-                borderRadius: '8px 8px 0 0',
-                borderBottom: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                opacity: 0.6,
-                cursor: 'not-allowed',
-              }}
-              title="Grouping is a premium feature. Upgrade to KendoReact Premium to enable this feature."
-            >
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                }}
-              >
-                <span>🔒</span>
-                <span>Drag a column header here to group by that column</span>
-                <span style={{ marginLeft: '8px', fontSize: '10px', color: '#9ca3af' }}>
-                  (Premium Feature)
-                </span>
-              </Typography>
-            </Box>
-            <Grid
+            {error && (
+              <Alert severity="warning" sx={{ mb: 2 }}>
+                {error}
+              </Alert>
+            )}
+            
+            {loading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <>
+                {/* Premium Feature Indicator - Grouping */}
+                <Box
+                  sx={{
+                    mb: 0,
+                    p: 2,
+                    backgroundColor: 'var(--bg-hover, #f3f4f6)',
+                    border: '2px dashed var(--border-color, #cbd5e1)',
+                    borderRadius: '8px 8px 0 0',
+                    borderBottom: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative',
+                    opacity: 0.6,
+                    cursor: 'not-allowed',
+                  }}
+                  title="Grouping is a premium feature. Upgrade to KendoReact Premium to enable this feature."
+                >
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 1,
+                    }}
+                  >
+                    <span>🔒</span>
+                    <span>Drag a column header here to group by that column</span>
+                    <span style={{ marginLeft: '8px', fontSize: '10px', color: '#9ca3af' }}>
+                      (Premium Feature)
+                    </span>
+                  </Typography>
+                </Box>
+                <Grid
               style={{ height: '600px', width: '100%' }}
               data={dataResult}
               sortable={true}
@@ -410,7 +468,9 @@ const Suppliers = () => {
                 filterable={true}
                 sortable={true}
               />
-            </Grid>
+                </Grid>
+              </>
+            )}
           </Box>
         </Paper>
       </Box>

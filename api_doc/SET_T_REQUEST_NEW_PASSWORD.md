@@ -1,0 +1,212 @@
+SET_T_REQUEST_NEW_PASSWORD
+
+
+
+By Guenter
+
+2
+
+Add a reaction
+Overview
+Xml template for forgotten password use case
+
+Business Logic
+N/A
+
+Data
+ 
+
+XML-IN
+
+XML-IN
+<ENVELOPE NAME="PV.ENVELOPE" VERSION="1.00" CREATE="">
+
+  <ENVELOPE_DATA>
+
+    <TOKEN>
+
+    </TOKEN>
+
+    <IPADDRESS />
+
+    <USERAGENT />
+
+    <LANGUAGE>LANGUAGE:ENGLISH</LANGUAGE>
+
+  </ENVELOPE_DATA>
+
+  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="DE">
+
+    <BNO_REQUEST VERSION="1.00">
+
+      <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
+
+      <BNO_GROUP>BNO_BASE</BNO_GROUP>
+
+      <BNO_INTERACTION_NAME>SET_T_REQUEST_NEW_PASSWORD</BNO_INTERACTION_NAME>
+
+      <BNO_INTERACTION_VERSION>1.00</BNO_INTERACTION_VERSION>
+
+      <BNO_INTERACTION_MODE>INTERACTION_MODE:CREATE</BNO_INTERACTION_MODE>
+
+      <BNO_PARAMETERS>
+
+      </BNO_PARAMETERS>
+
+    </BNO_REQUEST>
+
+  </APPLICATION_REQUEST>
+
+  <MESSAGE>
+
+    <MESSAGEAREA>
+
+      <DATAFIELDS>
+
+        <ENTITIES>
+
+          <ENTITY NAME="NEW.PASSWORD" VERSION="1.00">
+
+            <SETS>
+
+              <SET SORT="1" SET_ID="" PARENT_SET_ID="" ACTION="">
+
+                <ATTRIBUTEGROUP NAME="NEW.PASSWORD" KEY="" KEYVERSION="">
+
+                  <USERNAME>HERE USERNAME</USERNAME>
+
+                </ATTRIBUTEGROUP>
+
+              </SET>
+
+            </SETS>
+
+          </ENTITY>
+
+        </ENTITIES>
+
+      </DATAFIELDS>
+
+    </MESSAGEAREA>
+
+  </MESSAGE>
+
+</ENVELOPE>
+
+XML-OUT
+
+XML-OUT (relevant tags only)
+
+
+
+
+
+
+
+Messages
+User Messages
+Message
+
+CL
+
+Description
+
+
+Password reset OK - email sent.
+   <MESSAGES>
+
+        <MSG NAME="KERNEL.INTERACTIONUSEROPERATION.PASSWORD_RESETTED">
+
+          <CRITICALLEVEL>0</CRITICALLEVEL>
+
+          <CAPTION><![CDATA[You've got received a new password sent by e-mail!]]></CAPTION>
+
+          <DESCRIPTION>
+
+          </DESCRIPTION>
+
+          <OCCURANCE>
+
+          </OCCURANCE>
+
+          <DATAREFERENCE USED="NO" />
+
+        </MSG>
+
+      </MESSAGES>
+
+0
+
+ 
+
+
+User not known
+<MESSAGES>
+
+				<MSG NAME="KERNEL.INTERACTIONUSEROPERATION.USERNAME_INCORRECT">
+
+					<CRITICALLEVEL>1</CRITICALLEVEL>
+
+					<CAPTION>
+
+						<![CDATA[There are no further information about that user name!]]>
+
+					</CAPTION>
+
+					<DESCRIPTION>Der User will am Login-Secreen ein neues Passwort anfordern und gibt einen ungültigen Usernamen ein!</DESCRIPTION>
+
+					<OCCURANCE></OCCURANCE>
+
+					<DATAREFERENCE USED="NO" />
+
+				</MSG>
+
+			</MESSAGES>
+
+1
+
+ 
+
+
+Further messages with negative results from API
+KERNEL.INTERACTIONUSEROPERATION.USERNAME_NOT_FILLED
+
+KERNEL.INTERACTIONUSEROPERATION.USERNAME_INCORRECT
+
+KERNEL.INTERACTIONUSEROPERATION.INVALID_MEMBERCONTRACT
+
+KERNEL.INTERACTIONUSEROPERATION.ORGA_ACCESS_DENIED
+
+CORE.INTERACTIONUSEROPERATION.USER_HAS_NO_EMAIL
+
+KERNEL.INTERACTIONUSEROPERATION.USER_ACCESS_DENIED
+
+1
+
+ 
+
+System Messages
+Message
+
+CL
+
+Description
+
+
+API OK
+	<MESSAGEAREA NAME="SYSTEM_MESSAGES" ID="" VERSION="1.00">
+		<MESSAGES>
+			<MSG NAME="FACADE.CENTER.CALL_BNO_OK">
+				<CRITICALLEVEL>0</CRITICALLEVEL>
+				<CAPTION>
+					<![CDATA[The BNO was called successfully from facade!]]>
+				</CAPTION>
+				<DESCRIPTION>Aufruf des BNO war ok.</DESCRIPTION>
+				<OCCURANCE></OCCURANCE>
+				<DATAREFERENCE USED="NO" />
+			</MSG>
+		</MESSAGES>
+		<DEBUG_INFORMATION>
+			<INFO />
+		</DEBUG_INFORMATION>
+	</MESSAGEAREA>

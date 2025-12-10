@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import DashboardLayout from './components/DashboardLayout'
 import Login from './pages/Login'
 import Suppliers from './pages/Suppliers'
@@ -17,17 +16,18 @@ import Settings from './pages/Settings'
 import DevelopmentInProgress from './pages/DevelopmentInProgress'
 import './App.css'
 
+import { useAuth } from './contexts/AuthContext'
+
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
+  const { isAuthenticated, isLoading } = useAuth()
 
-  useEffect(() => {
-    const auth = localStorage.getItem('isAuthenticated')
-    setIsAuthenticated(auth === 'true')
-  }, [])
-
-  if (isAuthenticated === null) {
-    return null // or a loading spinner
+  if (isLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div>Loading...</div>
+      </div>
+    )
   }
 
   return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />
