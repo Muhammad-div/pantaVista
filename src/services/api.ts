@@ -720,7 +720,7 @@ export async function getPosSmallList(dataLevel: number = 1): Promise<ApiRespons
  * GET_T_APP_INIT - Get application initialization data including menu items and permissions
  */
 export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitMenuCaptions; permissions: MenuPermissions }>> {
-  const requestKey = 'GET_T_APP_INIT';
+  const requestKey = 'GET_APP_INIT';
   
   // If there's already a pending request, return it
   if (pendingRequests.has(requestKey)) {
@@ -768,13 +768,13 @@ export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitM
     <IPADDRESS />
     <USERAGENT />
     <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
-    <ORIGINATOR>PVNG.WEB.UI</ORIGINATOR>
+    <ORIGINATOR>PV.TC.WEB.UI</ORIGINATOR>
   </ENVELOPE_DATA>
   <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
     <BNO_REQUEST VERSION="1.00">
       <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
       <BNO_GROUP>LOGIN</BNO_GROUP>
-      <BNO_INTERACTION_NAME>GET_T_APP_INIT</BNO_INTERACTION_NAME>
+      <BNO_INTERACTION_NAME>GET_APP_INIT</BNO_INTERACTION_NAME>
       <BNO_INTERACTION_VERSION>1.00</BNO_INTERACTION_VERSION>
       <BNO_INTERACTION_MODE>INTERACTION_MODE:VIEW</BNO_INTERACTION_MODE>
       <BNO_PARAMETERS />
@@ -783,6 +783,7 @@ export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitM
 </ENVELOPE>`;
 
       console.log('getAppInit: Making API request');
+      console.log('getAppInit: XML Payload:', xmlPayload);
       const xmlResponse = await makeXMLRequest(xmlPayload);
       console.log('getAppInit: Raw XML Response:', xmlResponse);
       const doc = parseXML(xmlResponse);
@@ -826,7 +827,7 @@ export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitM
         };
       }
       
-      if (messageName === 'GET_T_APP_INIT' || messageName?.includes('APP_INIT')) {
+      if (messageName === 'GET_APP_INIT' || messageName === 'GET_T_APP_INIT' || messageName?.includes('APP_INIT')) {
         console.log('getAppInit: Extracting menu captions and permissions...');
         const menuCaptions = extractAppInitMenuCaptions(doc);
         const permissions = extractAppInitPermissions(doc);

@@ -219,10 +219,23 @@ const Login = () => {
         >
           <Box className="login-header">
             <Box className="logo-container">
-              <Typography variant="h4" component="div" className="logo-text">
-                <span className="logo-panta">panta</span>
-                <span className="logo-vista">Vista</span>
-              </Typography>
+              {captions.loginLogo ? (
+                <img 
+                  src={captions.loginLogo} 
+                  alt="Login Logo" 
+                  style={{ 
+                    maxWidth: '200px', 
+                    maxHeight: '100px', 
+                    objectFit: 'contain',
+                    marginBottom: '16px'
+                  }} 
+                />
+              ) : (
+                <Typography variant="h4" component="div" className="logo-text">
+                  <span className="logo-panta">panta</span>
+                  <span className="logo-vista">Vista</span>
+                </Typography>
+              )}
             </Box>
             <Typography variant="h5" className="welcome-text" gutterBottom>
               {captions.welcomePV || 'Welcome to Pantavista CRMkk'}

@@ -197,6 +197,7 @@ export interface PreAppInitCaptions {
   usernameTooltip?: string;
   passwordTooltip?: string;
   forgotPasswordTooltip?: string;
+  loginLogo?: string; // Base64 image data for login logo (data URL format)
 }
 
 export function extractPreAppInitCaptions(doc: Document): PreAppInitCaptions {
@@ -302,6 +303,38 @@ export function extractPreAppInitCaptions(doc: Document): PreAppInitCaptions {
       }
     }
   });
+  
+  // Extract login logo from UI.IMAGE.DATA entity
+  const imageDataEntity = entities.find(
+    (entity) => getAttribute(entity, 'NAME') === 'UI.IMAGE.DATA'
+  );
+  
+  if (imageDataEntity) {
+    const imageSets = findElements(imageDataEntity, 'SET');
+    imageSets.forEach((set) => {
+      const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
+      const imageItemGroup = attributeGroups.find(
+        (group) => getAttribute(group, 'NAME') === 'UI.IMAGE.ITEM'
+      );
+      
+      if (imageItemGroup) {
+        const imageIdentifierEl = findElement(imageItemGroup, 'IMAGE_IDENTIFIER');
+        const imageEl = findElement(imageItemGroup, 'IMAGE');
+        
+        if (imageIdentifierEl && imageEl) {
+          const identifier = getTextContent(imageIdentifierEl);
+          const imageData = getTextContent(imageEl);
+          
+          // Check if this is the login logo
+          if (identifier === 'ICON:LOGIN' && imageData) {
+            // Convert base64 to data URL
+            captions.loginLogo = `data:image/png;base64,${imageData}`;
+            console.log('extractPreAppInitCaptions: Found login logo');
+          }
+        }
+      }
+    });
+  }
   
   console.log('extractPreAppInitCaptions result:', captions);
   return captions;
@@ -776,18 +809,23 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
         const captionElements = findElements(group, 'CAPTION');
         console.log(`extractAppInitMenuCaptions: Found`, captionElements.length, 'CAPTION elements in ATTRIBUTEGROUP', groupName);
         
-        captionElements.forEach((caption, captionIndex) => {
+        captionElements.forEach((caption) => {
           const name = getAttribute(caption, 'NAME');
           const text = getTextContent(caption);
           
-          console.log(`extractAppInitMenuCaptions: CAPTION[${captionIndex}] NAME="${name}" TEXT="${text}"`);
-          
           if (name && text) {
+            // Only log menu-related captions to reduce console noise
+            if (name.includes('MENU') || name.includes('ACTIVITY') || name.includes('ORDER') || name.includes('AGENDA') || name.includes('EXCHANGE')) {
+              console.log(`extractAppInitMenuCaptions: CAPTION NAME="${name}" TEXT="${text}"`);
+            }
+            
             switch (name) {
               case 'MENU:ACTIVITIES':
+              case 'LABEL:ACTIVITIES':
                 captions.activities = text;
                 break;
               case 'MENU_TOOLTIP:ACTIVITIES':
+              case 'ACTIVITY.TOOLTIP:ACTIVITY':
                 captions.activitiesTooltip = text;
                 break;
               case 'MENU:ORDERS':
@@ -797,6 +835,7 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
                 captions.ordersTooltip = text;
                 break;
               case 'MENU_DAILYAGENDA':
+              case 'LABEL:AGENDA':
                 captions.dailyAgenda = text;
                 break;
               case 'MENU_TOOLTIP:DAILYAGENDA':
@@ -807,6 +846,13 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
                 break;
               case 'MENU_TOOLTIP:EXCHANGEDATA':
                 captions.exchangeDataTooltip = text;
+                break;
+              case 'TEXT:POS':
+              case 'LABEL:POS':
+                captions.pos = text;
+                break;
+              case 'LABEL:SUPPLIERS':
+                captions.suppliers = text;
                 break;
               default:
                 // Store other captions for future use
@@ -836,12 +882,15 @@ export function extractAppInitPermissions(doc: Document): MenuPermissions {
   
   console.log('extractAppInitPermissions: Starting extraction...');
   
+  // Check if user is a supplier (has supplier role) from localStorage
+  // This is set during login when ORGAROLE is ORGANISATION_ROLE:SUPPLIER
+  const isSupplier = localStorage.getItem('pv.isSupplier') === 'true';
+  console.log('extractAppInitPermissions: isSupplier from localStorage:', isSupplier);
+  
   // Check if user is a supplier (has supplier role)
   // This is typically indicated by a specific entity or field
   const entities = findElements(doc, 'ENTITY');
   console.log('extractAppInitPermissions: Found', entities.length, 'ENTITY elements');
-  
-  let isSupplier = false;
   
   // Look for supplier-related indicators
   entities.forEach((entity, index) => {
@@ -877,14 +926,31 @@ export function extractAppInitPermissions(doc: Document): MenuPermissions {
     permissions.showActivity = false;
     permissions.showOrder = false;
   } else {
-    // Check for activity and order permissions
-    if (interactionNames.includes('SET_T_ACTIVITY_INPUT_CREATE')) {
-      console.log('extractAppInitPermissions: Found SET_T_ACTIVITY_INPUT_CREATE, setting showActivity=true');
+    // Check for activity-related interactions (multiple possible names)
+    if (interactionNames.some(name => 
+      name === 'SET_T_ACTIVITY_INPUT_CREATE' || 
+      name === 'SET_ACTIVITIES' ||
+      name.includes('ACTIVITY') && (name.includes('CREATE') || name.includes('SET'))
+    )) {
+      console.log('extractAppInitPermissions: Found activity interaction, setting showActivity=true');
       permissions.showActivity = true;
     }
-    if (interactionNames.includes('SET_T_ORDER_INPUT_CREATE')) {
-      console.log('extractAppInitPermissions: Found SET_T_ORDER_INPUT_CREATE, setting showOrder=true');
+    
+    // Check for order-related interactions
+    if (interactionNames.some(name => 
+      name === 'SET_T_ORDER_INPUT_CREATE' || 
+      name.includes('ORDER') && (name.includes('CREATE') || name.includes('SET'))
+    )) {
+      console.log('extractAppInitPermissions: Found order interaction, setting showOrder=true');
       permissions.showOrder = true;
+    }
+    
+    // Check for POS-related interactions
+    if (interactionNames.some(name => 
+      name.includes('POS') || name.includes('GET_POS') || name.includes('GET_T_POS')
+    )) {
+      console.log('extractAppInitPermissions: Found POS interaction, setting showPOS=true');
+      permissions.showPOS = true;
     }
   }
   
