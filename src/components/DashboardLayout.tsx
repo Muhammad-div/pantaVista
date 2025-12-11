@@ -61,10 +61,22 @@ const DashboardLayout = () => {
   const navItems: NavItem[] = useMemo(() => {
     // Don't show anything if we don't have permissions data yet
     if (!permissions || menuLoading) {
+      console.log('DashboardLayout: Skipping nav items - permissions:', permissions, 'menuLoading:', menuLoading)
       return []
     }
     
     const items: NavItem[] = []
+    
+    console.log('DashboardLayout: Building nav items', {
+      permissions,
+      menuCaptions,
+      showActivity: permissions.showActivity,
+      showPOS: permissions.showPOS,
+      showOrder: permissions.showOrder,
+      hasActivitiesCaption: !!menuCaptions?.activities,
+      hasPOSCaption: !!menuCaptions?.pos,
+      hasOrdersCaption: !!menuCaptions?.orders,
+    })
     
     // Activities - shown if permission.showActivity is true AND we have caption
     if (permissions.showActivity && menuCaptions?.activities) {
@@ -73,6 +85,7 @@ const DashboardLayout = () => {
         label: menuCaptions.activities,
         icon: <ActivitiesIcon />,
       })
+      console.log('DashboardLayout: Added Activities menu item')
     }
     
     // Orders - shown if permission.showOrder is true AND we have caption
@@ -82,16 +95,21 @@ const DashboardLayout = () => {
         label: menuCaptions.orders,
         icon: <OrdersIcon />,
       })
+      console.log('DashboardLayout: Added Orders menu item')
     }
     
-    // POS - shown if permission.showPOS is true AND we have caption
-    if (permissions.showPOS && menuCaptions?.pos) {
+    // POS - shown if permission.showPOS is true
+    // Use caption if available, otherwise use fallback text
+    if (permissions.showPOS) {
       items.push({
         path: '/pos',
-        label: menuCaptions.pos,
+        label: menuCaptions?.pos || 'PoS',
         icon: <POSIcon />,
       })
+      console.log('DashboardLayout: Added POS menu item with label:', menuCaptions?.pos || 'PoS')
     }
+    
+    console.log('DashboardLayout: Built nav items:', items.map(i => ({ path: i.path, label: i.label })))
     
     return items
   }, [permissions, menuCaptions, menuLoading])

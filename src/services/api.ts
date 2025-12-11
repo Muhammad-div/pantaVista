@@ -183,10 +183,10 @@ export async function getPreAppInit(): Promise<ApiResponse<PreAppInitCaptions>> 
 }
 
 /**
- * GET_LOGIN_TEMPLATE - Get login form template with field definitions
+ * GET_LOGIN - Get login form template with field definitions
  */
 export async function getLoginTemplate(): Promise<ApiResponse<{ username?: LoginTemplateField; password?: LoginTemplateField }>> {
-  const requestKey = 'GET_LOGIN_TEMPLATE';
+  const requestKey = 'GET_LOGIN';
   
   // If there's already a pending request, return it
   if (pendingRequests.has(requestKey)) {
@@ -219,7 +219,7 @@ export async function getLoginTemplate(): Promise<ApiResponse<{ username?: Login
     <BNO_REQUEST VERSION="1.00">
       <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
       <BNO_GROUP>LOGIN</BNO_GROUP>
-      <BNO_INTERACTION_NAME>GET_LOGIN_TEMPLATE</BNO_INTERACTION_NAME>
+      <BNO_INTERACTION_NAME>GET_LOGIN</BNO_INTERACTION_NAME>
       <BNO_INTERACTION_VERSION>1.00</BNO_INTERACTION_VERSION>
       <BNO_INTERACTION_MODE>INTERACTION_MODE:TEMPLATE</BNO_INTERACTION_MODE>
       <BNO_PARAMETERS />
@@ -231,7 +231,7 @@ export async function getLoginTemplate(): Promise<ApiResponse<{ username?: Login
       const doc = parseXML(xmlResponse);
       const messageName = getMessageName(doc);
       
-      if (messageName === 'GET_LOGIN_TEMPLATE') {
+      if (messageName === 'GET_LOGIN' || messageName === 'GET_LOGIN_TEMPLATE' || messageName === 'GET_T_LOGIN_TEMPLATE') {
         const template = extractLoginTemplate(doc);
         const messages = getUserMessages(doc);
         

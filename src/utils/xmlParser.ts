@@ -776,6 +776,9 @@ export interface AppInitMenuCaptions {
   dailyAgendaTooltip?: string;
   exchangeData?: string;
   exchangeDataTooltip?: string;
+  pos?: string;
+  suppliers?: string;
+  logout?: string;
   [key: string]: string | undefined;
 }
 
@@ -787,38 +790,39 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
   
   console.log('extractAppInitMenuCaptions: Starting extraction...');
   
-  // Find ENTITY elements and look for CAPTION elements
+  // The old code uses: $(message).find("ENTITY").find("SET").find("ATTRIBUTEGROUP").find("CAPTION")
+  // This is a very broad search - find ALL CAPTION elements within ANY ENTITY -> SET -> ATTRIBUTEGROUP structure
+  // We'll do the same to catch all menu captions
+  
+  // Find all CAPTION elements in the document (broad search like old code)
+  const allCaptions: Array<{ name: string; text: string; entityName?: string }> = [];
+  
   const entities = findElements(doc, 'ENTITY');
   console.log('extractAppInitMenuCaptions: Found', entities.length, 'ENTITY elements');
   
-  entities.forEach((entity, entityIndex) => {
+  entities.forEach((entity) => {
     const entityName = getAttribute(entity, 'NAME');
-    console.log(`extractAppInitMenuCaptions: Processing ENTITY[${entityIndex}] NAME="${entityName}"`);
-    
     const sets = findElements(entity, 'SET');
-    console.log(`extractAppInitMenuCaptions: Found`, sets.length, 'SET elements in ENTITY', entityName);
     
-    sets.forEach((set, setIndex) => {
+    sets.forEach((set) => {
       const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
-      console.log(`extractAppInitMenuCaptions: Found`, attributeGroups.length, 'ATTRIBUTEGROUP elements in SET', setIndex);
       
-      attributeGroups.forEach((group, groupIndex) => {
-        const groupName = getAttribute(group, 'NAME');
-        console.log(`extractAppInitMenuCaptions: Processing ATTRIBUTEGROUP[${groupIndex}] NAME="${groupName}"`);
-        
+      attributeGroups.forEach((group) => {
         const captionElements = findElements(group, 'CAPTION');
-        console.log(`extractAppInitMenuCaptions: Found`, captionElements.length, 'CAPTION elements in ATTRIBUTEGROUP', groupName);
         
         captionElements.forEach((caption) => {
           const name = getAttribute(caption, 'NAME');
           const text = getTextContent(caption);
           
           if (name && text) {
-            // Only log menu-related captions to reduce console noise
-            if (name.includes('MENU') || name.includes('ACTIVITY') || name.includes('ORDER') || name.includes('AGENDA') || name.includes('EXCHANGE')) {
-              console.log(`extractAppInitMenuCaptions: CAPTION NAME="${name}" TEXT="${text}"`);
+            allCaptions.push({ name, text, entityName });
+            
+            // Log menu-related captions
+            if (name.includes('MENU') || name.includes('ACTIVITY') || name.includes('ORDER') || name.includes('AGENDA') || name.includes('EXCHANGE') || name.includes('POS') || name.includes('SUPPLIER')) {
+              console.log(`extractAppInitMenuCaptions: Found CAPTION NAME="${name}" TEXT="${text}" in ENTITY="${entityName}"`);
             }
             
+            // Match menu captions (checking multiple possible formats)
             switch (name) {
               case 'MENU:ACTIVITIES':
               case 'LABEL:ACTIVITIES':
@@ -829,12 +833,14 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
                 captions.activitiesTooltip = text;
                 break;
               case 'MENU:ORDERS':
+              case 'LABEL:ORDERS':
                 captions.orders = text;
                 break;
               case 'MENU_TOOLTIP:ORDERS':
                 captions.ordersTooltip = text;
                 break;
               case 'MENU_DAILYAGENDA':
+              case 'MENU:DAILYAGENDA':
               case 'LABEL:AGENDA':
                 captions.dailyAgenda = text;
                 break;
@@ -842,17 +848,24 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
                 captions.dailyAgendaTooltip = text;
                 break;
               case 'MENU:EXCHANGEDATA':
+              case 'MENU:EXCHANGE_DATA':
                 captions.exchangeData = text;
                 break;
               case 'MENU_TOOLTIP:EXCHANGEDATA':
+              case 'MENU_TOOLTIP:EXCHANGE_DATA':
                 captions.exchangeDataTooltip = text;
                 break;
               case 'TEXT:POS':
               case 'LABEL:POS':
                 captions.pos = text;
                 break;
+              case 'TEXT:SUPPLIER':
               case 'LABEL:SUPPLIERS':
+              case 'LABEL:SUPPLIER':
                 captions.suppliers = text;
+                break;
+              case 'MENU:LOGOUT':
+                captions.logout = text;
                 break;
               default:
                 // Store other captions for future use
@@ -864,6 +877,37 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
       });
     });
   });
+  
+  console.log(`extractAppInitMenuCaptions: Processed ${allCaptions.length} total CAPTION elements`);
+  
+  // Log all extracted menu captions for debugging
+  console.log('extractAppInitMenuCaptions: Extracted captions:', {
+    activities: captions.activities,
+    orders: captions.orders,
+    pos: captions.pos,
+    suppliers: captions.suppliers,
+    dailyAgenda: captions.dailyAgenda,
+    exchangeData: captions.exchangeData,
+  });
+  
+  // Also log all CAPTION names we found (for debugging)
+  const allCaptionNames: string[] = [];
+  entities.forEach((entity) => {
+    const sets = findElements(entity, 'SET');
+    sets.forEach((set) => {
+      const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
+      attributeGroups.forEach((group) => {
+        const captionElements = findElements(group, 'CAPTION');
+        captionElements.forEach((caption) => {
+          const name = getAttribute(caption, 'NAME');
+          if (name && (name.includes('MENU') || name.includes('ACTIVITY') || name.includes('ORDER') || name.includes('POS') || name.includes('SUPPLIER') || name.includes('AGENDA') || name.includes('EXCHANGE'))) {
+            allCaptionNames.push(name);
+          }
+        });
+      });
+    });
+  });
+  console.log('extractAppInitMenuCaptions: All menu-related CAPTION names found:', allCaptionNames);
   
   console.log('extractAppInitMenuCaptions result:', captions);
   return captions;

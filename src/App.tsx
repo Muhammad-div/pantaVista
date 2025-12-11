@@ -49,6 +49,9 @@ function App() {
         <Route path="suppliers" element={<Suppliers />} />
         <Route path="suppliers/:id" element={<ShowSupplier />} />
         <Route path="suppliers/:id/pos-list" element={<POSList />} />
+        <Route path="pos" element={<POSList />} />
+        <Route path="activities" element={<DevelopmentInProgress />} />
+        <Route path="orders" element={<DevelopmentInProgress />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="regions" element={<Regions />} />
         <Route path="persons" element={<Persons />} />
