@@ -115,6 +115,9 @@
   border: 1px solid var(--border-color, #cbd5e1);
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .pos-table-card:hover {
@@ -173,6 +176,160 @@
   margin-right: 16px;
 }
 
+/* KendoReact Grid Styles */
+.kendo-pos-grid {
+  border: none;
+  font-family: inherit;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.kendo-pos-grid .k-grid {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.kendo-pos-grid .k-grid-header {
+  background-color: var(--table-header-bg, #f9fafb);
+  border-bottom: 2px solid var(--divider-color, #e5e7eb);
+  width: 100% !important;
+}
+
+.kendo-pos-grid .k-grid-header th {
+  background-color: var(--table-header-bg, #f9fafb);
+  color: var(--text-secondary, #374151);
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 16px;
+  border-bottom: none;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.kendo-pos-grid .k-grid-content {
+  background-color: var(--bg-paper, #ffffff);
+  width: 100% !important;
+}
+
+.kendo-pos-grid .k-grid-table {
+  width: 100% !important;
+  table-layout: auto;
+}
+
+.kendo-pos-grid .k-grid-header-wrap,
+.kendo-pos-grid .k-grid-content-wrap {
+  width: 100% !important;
+  overflow-x: auto;
+}
+
+.kendo-pos-grid .k-grid-header,
+.kendo-pos-grid .k-grid-content {
+  width: 100% !important;
+  min-width: 100%;
+}
+
+.kendo-pos-grid .k-grid-header table,
+.kendo-pos-grid .k-grid-content table {
+  width: 100% !important;
+}
+
+.kendo-pos-grid .k-grid-content tr {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.kendo-pos-grid .k-grid-content tr:nth-of-type(even) {
+  background-color: var(--table-row-even, #ffffff);
+}
+
+.kendo-pos-grid .k-grid-content tr:hover {
+  background-color: var(--table-row-hover, #f1f5f9);
+}
+
+.kendo-pos-grid .k-grid-content td {
+  padding: 12px 16px;
+  color: var(--text-primary, #1f2937);
+  border-bottom: 1px solid var(--divider-color, #e2e8f0);
+}
+
+.kendo-pos-grid .k-grid-toolbar {
+  padding: 12px 16px;
+  background-color: var(--bg-paper, #ffffff);
+  border-bottom: 1px solid var(--divider-color, #e2e8f0);
+  border-top: 1px solid var(--divider-color, #e2e8f0);
+}
+
+.kendo-pos-grid .k-pager {
+  padding: 12px 16px;
+  background-color: var(--bg-paper, #ffffff);
+  border-top: 1px solid var(--divider-color, #e2e8f0);
+}
+
+.kendo-pos-grid .k-filter-row {
+  background-color: var(--table-header-bg, #f9fafb) !important;
+}
+
+.kendo-pos-grid .k-filter-row th {
+  padding: 8px;
+  background-color: var(--table-header-bg, #f9fafb) !important;
+  border-bottom: 1px solid var(--divider-color, #e5e7eb);
+}
+
+.kendo-pos-grid .k-filtercell {
+  padding: 8px;
+}
+
+.kendo-pos-grid .k-filtercell input,
+.kendo-pos-grid .k-filtercell select {
+  border: 1px solid var(--border-color, #cbd5e1);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 14px;
+  background-color: var(--input-bg, #ffffff);
+  color: var(--text-primary, #1f2937);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.kendo-pos-grid .k-filtercell input:focus,
+.kendo-pos-grid .k-filtercell select:focus {
+  outline: none;
+  border-color: var(--nav-active-bg, #3b82f6);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.kendo-pos-grid .k-filtercell input::placeholder {
+  color: var(--text-tertiary, #9ca3af);
+}
+
+.kendo-pos-grid .k-sort-icon {
+  color: var(--text-tertiary, #9ca3af);
+}
+
+.kendo-pos-grid .k-grid-header th:hover {
+  background-color: var(--bg-hover, #f1f5f9);
+}
+
+/* Table Header Styles */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--divider-color, #e2e8f0);
+  background: var(--bg-paper, #ffffff);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.table-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 /* Responsive */
 @media (max-width: 960px) {
   .pos-list-content {
@@ -195,6 +352,25 @@
 
   .pos-table-card {
     overflow-x: auto;
+  }
+
+  .table-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .table-header .MuiTextField-root {
+    width: 100% !important;
+  }
+
+  .kendo-pos-grid {
+    font-size: 12px;
+  }
+
+  .kendo-pos-grid .k-grid-header th,
+  .kendo-pos-grid .k-grid-content td {
+    padding: 8px 12px;
   }
 }
 

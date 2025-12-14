@@ -45,7 +45,7 @@ function App() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<Navigate to="/suppliers" replace />} />
+        <Route index element={<Navigate to="/pos" replace />} />
         <Route path="suppliers" element={<Suppliers />} />
         <Route path="suppliers/:id" element={<ShowSupplier />} />
         <Route path="suppliers/:id/pos-list" element={<POSList />} />

@@ -32,6 +32,7 @@ import {
 import { useState, useMemo } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
 import { useMenu } from '../contexts/MenuContext'
+import { useAuth } from '../contexts/AuthContext'
 import SettingsSidebar from './SettingsSidebar'
 import './DashboardLayout.css'
 
@@ -51,6 +52,7 @@ const DashboardLayout = () => {
   const navigate = useNavigate()
   const { mode, toggleTheme } = useTheme()
   const { menuCaptions, permissions, loading: menuLoading } = useMenu()
+  const { logout } = useAuth()
   const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const [settingsSidebarOpen, setSettingsSidebarOpen] = useState(false)
@@ -153,10 +155,10 @@ const DashboardLayout = () => {
     setUserMenuAnchor(null)
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated')
-    navigate('/login')
+  const handleLogout = async () => {
     handleUserMenuClose()
+    await logout()
+    navigate('/login', { replace: true })
   }
 
   const handleSettingsClick = (e: React.MouseEvent) => {
@@ -340,20 +342,33 @@ const DashboardLayout = () => {
       >
         <Box className="sidebar-header">
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: sidebarExpanded ? 'space-between' : 'center', width: '100%', gap: 1 }}>
-            <Typography 
-              variant="h5" 
-              className="logo-text" 
-              sx={{ 
-                opacity: sidebarExpanded ? 1 : 0,
-                width: sidebarExpanded ? 'auto' : 0,
-                overflow: 'hidden',
-                transition: 'opacity 0.3s ease, width 0.3s ease',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              <span className="logo-panta">panta</span>
-              <span className="logo-vista">Vista</span>
-            </Typography>
+            {menuCaptions?.logo && sidebarExpanded ? (
+              <img 
+                src={menuCaptions.logo} 
+                alt="Logo" 
+                style={{ 
+                  maxWidth: '150px', 
+                  maxHeight: '50px', 
+                  objectFit: 'contain',
+                  transition: 'opacity 0.3s ease, width 0.3s ease',
+                }} 
+              />
+            ) : (
+              <Typography 
+                variant="h5" 
+                className="logo-text" 
+                sx={{ 
+                  opacity: sidebarExpanded ? 1 : 0,
+                  width: sidebarExpanded ? 'auto' : 0,
+                  overflow: 'hidden',
+                  transition: 'opacity 0.3s ease, width 0.3s ease',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <span className="logo-panta">panta</span>
+                <span className="logo-vista">Vista</span>
+              </Typography>
+            )}
             <IconButton
               onClick={toggleSidebar}
               sx={{

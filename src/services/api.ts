@@ -52,13 +52,18 @@ export function storeToken(token: string): void {
 }
 
 /**
- * Clear stored token
+ * Clear stored token and all authentication-related data
  */
 export function clearToken(): void {
   localStorage.removeItem('pv.token');
   localStorage.removeItem('pv.lang');
   localStorage.removeItem('pv.displayName');
   localStorage.removeItem('pv.profileImage');
+  localStorage.removeItem('pv.username');
+  localStorage.removeItem('pv.isSupplier');
+  localStorage.removeItem('pv.orgRole');
+  localStorage.removeItem('pv.menuCaptions');
+  localStorage.removeItem('pv.permissions');
 }
 
 /**
@@ -862,6 +867,116 @@ export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitM
   
   pendingRequests.set(requestKey, requestPromise);
   return requestPromise;
+}
+
+/**
+ * SET_LOGOUT - Log out the current user
+ */
+export async function logout(): Promise<ApiResponse<{ success: boolean }>> {
+  try {
+    const token = getStoredToken();
+    
+    if (!token) {
+      // If no token, consider logout successful (already logged out)
+      return {
+        success: true,
+        data: { success: true },
+      };
+    }
+
+    const lang = detectLanguage();
+    const storedLang = getStoredLanguage();
+    
+    let langCode = lang.short;
+    if (storedLang.includes(':')) {
+      const parts = storedLang.split(':');
+      if (parts.length > 1) {
+        const langName = parts[1].toUpperCase();
+        if (langName === 'GERMAN') {
+          langCode = 'GE';
+        } else if (langName === 'ENGLISH') {
+          langCode = 'EN';
+        } else {
+          langCode = langName.substring(0, 2);
+        }
+      }
+    } else if (lang.full === 'GERMAN') {
+      langCode = 'GE';
+    } else if (lang.full === 'ENGLISH') {
+      langCode = 'EN';
+    }
+    
+    const xmlPayload = `<?xml version="1.0" encoding="utf-8"?>
+<ENVELOPE NAME="PV.ENVELOPE" VERSION="1.00" CREATE="">
+  <ENVELOPE_DATA>
+    <TOKEN>${token}</TOKEN>
+    <IPADDRESS />
+    <USERAGENT />
+    <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
+    <ORIGINATOR>PV.TC.WEB.UI</ORIGINATOR>
+  </ENVELOPE_DATA>
+  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
+    <BNO_REQUEST VERSION="1.00">
+      <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
+      <BNO_INTERACTION_NAME>SET_LOGOUT</BNO_INTERACTION_NAME>
+      <BNO_INTERACTION_VERSION>1.00</BNO_INTERACTION_VERSION>
+      <BNO_INTERACTION_MODE>INTERACTION_MODE:CREATE</BNO_INTERACTION_MODE>
+    </BNO_REQUEST>
+  </APPLICATION_REQUEST>
+</ENVELOPE>`;
+
+    console.log('Logout XML Payload:', xmlPayload);
+    const xmlResponse = await makeXMLRequest(xmlPayload);
+    console.log('Logout XML Response:', xmlResponse);
+    const doc = parseXML(xmlResponse);
+    const messages = getUserMessages(doc);
+    const systemMessages = getSystemMessages(doc);
+    const allMessages = [...messages, ...systemMessages];
+    
+    // Check for success messages (LOGOUT_DONE or LOGOUT_PROXYUSER_DONE)
+    const successMessages = allMessages.filter((msg) => 
+      msg.name === 'KERNEL.INTERACTIONUSEROPERATION.LOGOUT_DONE' ||
+      msg.name === 'KERNEL.INTERACTIONUSEROPERATION.LOGOUT_PROXYUSER_DONE'
+    );
+    
+    // Check for error messages (critical level 1 or higher)
+    const errorMessages = allMessages.filter((msg) => {
+      const cl = parseInt(msg.criticalLevel || '0', 10);
+      return cl >= 1;
+    });
+    
+    if (errorMessages.length > 0) {
+      return {
+        success: false,
+        error: errorMessages[0]?.caption || 'Logout failed',
+        messages: allMessages,
+      };
+    }
+    
+    // If we have success messages or no error messages, consider logout successful
+    if (successMessages.length > 0 || errorMessages.length === 0) {
+      return {
+        success: true,
+        data: { success: true },
+        messages: allMessages,
+      };
+    }
+    
+    // Default to success if no clear error
+    return {
+      success: true,
+      data: { success: true },
+      messages: allMessages,
+    };
+  } catch (error) {
+    // Even if API call fails, we should still clear local storage
+    // Log the error but don't fail the logout
+    console.error('Logout API call failed:', error);
+    return {
+      success: true, // Still return success to allow local cleanup
+      data: { success: true },
+    };
+  }
 }
 
 /**

@@ -18,6 +18,7 @@ import {
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useAuth } from '../contexts/AuthContext'
+import { useMenu } from '../contexts/MenuContext'
 import { getPreAppInit, getLoginTemplate, requestNewPassword } from '../services/api'
 import type { PreAppInitCaptions, LoginTemplateField } from '../utils/xmlParser'
 import './Login.css'
@@ -25,6 +26,7 @@ import './Login.css'
 const Login = () => {
   const navigate = useNavigate()
   const { login: loginApi, isAuthenticated } = useAuth()
+  const { refreshMenu } = useMenu()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -88,7 +90,7 @@ const Login = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/suppliers', { replace: true })
+      navigate('/pos', { replace: true })
     }
   }, [isAuthenticated, navigate])
 
@@ -111,7 +113,9 @@ const Login = () => {
       const result = await loginApi(username, password)
       
       if (result.success) {
-        navigate('/suppliers', { replace: true })
+        // Refresh menu after successful login
+        await refreshMenu()
+        navigate('/pos', { replace: true })
       } else {
         setError(result.error || 'Login failed. Please check your credentials.')
       }
@@ -142,7 +146,7 @@ const Login = () => {
           setForgotPasswordUsername('')
           setForgotPasswordSuccess(false)
         }, 3000)
-      } else {
+    } else {
         setForgotPasswordError(result.error || 'Failed to request new password')
       }
     } catch (err) {
@@ -231,10 +235,10 @@ const Login = () => {
                   }} 
                 />
               ) : (
-                <Typography variant="h4" component="div" className="logo-text">
-                  <span className="logo-panta">panta</span>
-                  <span className="logo-vista">Vista</span>
-                </Typography>
+              <Typography variant="h4" component="div" className="logo-text">
+                <span className="logo-panta">panta</span>
+                <span className="logo-vista">Vista</span>
+              </Typography>
               )}
             </Box>
             <Typography variant="h5" className="welcome-text" gutterBottom>

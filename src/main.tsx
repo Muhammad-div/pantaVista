@@ -15,11 +15,11 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
       <AuthProvider>
         <MenuProvider>
-          <BrowserRouter>
-            <App />
-            <Analytics />
-            <SpeedInsights />
-          </BrowserRouter>
+      <BrowserRouter>
+        <App />
+        <Analytics />
+        <SpeedInsights />
+      </BrowserRouter>
         </MenuProvider>
       </AuthProvider>
     </ThemeProvider>

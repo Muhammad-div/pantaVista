@@ -7,7 +7,7 @@ interface AuthContextType {
   isLoading: boolean;
   token: string | null;
   login: (username: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,10 +50,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const logout = () => {
-    clearToken();
-    setToken(null);
-    setIsAuthenticated(false);
+  const logout = async (): Promise<void> => {
+    try {
+      // Call logout API to notify backend
+      const { logout: logoutApi } = await import('../services/api');
+      await logoutApi();
+    } catch (error) {
+      // Even if API call fails, we should still clear local storage
+      console.error('Logout API call error:', error);
+    } finally {
+      // Always clear local storage and update state
+      clearToken();
+      setToken(null);
+      setIsAuthenticated(false);
+    }
   };
 
   return (

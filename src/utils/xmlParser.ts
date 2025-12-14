@@ -665,8 +665,98 @@ export interface POSItem {
 export function extractPosSmallList(doc: Document): POSItem[] {
   const posList: POSItem[] = [];
   
-  // Find ENTITY NAME="T.POS.SMALL.LIST" or similar
-  const entities = findElements(doc, 'ENTITY');
+  // Find MESSAGEAREA with NAME="T.POS.SMALL.LIST" or similar
+  const messageAreas = findElements(doc, 'MESSAGEAREA');
+  let posMessageArea = messageAreas.find(
+    (area) => {
+      const name = getAttribute(area, 'NAME');
+      return name === 'T.POS.SMALL.LIST' || 
+             name === 'T.POS.LIST' ||
+             name === 'POS.SMALL.LIST' ||
+             (name?.includes('POS') && name?.includes('LIST'));
+    }
+  );
+  
+  // If not found by name, try to find any MESSAGEAREA that contains POS data
+  if (!posMessageArea && messageAreas.length > 0) {
+    // Look for MESSAGEAREA that has DATAFIELDS with ENTITY containing POS
+    for (const area of messageAreas) {
+      const dataFields = findElement(area, 'DATAFIELDS');
+      if (dataFields) {
+        const entities = findElements(dataFields, 'ENTITY');
+        const posEntity = entities.find(
+          (entity) => {
+            const name = getAttribute(entity, 'NAME');
+            return name === 'T.POS.SMALL.LIST' || 
+                   name === 'T.POS.LIST' ||
+                   name === 'POS.SMALL.LIST' ||
+                   (name?.includes('POS') && name?.includes('LIST'));
+          }
+        );
+        if (posEntity) {
+          posMessageArea = area;
+          break;
+        }
+      }
+    }
+  }
+  
+  if (!posMessageArea) {
+    console.warn('extractPosSmallList: POS MESSAGEAREA not found. Available MESSAGEAREAs:', 
+      messageAreas.map(el => getAttribute(el, 'NAME')));
+    // Fallback: try to find ENTITY directly
+    const entities = findElements(doc, 'ENTITY');
+    const posEntity = entities.find(
+      (entity) => {
+        const name = getAttribute(entity, 'NAME');
+        return name === 'T.POS.SMALL.LIST' || 
+               name === 'T.POS.LIST' ||
+               name === 'POS.SMALL.LIST' ||
+               (name?.includes('POS') && name?.includes('LIST'));
+      }
+    );
+    
+    if (posEntity) {
+      const sets = findElements(posEntity, 'SET');
+      sets.forEach((set, index) => {
+        const setId = getAttribute(set, 'SET_ID') || `${index}`;
+        const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
+        
+        attributeGroups.forEach((group) => {
+          const pvno = getTextContent(findElement(group, 'PVNO'));
+          const displayName = getTextContent(findElement(group, 'DISPLAYNAME'));
+          const address = getTextContent(findElement(group, 'ADDRESS1'));
+          const city = getTextContent(findElement(group, 'CITY'));
+          const pcode = getTextContent(findElement(group, 'PCODE'));
+          const phone = getTextContent(findElement(group, 'PHONE1'));
+          
+          if (pvno || displayName) {
+            posList.push({
+              id: setId,
+              pvno: pvno || '',
+              displayName: displayName || '',
+              address: address || '',
+              city: city || '',
+              pcode: pcode || '',
+              phone: phone || undefined,
+            });
+          }
+        });
+      });
+      console.log('extractPosSmallList result (fallback):', posList);
+      return posList;
+    }
+    return posList;
+  }
+  
+  // Navigate through DATAFIELDS -> ENTITIES -> ENTITY -> SETS -> SET -> ATTRIBUTEGROUP
+  const dataFields = findElement(posMessageArea, 'DATAFIELDS');
+  if (!dataFields) {
+    console.warn('extractPosSmallList: DATAFIELDS not found in MESSAGEAREA');
+    return posList;
+  }
+  
+  const entities = findElements(dataFields, 'ENTITY');
   const posEntity = entities.find(
     (entity) => {
       const name = getAttribute(entity, 'NAME');
@@ -678,7 +768,7 @@ export function extractPosSmallList(doc: Document): POSItem[] {
   );
   
   if (!posEntity) {
-    console.warn('extractPosSmallList: POS entity not found. Available entities:', 
+    console.warn('extractPosSmallList: POS ENTITY not found in DATAFIELDS. Available entities:', 
       entities.map(el => getAttribute(el, 'NAME')));
     return posList;
   }
@@ -712,7 +802,7 @@ export function extractPosSmallList(doc: Document): POSItem[] {
     });
   });
   
-  console.log('extractPosSmallList result:', posList);
+  console.log('extractPosSmallList result:', posList.length, 'items');
   return posList;
 }
 
@@ -779,26 +869,41 @@ export interface AppInitMenuCaptions {
   pos?: string;
   suppliers?: string;
   logout?: string;
+  logo?: string; // Base64 logo image data URL
+  logoutIcon?: string; // Base64 logout icon image data URL
   [key: string]: string | undefined;
 }
 
 /**
  * Extract menu captions from GET_T_APP_INIT response
+ * Note: Data is in MESSAGEAREA > DATAFIELDS > ENTITIES > ENTITY (not METAFIELDS)
  */
 export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
   const captions: AppInitMenuCaptions = {};
   
   console.log('extractAppInitMenuCaptions: Starting extraction...');
   
-  // The old code uses: $(message).find("ENTITY").find("SET").find("ATTRIBUTEGROUP").find("CAPTION")
-  // This is a very broad search - find ALL CAPTION elements within ANY ENTITY -> SET -> ATTRIBUTEGROUP structure
-  // We'll do the same to catch all menu captions
+  // Find MESSAGEAREA first
+  const messageAreas = findElements(doc, 'MESSAGEAREA');
+  let dataFields: Element | null = null;
   
-  // Find all CAPTION elements in the document (broad search like old code)
+  // Look for DATAFIELDS in MESSAGEAREA (this is where actual data is, not METAFIELDS)
+  for (const messageArea of messageAreas) {
+    const df = findElement(messageArea, 'DATAFIELDS');
+    if (df) {
+      dataFields = df;
+      console.log('extractAppInitMenuCaptions: Found DATAFIELDS in MESSAGEAREA');
+      break;
+    }
+  }
+  
+  // If DATAFIELDS not found, fallback to searching all entities (for backward compatibility)
+  const searchRoot = dataFields || doc;
+  const entities = findElements(searchRoot, 'ENTITY');
+  console.log('extractAppInitMenuCaptions: Found', entities.length, 'ENTITY elements in', dataFields ? 'DATAFIELDS' : 'document');
+  
+  // Find all CAPTION elements in DATAFIELDS entities
   const allCaptions: Array<{ name: string; text: string; entityName?: string }> = [];
-  
-  const entities = findElements(doc, 'ENTITY');
-  console.log('extractAppInitMenuCaptions: Found', entities.length, 'ENTITY elements');
   
   entities.forEach((entity) => {
     const entityName = getAttribute(entity, 'NAME');
@@ -818,7 +923,7 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
             allCaptions.push({ name, text, entityName });
             
             // Log menu-related captions
-            if (name.includes('MENU') || name.includes('ACTIVITY') || name.includes('ORDER') || name.includes('AGENDA') || name.includes('EXCHANGE') || name.includes('POS') || name.includes('SUPPLIER')) {
+            if (name.includes('MENU') || name.includes('ACTIVITY') || name.includes('ORDER') || name.includes('AGENDA') || name.includes('EXCHANGE') || name.includes('POS') || name.includes('SUPPLIER') || name.includes('LOGOUT')) {
               console.log(`extractAppInitMenuCaptions: Found CAPTION NAME="${name}" TEXT="${text}" in ENTITY="${entityName}"`);
             }
             
@@ -826,50 +931,65 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
             switch (name) {
               case 'MENU:ACTIVITIES':
               case 'LABEL:ACTIVITIES':
+              case 'TEXT:ACTIVITIES':
                 captions.activities = text;
                 break;
               case 'MENU_TOOLTIP:ACTIVITIES':
               case 'ACTIVITY.TOOLTIP:ACTIVITY':
+              case 'TOOLTIP:ACTIVITIES':
                 captions.activitiesTooltip = text;
                 break;
               case 'MENU:ORDERS':
               case 'LABEL:ORDERS':
+              case 'TEXT:ORDERS':
                 captions.orders = text;
                 break;
               case 'MENU_TOOLTIP:ORDERS':
+              case 'TOOLTIP:ORDERS':
                 captions.ordersTooltip = text;
                 break;
               case 'MENU_DAILYAGENDA':
               case 'MENU:DAILYAGENDA':
               case 'LABEL:AGENDA':
+              case 'TEXT:AGENDA':
                 captions.dailyAgenda = text;
                 break;
               case 'MENU_TOOLTIP:DAILYAGENDA':
+              case 'TOOLTIP:AGENDA':
                 captions.dailyAgendaTooltip = text;
                 break;
               case 'MENU:EXCHANGEDATA':
               case 'MENU:EXCHANGE_DATA':
+              case 'TEXT:EXCHANGEDATA':
                 captions.exchangeData = text;
                 break;
               case 'MENU_TOOLTIP:EXCHANGEDATA':
               case 'MENU_TOOLTIP:EXCHANGE_DATA':
+              case 'TOOLTIP:EXCHANGEDATA':
                 captions.exchangeDataTooltip = text;
                 break;
               case 'TEXT:POS':
               case 'LABEL:POS':
+              case 'MENU:POS':
                 captions.pos = text;
                 break;
               case 'TEXT:SUPPLIER':
+              case 'TEXT:SUPPLIERS':
               case 'LABEL:SUPPLIERS':
               case 'LABEL:SUPPLIER':
+              case 'MENU:SUPPLIERS':
                 captions.suppliers = text;
                 break;
               case 'MENU:LOGOUT':
+              case 'TEXT:LOGOUT':
+              case 'LABEL:LOGOUT':
                 captions.logout = text;
                 break;
               default:
                 // Store other captions for future use
-                captions[name] = text;
+                if (name && text) {
+                  captions[name] = text;
+                }
                 break;
             }
           }
@@ -877,6 +997,48 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
       });
     });
   });
+  
+  // Extract images (logos) from UI.IMAGE.DATA entity
+  const imageDataEntity = entities.find(
+    (entity) => getAttribute(entity, 'NAME') === 'UI.IMAGE.DATA'
+  );
+  
+  if (imageDataEntity) {
+    console.log('extractAppInitMenuCaptions: Found UI.IMAGE.DATA entity, extracting images...');
+    const imageSets = findElements(imageDataEntity, 'SET');
+    
+    imageSets.forEach((set) => {
+      const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
+      const imageItemGroup = attributeGroups.find(
+        (group) => getAttribute(group, 'NAME') === 'UI.IMAGE.ITEM'
+      );
+      
+      if (imageItemGroup) {
+        const imageIdentifierEl = findElement(imageItemGroup, 'IMAGE_IDENTIFIER');
+        const imageEl = findElement(imageItemGroup, 'IMAGE');
+        
+        if (imageIdentifierEl && imageEl) {
+          const identifier = getTextContent(imageIdentifierEl);
+          const imageData = getTextContent(imageEl);
+          
+          if (imageData) {
+            // Convert base64 to data URL
+            const dataUrl = `data:image/png;base64,${imageData}`;
+            
+            if (identifier === 'PLACEHOLDER:LOGO' || identifier === 'ICON:LOGO') {
+              captions.logo = dataUrl;
+              console.log('extractAppInitMenuCaptions: Found logo image');
+            } else if (identifier === 'ICON:LOGOUT') {
+              captions.logoutIcon = dataUrl;
+              console.log('extractAppInitMenuCaptions: Found logout icon');
+            }
+          }
+        }
+      }
+    });
+  } else {
+    console.warn('extractAppInitMenuCaptions: UI.IMAGE.DATA entity not found');
+  }
   
   console.log(`extractAppInitMenuCaptions: Processed ${allCaptions.length} total CAPTION elements`);
   
@@ -888,26 +1050,10 @@ export function extractAppInitMenuCaptions(doc: Document): AppInitMenuCaptions {
     suppliers: captions.suppliers,
     dailyAgenda: captions.dailyAgenda,
     exchangeData: captions.exchangeData,
+    logout: captions.logout,
+    hasLogo: !!captions.logo,
+    hasLogoutIcon: !!captions.logoutIcon,
   });
-  
-  // Also log all CAPTION names we found (for debugging)
-  const allCaptionNames: string[] = [];
-  entities.forEach((entity) => {
-    const sets = findElements(entity, 'SET');
-    sets.forEach((set) => {
-      const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
-      attributeGroups.forEach((group) => {
-        const captionElements = findElements(group, 'CAPTION');
-        captionElements.forEach((caption) => {
-          const name = getAttribute(caption, 'NAME');
-          if (name && (name.includes('MENU') || name.includes('ACTIVITY') || name.includes('ORDER') || name.includes('POS') || name.includes('SUPPLIER') || name.includes('AGENDA') || name.includes('EXCHANGE'))) {
-            allCaptionNames.push(name);
-          }
-        });
-      });
-    });
-  });
-  console.log('extractAppInitMenuCaptions: All menu-related CAPTION names found:', allCaptionNames);
   
   console.log('extractAppInitMenuCaptions result:', captions);
   return captions;

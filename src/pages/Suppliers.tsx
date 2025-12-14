@@ -361,41 +361,41 @@ const Suppliers = () => {
               </Box>
             ) : (
               <>
-                {/* Premium Feature Indicator - Grouping */}
-                <Box
-                  sx={{
-                    mb: 0,
-                    p: 2,
-                    backgroundColor: 'var(--bg-hover, #f3f4f6)',
-                    border: '2px dashed var(--border-color, #cbd5e1)',
-                    borderRadius: '8px 8px 0 0',
-                    borderBottom: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    position: 'relative',
-                    opacity: 0.6,
-                    cursor: 'not-allowed',
-                  }}
-                  title="Grouping is a premium feature. Upgrade to KendoReact Premium to enable this feature."
-                >
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 1,
-                    }}
-                  >
-                    <span>🔒</span>
-                    <span>Drag a column header here to group by that column</span>
-                    <span style={{ marginLeft: '8px', fontSize: '10px', color: '#9ca3af' }}>
-                      (Premium Feature)
-                    </span>
-                  </Typography>
-                </Box>
-                <Grid
+            {/* Premium Feature Indicator - Grouping */}
+            <Box
+              sx={{
+                mb: 0,
+                p: 2,
+                backgroundColor: 'var(--bg-hover, #f3f4f6)',
+                border: '2px dashed var(--border-color, #cbd5e1)',
+                borderRadius: '8px 8px 0 0',
+                borderBottom: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                opacity: 0.6,
+                cursor: 'not-allowed',
+              }}
+              title="Grouping is a premium feature. Upgrade to KendoReact Premium to enable this feature."
+            >
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                }}
+              >
+                <span>🔒</span>
+                <span>Drag a column header here to group by that column</span>
+                <span style={{ marginLeft: '8px', fontSize: '10px', color: '#9ca3af' }}>
+                  (Premium Feature)
+                </span>
+              </Typography>
+            </Box>
+            <Grid
               style={{ height: '600px', width: '100%' }}
               data={dataResult}
               sortable={true}
@@ -468,7 +468,7 @@ const Suppliers = () => {
                 filterable={true}
                 sortable={true}
               />
-                </Grid>
+            </Grid>
               </>
             )}
           </Box>

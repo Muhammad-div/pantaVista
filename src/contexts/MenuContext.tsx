@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import type { ReactNode } from 'react'
-import { getAppInit } from '../services/api'
+import { getAppInit, getStoredToken } from '../services/api'
 import type { AppInitMenuCaptions, MenuPermissions } from '../utils/xmlParser'
 
 interface MenuContextType {
@@ -111,8 +111,11 @@ export const MenuProvider: React.FC<MenuProviderProps> = ({ children }) => {
     
     setLoading(false)
     
-    // Then fetch fresh data from API
-    refreshMenu()
+    // Then fetch fresh data from API if we have a token
+    const token = getStoredToken()
+    if (token) {
+      refreshMenu()
+    }
   }, [])
 
   return (
