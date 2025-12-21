@@ -3,6 +3,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import LockIcon from '@mui/icons-material/Lock'
 import PersonIcon from '@mui/icons-material/Person'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
+import { useNavigate } from 'react-router-dom'
+import { useTheme } from '../contexts/ThemeContext'
 import './SettingsSidebar.css'
 
 interface SettingsSidebarProps {
@@ -11,19 +13,22 @@ interface SettingsSidebarProps {
 }
 
 const SettingsSidebar = ({ open, onClose }: SettingsSidebarProps) => {
+  const navigate = useNavigate()
+  const { primaryColor, setPrimaryColor } = useTheme()
+
   const handleSecurityClick = () => {
-    // Handle security click
-    console.log('Security clicked')
+    onClose()
+    navigate('/settings/security')
   }
 
   const handleProfileClick = () => {
-    // Handle profile click
-    console.log('Profile clicked')
+    onClose()
+    navigate('/profile')
   }
 
   const handleDelegationClick = () => {
-    // Handle delegation click
-    console.log('Delegation clicked')
+    onClose()
+    navigate('/settings/delegation')
   }
 
   return (
@@ -58,6 +63,44 @@ const SettingsSidebar = ({ open, onClose }: SettingsSidebarProps) => {
           <Typography variant="body1" className="settings-intro">
             The system center offers you the opportunity to customize your personal settings.
           </Typography>
+
+          {/* Appearance / Primary Color */}
+          <Box className="settings-appearance">
+            <Typography className="settings-appearance-title">
+              Theme &amp; Colors
+            </Typography>
+            <Typography className="settings-appearance-subtitle">
+              Choose your primary accent color. This affects buttons, highlights and active navigation.
+            </Typography>
+            <Box className="settings-color-options">
+              {[
+                { key: 'blue', label: 'Blue', color: '#3b82f6' },
+                { key: 'indigo', label: 'Indigo', color: '#6366f1' },
+                { key: 'emerald', label: 'Emerald', color: '#10b981' },
+                { key: 'amber', label: 'Amber', color: '#f59e0b' },
+                { key: 'rose', label: 'Rose', color: '#f97373' },
+              ].map((option) => (
+                <button
+                  key={option.key}
+                  type="button"
+                  className={`settings-color-pill${
+                    primaryColor === option.key ? ' selected' : ''
+                  }`}
+                  onClick={() =>
+                    setPrimaryColor(
+                      (option.key as 'blue' | 'indigo' | 'emerald' | 'amber' | 'rose')
+                    )
+                  }
+                >
+                  <span
+                    className="settings-color-swatch"
+                    style={{ backgroundColor: option.color }}
+                  />
+                  <span>{option.label}</span>
+                </button>
+              ))}
+            </Box>
+          </Box>
 
           {/* Settings Options */}
           <List className="settings-options-list">

@@ -13,7 +13,10 @@ import Transactions from './pages/Transactions'
 import Pentaree from './pages/Pentaree'
 import Workspace from './pages/Workspace'
 import Settings from './pages/Settings'
+import MenuDemo from './pages/MenuDemo'
 import DevelopmentInProgress from './pages/DevelopmentInProgress'
+import Profile from './pages/Profile'
+import AccountSettings from './pages/AccountSettings'
 import './App.css'
 
 import { useAuth } from './contexts/AuthContext'
@@ -45,7 +48,7 @@ function App() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<Navigate to="/pos" replace />} />
+        <Route index element={<Dashboard />} />
         <Route path="suppliers" element={<Suppliers />} />
         <Route path="suppliers/:id" element={<ShowSupplier />} />
         <Route path="suppliers/:id/pos-list" element={<POSList />} />
@@ -70,9 +73,13 @@ function App() {
         <Route path="workspace/tasks" element={<DevelopmentInProgress />} />
         <Route path="workspace/calendar" element={<DevelopmentInProgress />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="menu-demo" element={<MenuDemo />} />
         <Route path="settings/general" element={<DevelopmentInProgress />} />
         <Route path="settings/security" element={<DevelopmentInProgress />} />
         <Route path="settings/notifications" element={<DevelopmentInProgress />} />
+        <Route path="settings/delegation" element={<DevelopmentInProgress />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="account-settings" element={<AccountSettings />} />
       </Route>
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>

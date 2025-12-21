@@ -199,7 +199,7 @@
 }
 
 .image-upload-area:hover {
-  border-color: #3b82f6;
+  border-color: var(--primary-main, #3b82f6);
   background-color: var(--bg-hover, #f0f9ff);
   box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -1px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(15, 23, 42, 0.02));
   transform: translateY(-2px);
@@ -248,12 +248,12 @@
 }
 
 .additional-data-tabs .Mui-selected {
-  color: #3b82f6;
+  color: var(--primary-main, #3b82f6);
   font-weight: 600;
 }
 
 .additional-data-tabs .MuiTabs-indicator {
-  background-color: #3b82f6;
+  background-color: var(--primary-main, #3b82f6);
   height: 2px;
 }
 

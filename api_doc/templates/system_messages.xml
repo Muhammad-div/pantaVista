@@ -1,0 +1,102 @@
+<!-- System Messages Templates - Standard System Response Messages -->
+
+<!-- SUCCESS MESSAGES -->
+<MESSAGE NAME="IDF.MESSAGES" VERSION="1.0">
+    <MESSAGEAREA NAME="SYSTEM_MESSAGES" ID="" VERSION="1.00">
+        <MESSAGES>
+            <MSG NAME="FACADE.CENTER.CALL_BNO_OK">
+                <CRITICALLEVEL>0</CRITICALLEVEL>
+                <CAPTION><![CDATA[The BNO was called successfully from facade!]]></CAPTION>
+                <DESCRIPTION>Aufruf des BNO war ok.</DESCRIPTION>
+                <OCCURANCE></OCCURANCE>
+                <DATAREFERENCE USED="NO" />
+            </MSG>
+        </MESSAGES>
+        <DEBUG_INFORMATION>
+            <INFO><![CDATA[User-Rolle: USER_ROLE:PV_REGIONAL_MANAGER]]></INFO>
+            <INFO><![CDATA[User-Rolle: USER_ROLE:PV_SALES_MANAGER]]></INFO>
+        </DEBUG_INFORMATION>
+    </MESSAGEAREA>
+</MESSAGE>
+
+<!-- USER MESSAGES TEMPLATE -->
+<MESSAGE NAME="USER_MESSAGES_TEMPLATE" VERSION="1.0">
+    <MESSAGEAREA NAME="USER_MESSAGES" ID="" VERSION="1.00">
+        <MESSAGES></MESSAGES>
+        <DEBUG_INFORMATION>
+            <INFO />
+        </DEBUG_INFORMATION>
+    </MESSAGEAREA>
+</MESSAGE>
+
+<!-- ERROR MESSAGES TEMPLATE -->
+<MESSAGE NAME="ERROR_MESSAGES_TEMPLATE" VERSION="1.0">
+    <MESSAGEAREA NAME="USER_MESSAGES" ID="" VERSION="1.00">
+        <MESSAGES>
+            <!-- Login Related Errors -->
+            <MSG NAME="KERNEL.INTERACTIONUSEROPERATION.USERNAME_INCORRECT">
+                <CRITICALLEVEL>1</CRITICALLEVEL>
+                <CAPTION><![CDATA[There are no further information about that user name!]]></CAPTION>
+                <DESCRIPTION>Der User will am Login-Secreen ein neues Passwort anfordern und gibt einen ungültigen Usernamen ein!</DESCRIPTION>
+                <OCCURANCE></OCCURANCE>
+                <DATAREFERENCE USED="NO" />
+            </MSG>
+            <MSG NAME="KERNEL.INTERACTIONUSEROPERATION.USERNAME_NOT_FILLED">
+                <CRITICALLEVEL>1</CRITICALLEVEL>
+                <CAPTION><![CDATA[Username is required!]]></CAPTION>
+                <DESCRIPTION>Username field cannot be empty</DESCRIPTION>
+                <OCCURANCE></OCCURANCE>
+                <DATAREFERENCE USED="NO" />
+            </MSG>
+            <MSG NAME="KERNEL.INTERACTIONUSEROPERATION.INVALID_MEMBERCONTRACT">
+                <CRITICALLEVEL>1</CRITICALLEVEL>
+                <CAPTION><![CDATA[Invalid member contract!]]></CAPTION>
+                <DESCRIPTION>The member contract is invalid or expired</DESCRIPTION>
+                <OCCURANCE></OCCURANCE>
+                <DATAREFERENCE USED="NO" />
+            </MSG>
+            <MSG NAME="KERNEL.INTERACTIONUSEROPERATION.ORGA_ACCESS_DENIED">
+                <CRITICALLEVEL>1</CRITICALLEVEL>
+                <CAPTION><![CDATA[Organization access denied!]]></CAPTION>
+                <DESCRIPTION>User does not have access to this organization</DESCRIPTION>
+                <OCCURANCE></OCCURANCE>
+                <DATAREFERENCE USED="NO" />
+            </MSG>
+            <MSG NAME="CORE.INTERACTIONUSEROPERATION.USER_HAS_NO_EMAIL">
+                <CRITICALLEVEL>1</CRITICALLEVEL>
+                <CAPTION><![CDATA[User has no email address!]]></CAPTION>
+                <DESCRIPTION>Cannot send password reset - no email configured</DESCRIPTION>
+                <OCCURANCE></OCCURANCE>
+                <DATAREFERENCE USED="NO" />
+            </MSG>
+            <MSG NAME="KERNEL.INTERACTIONUSEROPERATION.USER_ACCESS_DENIED">
+                <CRITICALLEVEL>1</CRITICALLEVEL>
+                <CAPTION><![CDATA[User access denied!]]></CAPTION>
+                <DESCRIPTION>User access has been denied</DESCRIPTION>
+                <OCCURANCE></OCCURANCE>
+                <DATAREFERENCE USED="NO" />
+            </MSG>
+        </MESSAGES>
+        <DEBUG_INFORMATION>
+            <INFO />
+        </DEBUG_INFORMATION>
+    </MESSAGEAREA>
+</MESSAGE>
+
+<!-- SUCCESS CONFIRMATION MESSAGES -->
+<MESSAGE NAME="SUCCESS_MESSAGES_TEMPLATE" VERSION="1.0">
+    <MESSAGEAREA NAME="USER_MESSAGES" ID="" VERSION="1.00">
+        <MESSAGES>
+            <MSG NAME="KERNEL.INTERACTIONUSEROPERATION.PASSWORD_RESETTED">
+                <CRITICALLEVEL>0</CRITICALLEVEL>
+                <CAPTION><![CDATA[You've got received a new password sent by e-mail!]]></CAPTION>
+                <DESCRIPTION></DESCRIPTION>
+                <OCCURANCE></OCCURANCE>
+                <DATAREFERENCE USED="NO" />
+            </MSG>
+        </MESSAGES>
+        <DEBUG_INFORMATION>
+            <INFO />
+        </DEBUG_INFORMATION>
+    </MESSAGEAREA>
+</MESSAGE>

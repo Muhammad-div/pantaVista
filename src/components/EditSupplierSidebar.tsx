@@ -654,12 +654,12 @@ const EditSupplierSidebar = ({
             onClick={handleSave}
             className="save-button"
             sx={{
-              backgroundColor: '#3b82f6',
+              backgroundColor: 'var(--primary-main, #3b82f6)',
               color: '#ffffff',
               textTransform: 'none',
               fontWeight: 600,
               '&:hover': {
-                backgroundColor: '#2563eb',
+                backgroundColor: 'var(--primary-dark, #2563eb)',
               },
             }}
           >

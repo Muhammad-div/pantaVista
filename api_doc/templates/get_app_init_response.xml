@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GET_APP_INIT API Response Template -->
+<!-- This is the main response structure for application initialization -->
+<ENVELOPE NAME="IDF.ENVELOPE" VERSION="1.00" CREATE="{TIMESTAMP}">
+    <ENVELOPE_DATA>
+        <SENDER />
+        <ANSWERON />
+        <TOKEN>{AUTH_TOKEN}</TOKEN>
+        <LANGUAGE>LANGUAGE:ENGLISH</LANGUAGE>
+        <IPADDRESS>{CLIENT_IP}</IPADDRESS>
+        <USERAGENT>{USER_AGENT}</USERAGENT>
+    </ENVELOPE_DATA>
+    
+    <!-- Main application data message -->
+    <MESSAGE NAME="GET_APP_INIT" VERSION="1.00">
+        <MESSAGEAREA NAME="UI.DATA" VERSION="1.00">
+            <!-- Metadata Fields - Entity Definitions -->
+            <METAFIELDS>
+                <ENTITIES>
+                    <!-- Include interaction entities -->
+                    <!-- @include: interaction_entities_metadata.xml -->
+                    
+                    <!-- Include configuration entities -->
+                    <!-- @include: configuration_entities_metadata.xml -->
+                    
+                    <!-- Include UI entities -->
+                    <!-- @include: ui_entities_metadata.xml -->
+                </ENTITIES>
+            </METAFIELDS>
+            
+            <!-- Data Fields - Actual Data Content -->
+            <DATAFIELDS>
+                <ENTITIES>
+                    <!-- Interaction Data -->
+                    <ENTITY NAME="INTERACTION.AUTOSTART" VERSION="1.00">
+                        <SETS>
+                            <SET SORT="1" SET_ID="{INTERACTION_SET_ID}" PARENT_SET_ID="{PARENT_SET_ID}" ACTION="">
+                                <ATTRIBUTEGROUP NAME="INTERACTION.AUTOSTART.DATA" KEY="{KEY}" KEYVERSION="{KEY_VERSION}">
+                                    <INTERACTION_ID>{INTERACTION_ID}</INTERACTION_ID>
+                                </ATTRIBUTEGROUP>
+                            </SET>
+                        </SETS>
+                    </ENTITY>
+
+                    <!-- Parameters Data -->
+                    <ENTITY NAME="INTERACTION.PARAMETERS" VERSION="1.00">
+                        <SETS>
+                            <!-- Multiple parameter sets -->
+                            <SET SORT="1" SET_ID="{PARAM_SET_ID}" PARENT_SET_ID="{PARAM_PARENT_ID}" ACTION="">
+                                <ATTRIBUTEGROUP NAME="INTERACTION.PARAMETER" KEY="{PARAM_KEY}" KEYVERSION="{PARAM_KEY_VERSION}">
+                                    <INTERACTION_ID>{PARAM_INTERACTION_ID}</INTERACTION_ID>
+                                    <OPTIONAL_VALUE>{OPTIONAL_VALUE}</OPTIONAL_VALUE>
+                                    <PARAMETER_NAME>{PARAMETER_NAME}</PARAMETER_NAME>
+                                </ATTRIBUTEGROUP>
+                            </SET>
+                            <!-- ... more parameter sets ... -->
+                        </SETS>
+                    </ENTITY>
+
+                    <!-- Configuration Data -->
+                    <ENTITY NAME="REGION.PARAMETERS" VERSION="1.00">
+                        <SETS>
+                            <SET SORT="1" SET_ID="{REGION_SET_ID}" PARENT_SET_ID="{REGION_PARENT_ID}" ACTION="">
+                                <ATTRIBUTEGROUP NAME="REGION.PARAMETER" KEY="{REGION_KEY}" KEYVERSION="{REGION_KEY_VERSION}">
+                                    <AGENCY_DISPLAYNAME>{REGION_NAME}</AGENCY_DISPLAYNAME>
+                                    <COLOR>{REGION_COLOR}</COLOR>
+                                    <ID_REGION>{REGION_ID}</ID_REGION>
+                                </ATTRIBUTEGROUP>
+                            </SET>
+                        </SETS>
+                    </ENTITY>
+
+                    <ENTITY NAME="SERVICE.PARAMETERS" VERSION="1.00">
+                        <SETS>
+                            <SET SORT="1" SET_ID="{SERVICE_SET_ID}" PARENT_SET_ID="{SERVICE_PARENT_ID}" ACTION="">
+                                <ATTRIBUTEGROUP NAME="SERVICE.PARAMETER" KEY="{SERVICE_KEY}" KEYVERSION="{SERVICE_KEY_VERSION}">
+                                    <COLOR>{SERVICE_COLOR}</COLOR>
+                                    <ID_SERVICE>{SERVICE_ID}</ID_SERVICE>
+                                    <SERVICE>{SERVICE_NAME}</SERVICE>
+                                </ATTRIBUTEGROUP>
+                            </SET>
+                        </SETS>
+                    </ENTITY>
+
+                    <ENTITY NAME="SUPPLIER.PARAMETERS" VERSION="1.00">
+                        <SETS>
+                            <SET SORT="1" SET_ID="{SUPPLIER_SET_ID}" PARENT_SET_ID="{SUPPLIER_PARENT_ID}" ACTION="">
+                                <ATTRIBUTEGROUP NAME="SUPPLIER.PARAMETER" KEY="{SUPPLIER_KEY}" KEYVERSION="{SUPPLIER_KEY_VERSION}">
+                                    <COLOR>{SUPPLIER_COLOR}</COLOR>
+                                    <ID_SUPPLIER>{SUPPLIER_ID}</ID_SUPPLIER>
+                                    <SUP_DISPLAYNAME>{SUPPLIER_NAME}</SUP_DISPLAYNAME>
+                                </ATTRIBUTEGROUP>
+                            </SET>
+                        </SETS>
+                    </ENTITY>
+
+                    <!-- UI Data -->
+                    <ENTITY NAME="UI.IMAGE.DATA" VERSION="1.00">
+                        <SETS>
+                            <SET SORT="1" SET_ID="{IMAGE_SET_ID}" PARENT_SET_ID="{IMAGE_PARENT_ID}" ACTION="">
+                                <ATTRIBUTEGROUP NAME="UI.IMAGE.ITEM" KEY="{IMAGE_KEY}" KEYVERSION="{IMAGE_KEY_VERSION}">
+                                    <IMAGE>{IMAGE_BLOB_DATA}</IMAGE>
+                                    <IMAGE_IDENTIFIER>{IMAGE_IDENTIFIER}</IMAGE_IDENTIFIER>
+                                </ATTRIBUTEGROUP>
+                            </SET>
+                        </SETS>
+                    </ENTITY>
+
+                    <!-- UI Interaction Data - Large entity with interaction definitions -->
+                    <ENTITY NAME="UI.INTERACTION.DATA" VERSION="1.00">
+                        <SETS>
+                            <!-- Multiple interaction sets would be here -->
+                            <!-- This is typically a very large section with many interaction definitions -->
+                        </SETS>
+                    </ENTITY>
+
+                    <!-- UI Menu Data -->
+                    <ENTITY NAME="UI.MENU.DATA" VERSION="1.00">
+                        <SETS>
+                            <SET SORT="1" SET_ID="{MENU_SET_ID}" PARENT_SET_ID="{MENU_PARENT_ID}" ACTION="">
+                                <ATTRIBUTEGROUP NAME="UI.MENU.ITEM" KEY="{MENU_KEY}" KEYVERSION="{MENU_KEY_VERSION}">
+                                    <ACTION>{MENU_ACTION}</ACTION>
+                                    <CAPTION>{MENU_CAPTION}</CAPTION>
+                                    <CLOSECALLER>{CLOSE_CALLER}</CLOSECALLER>
+                                    <INTERACTION_ID>{MENU_INTERACTION_ID}</INTERACTION_ID>
+                                    <MENU_TYPE>{MENU_TYPE}</MENU_TYPE>
+                                    <TOOLTIP>{MENU_TOOLTIP}</TOOLTIP>
+                                </ATTRIBUTEGROUP>
+                            </SET>
+                        </SETS>
+                    </ENTITY>
+
+                    <!-- UI Parameters Data -->
+                    <ENTITY NAME="UI.PARAMETERS" VERSION="1.00">
+                        <SETS>
+                            <SET SORT="1" SET_ID="{UI_PARAM_SET_ID}" PARENT_SET_ID="{UI_PARAM_PARENT_ID}" ACTION="">
+                                <ATTRIBUTEGROUP NAME="UI.PARAMETER" KEY="{UI_PARAM_KEY}" KEYVERSION="{UI_PARAM_KEY_VERSION}">
+                                    <!-- UI parameter fields would be defined here -->
+                                </ATTRIBUTEGROUP>
+                            </SET>
+                        </SETS>
+                    </ENTITY>
+
+                    <!-- UI Text Data -->
+                    <ENTITY NAME="UI.TEXT.DATA" VERSION="1.00">
+                        <SETS>
+                            <SET SORT="1" SET_ID="{TEXT_SET_ID}" PARENT_SET_ID="{TEXT_PARENT_ID}" ACTION="">
+                                <ATTRIBUTEGROUP NAME="UI.TEXT.ITEM" KEY="{TEXT_KEY}" KEYVERSION="{TEXT_KEY_VERSION}">
+                                    <CAPTION>{TEXT_CAPTION}</CAPTION>
+                                </ATTRIBUTEGROUP>
+                            </SET>
+                        </SETS>
+                    </ENTITY>
+                </ENTITIES>
+            </DATAFIELDS>
+        </MESSAGEAREA>
+    </MESSAGE>
+    
+    <!-- System Messages -->
+    <!-- @include: system_messages.xml -->
+    <MESSAGE NAME="IDF.MESSAGES" VERSION="1.0">
+        <MESSAGEAREA NAME="SYSTEM_MESSAGES" ID="" VERSION="1.00">
+            <MESSAGES>
+                <MSG NAME="FACADE.CENTER.CALL_BNO_OK">
+                    <CRITICALLEVEL>0</CRITICALLEVEL>
+                    <CAPTION><![CDATA[The BNO was called successfully from facade!]]></CAPTION>
+                    <DESCRIPTION>Aufruf des BNO war ok.</DESCRIPTION>
+                    <OCCURANCE></OCCURANCE>
+                    <DATAREFERENCE USED="NO" />
+                </MSG>
+            </MESSAGES>
+            <DEBUG_INFORMATION>
+                <INFO><![CDATA[User-Rolle: USER_ROLE:PV_REGIONAL_MANAGER]]></INFO>
+                <INFO><![CDATA[User-Rolle: USER_ROLE:PV_SALES_MANAGER]]></INFO>
+            </DEBUG_INFORMATION>
+        </MESSAGEAREA>
+        <MESSAGEAREA NAME="USER_MESSAGES" ID="" VERSION="1.00">
+            <MESSAGES></MESSAGES>
+            <DEBUG_INFORMATION>
+                <INFO />
+            </DEBUG_INFORMATION>
+        </MESSAGEAREA>
+    </MESSAGE>
+</ENVELOPE>

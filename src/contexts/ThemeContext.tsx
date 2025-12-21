@@ -4,9 +4,44 @@ import { ThemeProvider as MUIThemeProvider, createTheme, CssBaseline } from '@mu
 
 type ThemeMode = 'light' | 'dark'
 
+export type PrimaryColorKey = 'blue' | 'indigo' | 'emerald' | 'amber' | 'rose'
+
+const PRIMARY_COLORS: Record<
+  PrimaryColorKey,
+  { main: string; light: string; dark: string }
+> = {
+  blue: {
+    main: '#3b82f6',
+    light: '#60a5fa',
+    dark: '#2563eb',
+  },
+  indigo: {
+    main: '#6366f1',
+    light: '#818cf8',
+    dark: '#4f46e5',
+  },
+  emerald: {
+    main: '#10b981',
+    light: '#34d399',
+    dark: '#059669',
+  },
+  amber: {
+    main: '#f59e0b',
+    light: '#fbbf24',
+    dark: '#d97706',
+  },
+  rose: {
+    main: '#f97373',
+    light: '#fb7185',
+    dark: '#e11d48',
+  },
+}
+
 interface ThemeContextType {
   mode: ThemeMode
   toggleTheme: () => void
+  primaryColor: PrimaryColorKey
+  setPrimaryColor: (color: PrimaryColorKey) => void
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
@@ -25,15 +60,44 @@ interface ThemeProviderProps {
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [mode, setMode] = useState<ThemeMode>(() => {
-    const savedMode = localStorage.getItem('themeMode')
-    return (savedMode as ThemeMode) || 'light'
+    try {
+      const savedMode = localStorage.getItem('themeMode')
+      return (savedMode as ThemeMode) || 'light'
+    } catch {
+      return 'light'
+    }
+  })
+
+  const [primaryColor, setPrimaryColor] = useState<PrimaryColorKey>(() => {
+    try {
+      const saved = localStorage.getItem('primaryColor') as PrimaryColorKey | null
+      if (saved && PRIMARY_COLORS[saved]) {
+        return saved
+      }
+    } catch {
+      // ignore storage errors and fall back to default
+    }
+    return 'blue'
   })
 
   useEffect(() => {
-    localStorage.setItem('themeMode', mode)
-    
+    try {
+      localStorage.setItem('themeMode', mode)
+      localStorage.setItem('primaryColor', primaryColor)
+    } catch {
+      // Ignore storage write errors to avoid crashing the app
+    }
+
     // Inject CSS variables for theme-aware styling
     const root = document.documentElement
+
+    const primary = PRIMARY_COLORS[primaryColor] || PRIMARY_COLORS.blue
+
+    // Primary color variables (used throughout the app)
+    root.style.setProperty('--primary-main', primary.main)
+    root.style.setProperty('--primary-light', primary.light)
+    root.style.setProperty('--primary-dark', primary.dark)
+
     if (mode === 'dark') {
       // Beautiful modern dark mode palette
       root.style.setProperty('--bg-default', '#0f1419')
@@ -53,7 +117,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
       root.style.setProperty('--table-row-hover', '#232938')
       root.style.setProperty('--table-row-even', '#1a1f2e')
       root.style.setProperty('--input-bg', '#151a26')
-      root.style.setProperty('--nav-active-bg', '#3b82f6')
+      root.style.setProperty('--nav-active-bg', primary.main)
       root.style.setProperty('--nav-hover-bg', '#232938')
     } else {
       root.style.setProperty('--bg-default', '#f8fafc')
@@ -76,22 +140,24 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
       root.style.setProperty('--table-row-hover', '#f1f5f9')
       root.style.setProperty('--table-row-even', '#ffffff')
       root.style.setProperty('--input-bg', '#ffffff')
-      root.style.setProperty('--nav-active-bg', '#2563eb')
+      root.style.setProperty('--nav-active-bg', primary.main)
       root.style.setProperty('--nav-hover-bg', '#f1f5f9')
     }
-  }, [mode])
+  }, [mode, primaryColor])
 
   const toggleTheme = () => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
   }
 
+  const primary = PRIMARY_COLORS[primaryColor] || PRIMARY_COLORS.blue
+
   const theme = createTheme({
     palette: {
       mode,
       primary: {
-        main: '#3b82f6',
-        light: '#60a5fa',
-        dark: '#2563eb',
+        main: primary.main,
+        light: primary.light,
+        dark: primary.dark,
       },
       secondary: {
         main: '#7c3aed',
@@ -187,7 +253,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
               },
               '&.Mui-focused': {
                 '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: mode === 'dark' ? '#3b82f6' : '#3b82f6',
+                  borderColor: primary.main,
                 },
               },
             },
@@ -204,7 +270,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
             '& .MuiInputLabel-root': {
               color: mode === 'dark' ? '#b0b7c3' : '#6b7280',
               '&.Mui-focused': {
-                color: mode === 'dark' ? '#3b82f6' : '#3b82f6',
+                color: primary.main,
               },
             },
           },
@@ -215,7 +281,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
           root: {
             color: mode === 'dark' ? '#b0b7c3' : '#6b7280',
             '&.Mui-focused': {
-              color: mode === 'dark' ? '#3b82f6' : '#3b82f6',
+              color: primary.main,
             },
           },
         },
@@ -230,19 +296,20 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
               borderColor: mode === 'dark' ? '#475569' : '#9ca3af',
             },
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: mode === 'dark' ? '#3b82f6' : '#3b82f6',
+              borderColor: primary.main,
             },
           },
         },
       },
     },
     typography: {
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+      fontFamily:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
     },
   })
 
   return (
-    <ThemeContext.Provider value={{ mode, toggleTheme }}>
+    <ThemeContext.Provider value={{ mode, toggleTheme, primaryColor, setPrimaryColor }}>
       <MUIThemeProvider theme={theme}>
         <CssBaseline />
         {children}

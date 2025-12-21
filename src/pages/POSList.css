@@ -1,8 +1,11 @@
 .pos-list-page {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background-color: var(--bg-default, #f9fafb);
   transition: background-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header Section */
@@ -18,9 +21,32 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Compact Header Section */
+.pos-list-header-compact {
+  background-color: var(--bg-paper, #ffffff);
+  border-bottom: 1px solid var(--divider-color, #e2e8f0);
+  padding: 8px 24px;
+  flex-shrink: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(15, 23, 42, 0.04), 0 1px 3px 0 rgba(15, 23, 42, 0.06));
+  backdrop-filter: blur(8px);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
 /* Main Content */
 .pos-list-content {
   padding: 32px;
+}
+
+/* Compact Main Content - More space for table */
+.pos-list-content-compact {
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 64px);
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
 }
 
 /* Title Section */
@@ -118,6 +144,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .pos-table-card:hover {
@@ -189,6 +217,8 @@
   max-width: 100% !important;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  flex: 1;
 }
 
 .kendo-pos-grid .k-grid-header {
@@ -207,11 +237,30 @@
   padding: 12px 16px;
   border-bottom: none;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+.kendo-pos-grid .k-grid-header th .k-cell-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .kendo-pos-grid .k-grid-content {
   background-color: var(--bg-paper, #ffffff);
   width: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  flex: 1;
+  height: 100%;
+}
+
+.kendo-pos-grid .k-grid-content-wrap {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .kendo-pos-grid .k-grid-table {
@@ -256,20 +305,62 @@
 }
 
 .kendo-pos-grid .k-grid-toolbar {
-  padding: 12px 16px;
-  background-color: var(--bg-paper, #ffffff);
-  border-bottom: 1px solid var(--divider-color, #e2e8f0);
-  border-top: 1px solid var(--divider-color, #e2e8f0);
+  display: none !important;
 }
 
 .kendo-pos-grid .k-pager {
   padding: 12px 16px;
   background-color: var(--bg-paper, #ffffff);
   border-top: 1px solid var(--divider-color, #e2e8f0);
+  display: none; /* Hide pagination */
 }
 
 .kendo-pos-grid .k-filter-row {
   background-color: var(--table-header-bg, #f9fafb) !important;
+}
+
+.kendo-pos-grid.filters-hidden .k-filter-row {
+  display: none !important;
+}
+
+.kendo-pos-grid.filters-visible .k-filter-row {
+  display: table-row !important;
+}
+
+/* Filter icon styles */
+.kendo-pos-grid .column-filter-icon {
+  margin-left: 8px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kendo-pos-grid .column-filter-icon:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.kendo-pos-grid .column-filter-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.kendo-pos-grid.filters-visible .column-filter-icon {
+  opacity: 1;
+  color: var(--nav-active-bg, #3b82f6);
+}
+
+.kendo-pos-grid.filters-visible .column-filter-icon svg {
+  fill: var(--nav-active-bg, #3b82f6);
+}
+
+.kendo-pos-grid .k-grid-header th {
+  cursor: pointer;
+  position: relative;
 }
 
 .kendo-pos-grid .k-filter-row th {
@@ -317,11 +408,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--divider-color, #e2e8f0);
+  padding: 12px 16px 8px 16px;
+  border-bottom: none;
   background: var(--bg-paper, #ffffff);
   transition: background-color 0.2s ease, border-color 0.2s ease;
   backdrop-filter: blur(8px);
+  flex-shrink: 0;
+  margin-bottom: 0;
 }
 
 .table-stats {

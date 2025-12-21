@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Common Envelope Template for PantaVista API -->
+<ENVELOPE NAME="IDF.ENVELOPE" VERSION="1.00" CREATE="{TIMESTAMP}">
+    <ENVELOPE_DATA>
+        <SENDER />
+        <ANSWERON />
+        <TOKEN>{AUTH_TOKEN}</TOKEN>
+        <LANGUAGE>LANGUAGE:ENGLISH</LANGUAGE>
+        <IPADDRESS>{CLIENT_IP}</IPADDRESS>
+        <USERAGENT>{USER_AGENT}</USERAGENT>
+    </ENVELOPE_DATA>
+    <!-- MESSAGE content goes here -->
+    {MESSAGE_CONTENT}
+</ENVELOPE>

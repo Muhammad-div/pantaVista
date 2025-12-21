@@ -10,6 +10,11 @@ import {
   MenuItem,
   CircularProgress,
   Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Snackbar,
 } from '@mui/material'
 import {
   Settings as SettingsIcon,
@@ -55,6 +60,9 @@ const POSList = () => {
   const [showFilters, setShowFilters] = useState(false)
   const [fieldMetadata, setFieldMetadata] = useState<POSFieldMetadata[]>([])
   const [sortConfig, setSortConfig] = useState<POSSortConfig | null>(null)
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [settingsOpen, setSettingsOpen] = useState(false)
 
   // Check if we're on the /pos route (not from suppliers)
   const isDirectPOSRoute = location.pathname === '/pos'
@@ -313,8 +321,266 @@ const POSList = () => {
     setOptionsAnchor(null)
   }
 
+  // Export to Excel (CSV format)
+  const handleExport = useCallback(() => {
+    try {
+      // Use posList directly and apply current filters/sorting
+      if (!posList || posList.length === 0) {
+        setSnackbarMessage(textService.getText('MESSAGE:NODATAFOUND', 'No data to export'))
+        setSnackbarOpen(true)
+        return
+      }
+
+      // Apply current filters and sorting to get the displayed data
+      const processed = process(posList, dataState)
+      const dataToExport = (processed.data as POSItem[]) || posList
+      
+      if (!dataToExport || dataToExport.length === 0) {
+        setSnackbarMessage(textService.getText('MESSAGE:NODATAFOUND', 'No data to export'))
+        setSnackbarOpen(true)
+        return
+      }
+
+      // Use default headers to match the data structure
+      const headers = ['POS ID', 'SHORT NAME', 'ADDRESS', 'CITY', 'ZIPCODE', 'PHONE']
+
+      // Create CSV content
+      const csvRows: string[] = []
+      
+      // Add headers
+      csvRows.push(headers.join(','))
+
+      // Add data rows - always use default fields to ensure we get the data
+      dataToExport.forEach((item) => {
+        // Use default field mapping to ensure we get actual data
+        const row = [
+          `"${String(item.posId || '').replace(/"/g, '""')}"`,
+          `"${String(item.shortName || '').replace(/"/g, '""')}"`,
+          `"${String(item.address || '').replace(/"/g, '""')}"`,
+          `"${String(item.city || '').replace(/"/g, '""')}"`,
+          `"${String(item.zipcode || '').replace(/"/g, '""')}"`,
+          `"${String(item.phone || '').replace(/"/g, '""')}"`
+        ]
+        csvRows.push(row.join(','))
+      })
+
+      const csvContent = csvRows.join('\n')
+      
+      // Create blob and download
+      const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `POS_List_${new Date().toISOString().split('T')[0]}.csv`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+
+      setSnackbarMessage(textService.getText('BUTTON.IA:EXPORT', 'Data exported successfully'))
+      setSnackbarOpen(true)
+    } catch (err) {
+      console.error('Export error:', err)
+      setSnackbarMessage('Failed to export data')
+      setSnackbarOpen(true)
+    }
+  }, [posList, dataState, fieldMetadata, fieldNameMap, textService])
+
+  // Print functionality
+  const handlePrint = useCallback(() => {
+    try {
+      // Use posList directly and apply current filters/sorting
+      if (!posList || posList.length === 0) {
+        setSnackbarMessage(textService.getText('MESSAGE:NODATAFOUND', 'No data to print'))
+        setSnackbarOpen(true)
+        return
+      }
+
+      // Apply current filters and sorting to get the displayed data
+      const processed = process(posList, dataState)
+      const dataToPrint = (processed.data as POSItem[]) || posList
+      
+      if (!dataToPrint || dataToPrint.length === 0) {
+        setSnackbarMessage(textService.getText('MESSAGE:NODATAFOUND', 'No data to print'))
+        setSnackbarOpen(true)
+        return
+      }
+
+      // Create print window
+      const printWindow = window.open('', '_blank')
+      if (!printWindow) {
+        setSnackbarMessage('Please allow popups to print')
+        setSnackbarOpen(true)
+        return
+      }
+
+      // Use default headers to match the data structure
+      const headers = ['POS ID', 'SHORT NAME', 'ADDRESS', 'CITY', 'ZIPCODE', 'PHONE']
+
+      // Build HTML table
+      let html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>POS List - Print</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1 { margin-bottom: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; font-weight: bold; }
+            tr:nth-child(even) { background-color: #f9f9f9; }
+            @media print {
+              body { margin: 0; }
+              @page { margin: 1cm; }
+            }
+          </style>
+        </head>
+        <body>
+          <h1>${textService.getText('WINDOW.TITLE', 'Points-of-Sale')} - ${new Date().toLocaleDateString()}</h1>
+          <p>Total: ${dataToPrint.length} ${textService.getText('LABEL:ENTRIES', 'entries')}</p>
+          <table>
+            <thead>
+              <tr>
+                ${headers.map(h => `<th>${h}</th>`).join('')}
+              </tr>
+            </thead>
+            <tbody>
+      `
+
+      dataToPrint.forEach((item) => {
+        // Always use default fields to ensure we get the data
+        const cells = [
+          `<td>${String(item.posId || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td>`,
+          `<td>${String(item.shortName || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td>`,
+          `<td>${String(item.address || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td>`,
+          `<td>${String(item.city || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td>`,
+          `<td>${String(item.zipcode || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td>`,
+          `<td>${String(item.phone || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td>`
+        ]
+        html += `<tr>${cells.join('')}</tr>`
+      })
+
+      html += `
+            </tbody>
+          </table>
+        </body>
+        </html>
+      `
+
+      printWindow.document.write(html)
+      printWindow.document.close()
+      
+      // Wait for content to load, then print
+      setTimeout(() => {
+        printWindow.print()
+        printWindow.onafterprint = () => printWindow.close()
+      }, 250)
+    } catch (err) {
+      console.error('Print error:', err)
+      setSnackbarMessage('Failed to print data')
+      setSnackbarOpen(true)
+    }
+  }, [posList, dataState, fieldMetadata, fieldNameMap, textService])
+
+  // Copy to clipboard
+  const handleCopy = useCallback(async () => {
+    try {
+      // Use posList directly and apply current filters/sorting
+      if (!posList || posList.length === 0) {
+        setSnackbarMessage(textService.getText('MESSAGE:NODATAFOUND', 'No data to copy'))
+        setSnackbarOpen(true)
+        return
+      }
+
+      // Apply current filters and sorting to get the displayed data
+      const processed = process(posList, dataState)
+      const dataToCopy = (processed.data as POSItem[]) || posList
+      
+      if (!dataToCopy || dataToCopy.length === 0) {
+        setSnackbarMessage(textService.getText('MESSAGE:NODATAFOUND', 'No data to copy'))
+        setSnackbarOpen(true)
+        return
+      }
+
+      // Use default headers to match the data structure
+      const headers = ['POS ID', 'SHORT NAME', 'ADDRESS', 'CITY', 'ZIPCODE', 'PHONE']
+
+      // Create tab-separated text (works well for pasting into Excel)
+      const rows: string[] = []
+      rows.push(headers.join('\t'))
+
+      dataToCopy.forEach((item) => {
+        // Always use default fields to ensure we get the data
+        const row = [
+          String(item.posId || ''),
+          String(item.shortName || ''),
+          String(item.address || ''),
+          String(item.city || ''),
+          String(item.zipcode || ''),
+          String(item.phone || '')
+        ]
+        rows.push(row.join('\t'))
+      })
+
+      const textToCopy = rows.join('\n')
+      
+      // Copy to clipboard
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(textToCopy)
+        setSnackbarMessage(textService.getText('BUTTON.IA:COPY', 'Data copied to clipboard'))
+        setSnackbarOpen(true)
+      } else {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea')
+        textArea.value = textToCopy
+        textArea.style.position = 'fixed'
+        textArea.style.opacity = '0'
+        document.body.appendChild(textArea)
+        textArea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textArea)
+        setSnackbarMessage(textService.getText('BUTTON.IA:COPY', 'Data copied to clipboard'))
+        setSnackbarOpen(true)
+      }
+    } catch (err) {
+      console.error('Copy error:', err)
+      setSnackbarMessage('Failed to copy data')
+      setSnackbarOpen(true)
+    }
+  }, [posList, dataState, fieldMetadata, fieldNameMap, textService])
+
+  // Handle action dispatch
   const handleAction = (action: string) => {
-    console.log(`Action: ${action}`)
+    switch (action) {
+      case 'Export':
+        handleExport()
+        break
+      case 'Print':
+        handlePrint()
+        break
+      case 'Copy':
+        handleCopy()
+        break
+      case 'Settings':
+        setSettingsOpen(true)
+        break
+      case 'Filter':
+        setShowFilters(!showFilters)
+        break
+      case 'Sort':
+        // Sort functionality is already handled by the grid
+        setSnackbarMessage('Use column headers to sort data')
+        setSnackbarOpen(true)
+        break
+      case 'Columns':
+        // Column configuration could be implemented here
+        setSnackbarMessage('Column configuration coming soon')
+        setSnackbarOpen(true)
+        break
+      default:
+        console.log(`Action: ${action}`)
+    }
     handleOptionsClose()
   }
 
@@ -349,7 +615,7 @@ const POSList = () => {
               sx={{ minWidth: 'auto', px: 1.5, fontSize: '12px', textTransform: 'none' }}
               title={textService.getText('BUTTON.IA:COPY', 'Copy')}
             >
-              {textService.getText('BUTTON.IA:COPY', 'Copy')}
+              {textService.getText('BUTTON.IA:COPY', 'Copyrfe')}
             </Button>
             <Button
               variant="outlined"
@@ -369,7 +635,7 @@ const POSList = () => {
               sx={{ minWidth: 'auto', px: 1.5, fontSize: '12px', textTransform: 'none' }}
               title={textService.getText('BUTTON.IA:EXPORT', 'Exports this data into an Excel file.')}
             >
-              {textService.getText('BUTTON.IA:EXPORT', 'Export').replace('Exports this data into an Excel file.', 'Export')}
+              {textService.getText('BUTTON.IA:EXPORT', 'Exportfrerferfrefre').replace('Exports this data into an Excel file.', 'Export')}
             </Button>
           <IconButton
               size="small"
@@ -409,6 +675,44 @@ const POSList = () => {
         </Box>
         </Box>
       </Box>
+
+      {/* Settings Dialog */}
+      <Dialog
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          {textService.getText('LABEL:SETTINGS', 'Settings')}
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" color="text.secondary">
+            {textService.getText('LABEL:SETTINGS', 'Settings configuration coming soon')}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setSettingsOpen(false)}>
+            {textService.getText('BUTTON:CLOSE', 'Close')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Snackbar for notifications */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert 
+          onClose={() => setSnackbarOpen(false)} 
+          severity="success" 
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
 
       {/* Main Content - Focused on Table */}
       <Box className="pos-list-content-compact" sx={{ paddingLeft: '24px', paddingRight: '24px' }}>

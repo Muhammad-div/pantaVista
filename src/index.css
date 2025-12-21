@@ -35,6 +35,9 @@
   --table-row-hover: #f1f5f9;
   --table-row-even: #ffffff;
   --input-bg: #ffffff;
+  --primary-main: #3b82f6;
+  --primary-light: #60a5fa;
+  --primary-dark: #2563eb;
   --nav-active-bg: #2563eb;
   --nav-hover-bg: #f1f5f9;
 }

@@ -37,3 +37,29 @@
   font-size: 14px;
 }
 
+.dashboard-welcome {
+  width: 100%;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.dashboard-welcome .logo-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.dashboard-welcome .logo-panta {
+  color: #3b82f6;
+}
+
+.dashboard-welcome .logo-vista {
+  color: #2563eb;
+}
+

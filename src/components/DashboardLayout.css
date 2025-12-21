@@ -16,7 +16,7 @@
 }
 
 .logo-panta {
-  color: #3b82f6;
+  color: var(--primary-main, #3b82f6);
   transition: color 0.2s ease;
 }
 
@@ -133,7 +133,7 @@
 
 .submenu-item.submenu-active {
   background-color: var(--bg-active, #eff6ff);
-  color: #3b82f6;
+  color: var(--primary-main, #3b82f6);
   font-weight: 600;
 }
 
@@ -145,7 +145,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  max-height: 100vh;
   background-color: var(--bg-default, #f9fafb);
   transition: background-color 0.2s ease;
   overflow: hidden;
@@ -184,8 +185,11 @@
 
 .content-wrapper {
   flex: 1;
-  padding: 32px;
-  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
 }
 
 /* Actions Menu Animation */

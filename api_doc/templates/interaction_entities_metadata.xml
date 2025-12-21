@@ -1,0 +1,131 @@
+<!-- Interaction Entities Metadata - Field Definitions for Interaction Management -->
+
+<!-- INTERACTION AUTOSTART ENTITY - Manages automatic interaction startup -->
+<ENTITY NAME="INTERACTION.AUTOSTART" VERSION="1.00">
+    <DATARANGE>
+        <START />
+        <END />
+        <CUR_PAGE />
+        <PAGE_ENTRIES />
+        <TOTAL_PAGES />
+        <TOTAL_ENTRIES />
+        <SORT_LIST>
+            <SORT SORT="">
+                <NAME></NAME>
+                <SORTTYPE></SORTTYPE>
+            </SORT>
+        </SORT_LIST>
+        <FILTER_LIST>
+            <FILTER>
+                <NAME></NAME>
+                <FILTERTYPE></FILTERTYPE>
+                <BEGIN_VALUE></BEGIN_VALUE>
+                <END_VALUE></END_VALUE>
+            </FILTER>
+        </FILTER_LIST>
+    </DATARANGE>
+    <LIST_PROPERTIES>
+        <NAME />
+    </LIST_PROPERTIES>
+    <FIELDS>
+        <ATTRIBUTEGROUP NAME="INTERACTION.AUTOSTART.DATA">
+            <FIELD NAME="INTERACTION_ID">
+                <CAPTION>FOR INTERNAL USE ONLY</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH>10</MAXLENGTH>
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>FOR INTERNAL USE ONLY</EDITHINT>
+                <HELPDESCRIPTION>FOR INTERNAL USE ONLY</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+        </ATTRIBUTEGROUP>
+    </FIELDS>
+</ENTITY>
+
+<!-- INTERACTION PARAMETERS ENTITY - Manages interaction parameters -->
+<ENTITY NAME="INTERACTION.PARAMETERS" VERSION="1.00">
+    <DATARANGE>
+        <START />
+        <END />
+        <CUR_PAGE />
+        <PAGE_ENTRIES />
+        <TOTAL_PAGES />
+        <TOTAL_ENTRIES />
+        <SORT_LIST>
+            <SORT SORT="">
+                <NAME></NAME>
+                <SORTTYPE></SORTTYPE>
+            </SORT>
+        </SORT_LIST>
+        <FILTER_LIST>
+            <FILTER>
+                <NAME></NAME>
+                <FILTERTYPE></FILTERTYPE>
+                <BEGIN_VALUE></BEGIN_VALUE>
+                <END_VALUE></END_VALUE>
+            </FILTER>
+        </FILTER_LIST>
+    </DATARANGE>
+    <LIST_PROPERTIES>
+        <NAME />
+    </LIST_PROPERTIES>
+    <FIELDS>
+        <ATTRIBUTEGROUP NAME="INTERACTION.PARAMETER">
+            <FIELD NAME="INTERACTION_ID">
+                <CAPTION>FOR INTERNAL USE ONLY</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH>10</MAXLENGTH>
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>FOR INTERNAL USE ONLY</EDITHINT>
+                <HELPDESCRIPTION>FOR INTERNAL USE ONLY</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="OPTIONAL_VALUE">
+                <CAPTION>Optionality of the parameter</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>The value can't be set</EDITHINT>
+                <HELPDESCRIPTION>Shows you whether a parameter has to be set or not!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="PARAMETER_NAME">
+                <CAPTION>Parametername</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>The value can't be set</EDITHINT>
+                <HELPDESCRIPTION>Shows you the name of the parameter!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+        </ATTRIBUTEGROUP>
+    </FIELDS>
+</ENTITY>

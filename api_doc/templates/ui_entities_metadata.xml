@@ -1,0 +1,302 @@
+<!-- UI Entities Metadata - Field Definitions for User Interface Components -->
+
+<!-- UI IMAGE DATA ENTITY - Manages image resources -->
+<ENTITY NAME="UI.IMAGE.DATA" VERSION="1.00">
+    <DATARANGE>
+        <START />
+        <END />
+        <CUR_PAGE />
+        <PAGE_ENTRIES />
+        <TOTAL_PAGES />
+        <TOTAL_ENTRIES />
+        <SORT_LIST>
+            <SORT SORT="">
+                <NAME></NAME>
+                <SORTTYPE></SORTTYPE>
+            </SORT>
+        </SORT_LIST>
+        <FILTER_LIST>
+            <FILTER>
+                <NAME></NAME>
+                <FILTERTYPE></FILTERTYPE>
+                <BEGIN_VALUE></BEGIN_VALUE>
+                <END_VALUE></END_VALUE>
+            </FILTER>
+        </FILTER_LIST>
+    </DATARANGE>
+    <LIST_PROPERTIES>
+        <NAME />
+    </LIST_PROPERTIES>
+    <FIELDS>
+        <ATTRIBUTEGROUP NAME="UI.IMAGE.ITEM">
+            <FIELD NAME="IMAGE">
+                <CAPTION>Picture</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:BLOB</DATATYPE>
+                <EDITHINT>Select the picture!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the picture!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="IMAGE_IDENTIFIER">
+                <CAPTION>Identifier</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH>200</MAXLENGTH>
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>Enter the image identification!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the identification of the picture!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+        </ATTRIBUTEGROUP>
+    </FIELDS>
+</ENTITY>
+
+<!-- UI MENU DATA ENTITY - Manages menu structure and navigation -->
+<ENTITY NAME="UI.MENU.DATA" VERSION="1.00">
+    <DATARANGE>
+        <START />
+        <END />
+        <CUR_PAGE />
+        <PAGE_ENTRIES />
+        <TOTAL_PAGES />
+        <TOTAL_ENTRIES />
+        <SORT_LIST>
+            <SORT SORT="">
+                <NAME></NAME>
+                <SORTTYPE></SORTTYPE>
+            </SORT>
+        </SORT_LIST>
+        <FILTER_LIST>
+            <FILTER>
+                <NAME></NAME>
+                <FILTERTYPE></FILTERTYPE>
+                <BEGIN_VALUE></BEGIN_VALUE>
+                <END_VALUE></END_VALUE>
+            </FILTER>
+        </FILTER_LIST>
+    </DATARANGE>
+    <LIST_PROPERTIES>
+        <NAME />
+    </LIST_PROPERTIES>
+    <FIELDS>
+        <ATTRIBUTEGROUP NAME="UI.MENU.ITEM">
+            <FIELD NAME="ACTION">
+                <CAPTION>ACTION</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>ACTION</EDITHINT>
+                <HELPDESCRIPTION>ACTION</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="CAPTION">
+                <CAPTION>FOR INTERNAL USE ONLY</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH>100</MAXLENGTH>
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>FOR INTERNAL USE ONLY</EDITHINT>
+                <HELPDESCRIPTION>FOR INTERNAL USE ONLY</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="CLOSECALLER" LUGROUPKEY="11" PARENTGROUPKEY="">
+                <CAPTION>FOR INTERNAL USE ONLY</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>FOR INTERNAL USE ONLY</EDITHINT>
+                <HELPDESCRIPTION>FOR INTERNAL USE ONLY</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+                <LOOKUPITEMS>
+                    <LOOKUPITEM SORT="1" LUITEMKEY="46" PARENTITEMKEY="">
+                        <NAME>ANSWER:YES</NAME>
+                        <CAPTION_LONG>Yes</CAPTION_LONG>
+                        <CAPTION_SHORT>Y</CAPTION_SHORT>
+                        <CARGO>ANSWER:YES</CARGO>
+                    </LOOKUPITEM>
+                    <LOOKUPITEM SORT="2" LUITEMKEY="47" PARENTITEMKEY="">
+                        <NAME>ANSWER:NO</NAME>
+                        <CAPTION_LONG>No</CAPTION_LONG>
+                        <CAPTION_SHORT>N</CAPTION_SHORT>
+                        <CARGO>ANSWER:NO</CARGO>
+                    </LOOKUPITEM>
+                </LOOKUPITEMS>
+            </FIELD>
+            <FIELD NAME="INTERACTION_ID">
+                <CAPTION>FOR INTERNAL USE ONLY</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH>10</MAXLENGTH>
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>FOR INTERNAL USE ONLY</EDITHINT>
+                <HELPDESCRIPTION>FOR INTERNAL USE ONLY</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="MENU_TYPE" LUGROUPKEY="61" PARENTGROUPKEY="">
+                <CAPTION>FOR INTERNAL USE ONLY</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>FOR INTERNAL USE ONLY</EDITHINT>
+                <HELPDESCRIPTION>FOR INTERNAL USE ONLY</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+                <LOOKUPITEMS>
+                    <LOOKUPITEM SORT="1" LUITEMKEY="324" PARENTITEMKEY="">
+                        <NAME>MENUTYPE:PARENT</NAME>
+                        <CAPTION_LONG></CAPTION_LONG>
+                        <CAPTION_SHORT></CAPTION_SHORT>
+                        <CARGO>PARENT</CARGO>
+                    </LOOKUPITEM>
+                    <LOOKUPITEM SORT="1" LUITEMKEY="325" PARENTITEMKEY="">
+                        <NAME>MENUTYPE:SUB</NAME>
+                        <CAPTION_LONG></CAPTION_LONG>
+                        <CAPTION_SHORT></CAPTION_SHORT>
+                        <CARGO>PARENT</CARGO>
+                    </LOOKUPITEM>
+                    <LOOKUPITEM SORT="1" LUITEMKEY="326" PARENTITEMKEY="">
+                        <NAME>MENUTYPE:CONTEXT</NAME>
+                        <CAPTION_LONG></CAPTION_LONG>
+                        <CAPTION_SHORT></CAPTION_SHORT>
+                        <CARGO>INTERACTION</CARGO>
+                    </LOOKUPITEM>
+                    <LOOKUPITEM SORT="1" LUITEMKEY="327" PARENTITEMKEY="">
+                        <NAME>MENUTYPE:FLYOUT</NAME>
+                        <CAPTION_LONG></CAPTION_LONG>
+                        <CAPTION_SHORT></CAPTION_SHORT>
+                        <CARGO>INTERACTION</CARGO>
+                    </LOOKUPITEM>
+                    <LOOKUPITEM SORT="1" LUITEMKEY="328" PARENTITEMKEY="">
+                        <NAME>MENUTYPE:SPACER</NAME>
+                        <CAPTION_LONG></CAPTION_LONG>
+                        <CAPTION_SHORT></CAPTION_SHORT>
+                        <CARGO>PARENT</CARGO>
+                    </LOOKUPITEM>
+                    <LOOKUPITEM SORT="1" LUITEMKEY="329" PARENTITEMKEY="">
+                        <NAME>MENUTYPE:CONTEXTSPACER</NAME>
+                        <CAPTION_LONG></CAPTION_LONG>
+                        <CAPTION_SHORT></CAPTION_SHORT>
+                        <CARGO>INTERACTION</CARGO>
+                    </LOOKUPITEM>
+                    <LOOKUPITEM SORT="1" LUITEMKEY="330" PARENTITEMKEY="">
+                        <NAME>MENUTYPE:FLYOUTSPACER</NAME>
+                        <CAPTION_LONG></CAPTION_LONG>
+                        <CAPTION_SHORT></CAPTION_SHORT>
+                        <CARGO>INTERACTION</CARGO>
+                    </LOOKUPITEM>
+                </LOOKUPITEMS>
+            </FIELD>
+            <FIELD NAME="TOOLTIP">
+                <CAPTION>FOR INTERNAL USE ONLY</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>FOR INTERNAL USE ONLY</EDITHINT>
+                <HELPDESCRIPTION>FOR INTERNAL USE ONLY</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+        </ATTRIBUTEGROUP>
+    </FIELDS>
+</ENTITY>
+
+<!-- UI TEXT DATA ENTITY - Manages text content and localization -->
+<ENTITY NAME="UI.TEXT.DATA" VERSION="1.00">
+    <DATARANGE>
+        <START />
+        <END />
+        <CUR_PAGE />
+        <PAGE_ENTRIES />
+        <TOTAL_PAGES />
+        <TOTAL_ENTRIES />
+        <SORT_LIST>
+            <SORT SORT="">
+                <NAME></NAME>
+                <SORTTYPE></SORTTYPE>
+            </SORT>
+        </SORT_LIST>
+        <FILTER_LIST>
+            <FILTER>
+                <NAME></NAME>
+                <FILTERTYPE></FILTERTYPE>
+                <BEGIN_VALUE></BEGIN_VALUE>
+                <END_VALUE></END_VALUE>
+            </FILTER>
+        </FILTER_LIST>
+    </DATARANGE>
+    <LIST_PROPERTIES>
+        <NAME />
+    </LIST_PROPERTIES>
+    <FIELDS>
+        <ATTRIBUTEGROUP NAME="UI.TEXT.ITEM">
+            <FIELD NAME="CAPTION">
+                <CAPTION>FOR INTERNAL USE ONLY</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH>100</MAXLENGTH>
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>FOR INTERNAL USE ONLY</EDITHINT>
+                <HELPDESCRIPTION>FOR INTERNAL USE ONLY</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+        </ATTRIBUTEGROUP>
+    </FIELDS>
+</ENTITY>

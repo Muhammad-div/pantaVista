@@ -90,7 +90,7 @@ const Login = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/pos', { replace: true })
+      navigate('/', { replace: true })
     }
   }, [isAuthenticated, navigate])
 
@@ -115,7 +115,7 @@ const Login = () => {
       if (result.success) {
         // Refresh menu after successful login
         await refreshMenu()
-        navigate('/pos', { replace: true })
+        navigate('/', { replace: true })
       } else {
         setError(result.error || 'Login failed. Please check your credentials.')
       }
@@ -191,7 +191,7 @@ const Login = () => {
             '& .MuiInputLabel-root': {
               color: '#6b7280 !important',
               '&.Mui-focused': {
-                color: '#3b82f6 !important',
+                color: 'var(--primary-main, #3b82f6) !important',
               },
             },
             '& .MuiOutlinedInput-root': {
@@ -204,7 +204,7 @@ const Login = () => {
                 borderColor: '#9ca3af !important',
               },
               '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#3b82f6 !important',
+                borderColor: 'var(--primary-main, #3b82f6) !important',
               },
             },
             '& .MuiInputBase-input': {
@@ -217,7 +217,7 @@ const Login = () => {
               color: '#6b7280 !important',
             },
             '& .MuiButton-text': {
-              color: '#3b82f6 !important',
+              color: 'var(--primary-main, #3b82f6) !important',
             },
           }}
         >

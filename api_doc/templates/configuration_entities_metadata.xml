@@ -1,0 +1,244 @@
+<!-- Configuration Entities Metadata - Field Definitions for System Configuration -->
+
+<!-- REGION PARAMETERS ENTITY - Manages regional configuration -->
+<ENTITY NAME="REGION.PARAMETERS" VERSION="1.00">
+    <DATARANGE>
+        <START />
+        <END />
+        <CUR_PAGE />
+        <PAGE_ENTRIES />
+        <TOTAL_PAGES />
+        <TOTAL_ENTRIES />
+        <SORT_LIST>
+            <SORT SORT="">
+                <NAME></NAME>
+                <SORTTYPE></SORTTYPE>
+            </SORT>
+        </SORT_LIST>
+        <FILTER_LIST>
+            <FILTER>
+                <NAME></NAME>
+                <FILTERTYPE></FILTERTYPE>
+                <BEGIN_VALUE></BEGIN_VALUE>
+                <END_VALUE></END_VALUE>
+            </FILTER>
+        </FILTER_LIST>
+    </DATARANGE>
+    <LIST_PROPERTIES>
+        <NAME />
+    </LIST_PROPERTIES>
+    <FIELDS>
+        <ATTRIBUTEGROUP NAME="REGION.PARAMETER">
+            <FIELD NAME="AGENCY_DISPLAYNAME">
+                <CAPTION>Region</CAPTION>
+                <MUSTFILL>MUSTFILL:TRUE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>The name of the region is set automatically!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the name of the region!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="COLOR">
+                <CAPTION>Color</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>Select the color, that you want to assign!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the assigned color!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="ID_REGION">
+                <CAPTION>ID of region</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:NUMBER</DATATYPE>
+                <EDITHINT>The ID of the region can not be set!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the ID of the region!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+        </ATTRIBUTEGROUP>
+    </FIELDS>
+</ENTITY>
+
+<!-- SERVICE PARAMETERS ENTITY - Manages service configuration -->
+<ENTITY NAME="SERVICE.PARAMETERS" VERSION="1.00">
+    <DATARANGE>
+        <START />
+        <END />
+        <CUR_PAGE />
+        <PAGE_ENTRIES />
+        <TOTAL_PAGES />
+        <TOTAL_ENTRIES />
+        <SORT_LIST>
+            <SORT SORT="">
+                <NAME></NAME>
+                <SORTTYPE></SORTTYPE>
+            </SORT>
+        </SORT_LIST>
+        <FILTER_LIST>
+            <FILTER>
+                <NAME></NAME>
+                <FILTERTYPE></FILTERTYPE>
+                <BEGIN_VALUE></BEGIN_VALUE>
+                <END_VALUE></END_VALUE>
+            </FILTER>
+        </FILTER_LIST>
+    </DATARANGE>
+    <LIST_PROPERTIES>
+        <NAME />
+    </LIST_PROPERTIES>
+    <FIELDS>
+        <ATTRIBUTEGROUP NAME="SERVICE.PARAMETER">
+            <FIELD NAME="COLOR">
+                <CAPTION>Color</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>Select the color, that you want to assign!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the assigned color!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="ID_SERVICE">
+                <CAPTION>ID of service</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>Please enter the ID of the service!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the ID of the service to be performed!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="SERVICE">
+                <CAPTION>Service</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH>100</MAXLENGTH>
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>Please select the service!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the service!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+        </ATTRIBUTEGROUP>
+    </FIELDS>
+</ENTITY>
+
+<!-- SUPPLIER PARAMETERS ENTITY - Manages supplier configuration -->
+<ENTITY NAME="SUPPLIER.PARAMETERS" VERSION="1.00">
+    <DATARANGE>
+        <START />
+        <END />
+        <CUR_PAGE />
+        <PAGE_ENTRIES />
+        <TOTAL_PAGES />
+        <TOTAL_ENTRIES />
+        <SORT_LIST>
+            <SORT SORT="">
+                <NAME></NAME>
+                <SORTTYPE></SORTTYPE>
+            </SORT>
+        </SORT_LIST>
+        <FILTER_LIST>
+            <FILTER>
+                <NAME></NAME>
+                <FILTERTYPE></FILTERTYPE>
+                <BEGIN_VALUE></BEGIN_VALUE>
+                <END_VALUE></END_VALUE>
+            </FILTER>
+        </FILTER_LIST>
+    </DATARANGE>
+    <LIST_PROPERTIES>
+        <NAME />
+    </LIST_PROPERTIES>
+    <FIELDS>
+        <ATTRIBUTEGROUP NAME="SUPPLIER.PARAMETER">
+            <FIELD NAME="COLOR">
+                <CAPTION>Color</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>Select the color, that you want to assign!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the assigned color!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="ID_SUPPLIER">
+                <CAPTION>ID of supplier</CAPTION>
+                <MUSTFILL>MUSTFILL:FALSE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>Please enter the ID of the supplier!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the ID of the supplier!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+            <FIELD NAME="SUP_DISPLAYNAME">
+                <CAPTION>Supplier</CAPTION>
+                <MUSTFILL>MUSTFILL:TRUE</MUSTFILL>
+                <MAXLENGTH />
+                <DEFAULTVALUE />
+                <VISIBLE />
+                <EDITABLE />
+                <POSITION />
+                <COLUMNWIDTH />
+                <DATATYPE>DATATYPE:ALPHANUMERIC</DATATYPE>
+                <EDITHINT>The name of the supplier is set automatically!</EDITHINT>
+                <HELPDESCRIPTION>Shows you the name of the supplier!</HELPDESCRIPTION>
+                <SYSTEMCOLUMN />
+                <UR>RIGHT:DELETE</UR>
+                <FREEZE />
+            </FIELD>
+        </ATTRIBUTEGROUP>
+    </FIELDS>
+</ENTITY>
