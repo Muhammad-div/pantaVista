@@ -3,12 +3,8 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import {
   Box,
   Typography,
-  Breadcrumbs,
-  Link,
   Button,
   Paper,
-  TextField,
-  InputAdornment,
   IconButton,
   Menu,
   MenuItem,
@@ -16,13 +12,12 @@ import {
   Alert,
 } from '@mui/material'
 import {
-  Home as HomeIcon,
-  Search as SearchIcon,
   Settings as SettingsIcon,
   ContentCopy as CopyIcon,
   Print as PrintIcon,
   FileDownload as ExportIcon,
   MoreVert as MoreVertIcon,
+  FilterList as FilterListIcon,
 } from '@mui/icons-material'
 import { Grid, GridColumn, GridToolbar } from '@progress/kendo-react-grid'
 import {
@@ -33,7 +28,8 @@ import type {
   DataResult,
 } from '@progress/kendo-data-query'
 import { getPosSmallList } from '../services/api'
-import type { POSItem as ApiPOSItem } from '../utils/xmlParser'
+import { useTextService } from '../services/textService'
+import type { POSItem as ApiPOSItem, POSFieldMetadata, POSSortConfig } from '../utils/xmlParser'
 import './POSList.css'
 
 interface POSItem {
@@ -51,24 +47,33 @@ const POSList = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const location = useLocation()
-  const [searchQuery, setSearchQuery] = useState('')
+  const textService = useTextService()
   const [optionsAnchor, setOptionsAnchor] = useState<null | HTMLElement>(null)
   const [posList, setPosList] = useState<POSItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [loadingMore, setLoadingMore] = useState(false)
-  const [nextDataLevel, setNextDataLevel] = useState<number>(0)
-  const [hasMoreData, setHasMoreData] = useState(false)
-  const [isLoadingNextLevel, setIsLoadingNextLevel] = useState(false)
+  const [showFilters, setShowFilters] = useState(false)
+  const [fieldMetadata, setFieldMetadata] = useState<POSFieldMetadata[]>([])
+  const [sortConfig, setSortConfig] = useState<POSSortConfig | null>(null)
 
   // Check if we're on the /pos route (not from suppliers)
   const isDirectPOSRoute = location.pathname === '/pos'
 
-  // KendoReact Grid data state
+  // Field name mapping from XML field names to component field names
+  const fieldNameMap: Record<string, string> = {
+    'PVNO': 'posId',
+    'DISPLAYNAME': 'shortName',
+    'ADDRESS1': 'address',
+    'CITY': 'city',
+    'PCODE': 'zipcode',
+    'PHONE1': 'phone',
+  }
+
+  // KendoReact Grid data state - no pagination, show all data
   const [dataState, setDataState] = useState<State>({
-    sort: [{ field: 'shortName', dir: 'asc' }],
+    sort: [],
     skip: 0,
-    take: 25,
+    take: 999999, // Show all data at once
     filter: {
       logic: 'and',
       filters: [],
@@ -76,17 +81,13 @@ const POSList = () => {
     group: [],
   })
 
-  // Fetch POS list from API
-  const fetchPOSList = useCallback(async (level: number = 1, append: boolean = false) => {
-    if (level === 1 && !append) {
+  // Fetch POS list from API - loads all data at once
+  const fetchPOSList = useCallback(async () => {
       setLoading(true)
       setError(null)
-    } else {
-      setIsLoadingNextLevel(true)
-    }
     
     try {
-      const response = await getPosSmallList(level)
+      const response = await getPosSmallList(1)
       
       if (response.success && response.data) {
         // Map API POS data to component POSItem interface with all available fields
@@ -102,91 +103,206 @@ const POSList = () => {
           }
         })
         
-        if (append) {
-          setPosList(prev => {
-            // Calculate proper IDs based on current list length
-            const startIndex = prev.length
-            return [...prev, ...mappedPOS.map((pos, idx) => ({
-              ...pos,
-              id: pos.id || startIndex + idx + 1
-            }))]
-          })
-        } else {
           setPosList(mappedPOS)
-        }
         
-        // Store next data level for potential loading
-        const nextLevel = response.data.nextDataLevel || 0
-        setNextDataLevel(nextLevel)
-        setHasMoreData(nextLevel > 0 && nextLevel !== level)
+        // Store field metadata and sort config
+        if (response.data.fieldMetadata) {
+          setFieldMetadata(response.data.fieldMetadata)
+        }
+        if (response.data.sortConfig) {
+          setSortConfig(response.data.sortConfig)
+        }
       } else {
         setError(response.error || 'Failed to load POS list')
-        if (level === 1 && !append) {
           setPosList([])
-        }
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred'
       setError(errorMessage)
-      if (level === 1 && !append) {
         setPosList([])
-      }
     } finally {
-      if (level === 1 && !append) {
         setLoading(false)
-      }
-      setIsLoadingNextLevel(false)
-      setLoadingMore(false)
     }
   }, [])
 
   // Initial load
   useEffect(() => {
-    fetchPOSList(1, false)
-  }, [fetchPOSList]) // Only run on mount
+    fetchPOSList()
+  }, [fetchPOSList])
 
-  // Load more data when user scrolls near the end or clicks load more
-  const loadMoreData = useCallback(() => {
-    if (hasMoreData && nextDataLevel > 0 && !isLoadingNextLevel) {
-      setLoadingMore(true)
-      fetchPOSList(nextDataLevel, true)
+  // Apply sort configuration from XML when available
+  useEffect(() => {
+    if (sortConfig && sortConfig.name) {
+      const mappedField = fieldNameMap[sortConfig.name] || sortConfig.name.toLowerCase()
+      const sortDir = sortConfig.sortType?.toLowerCase().includes('desc') ? 'desc' : 'asc'
+      setDataState(prev => ({
+        ...prev,
+        sort: [{ field: mappedField, dir: sortDir }],
+      }))
     }
-  }, [hasMoreData, nextDataLevel, isLoadingNextLevel, fetchPOSList])
+  }, [sortConfig])
 
-  // Filter POS list based on search query
-  const filteredPOS = useMemo(() => {
-    if (!searchQuery) return posList
+  // Update filter icon appearance when showFilters changes
+  useEffect(() => {
+    const updateFilterIcons = () => {
+      const filterIcons = document.querySelectorAll('.kendo-pos-grid .column-filter-icon')
+      filterIcons.forEach((icon) => {
+        // Use SVG filter icon instead of emoji/text
+        const isActive = showFilters
+        if (isActive) {
+          icon.setAttribute('style', 'margin-left: 8px; font-size: 16px; cursor: pointer; opacity: 1; color: #3b82f6; transition: all 0.2s ease; display: inline-flex; align-items: center;')
+          icon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 18H14V16H10V18ZM3 6V8H21V6H3ZM6 13H18V11H6V13Z" fill="currentColor"/></svg>'
+        } else {
+          icon.setAttribute('style', 'margin-left: 8px; font-size: 16px; cursor: pointer; opacity: 0.5; transition: all 0.2s ease; display: inline-flex; align-items: center;')
+          icon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 18H14V16H10V18ZM3 6V8H21V6H3ZM6 13H18V11H6V13Z" fill="currentColor"/></svg>'
+        }
+      })
+    }
+    updateFilterIcons()
+  }, [showFilters])
 
-    const query = searchQuery.toLowerCase()
-    return posList.filter(
-      (pos) =>
-        (pos.posId || '').toLowerCase().includes(query) ||
-        (pos.shortName || '').toLowerCase().includes(query) ||
-        (pos.address || '').toLowerCase().includes(query) ||
-        (pos.city || '').toLowerCase().includes(query) ||
-        (pos.zipcode || '').toLowerCase().includes(query) ||
-        (pos.phone || '').includes(query)
-    )
-  }, [searchQuery, posList])
+  // Add filter icons to column headers and handle clicks
+  useEffect(() => {
+    if (!loading) {
+      const addFilterIcons = () => {
+        const headerCells = document.querySelectorAll('.kendo-pos-grid .k-grid-header th')
+        headerCells.forEach((th) => {
+          // Skip if already processed
+          if (th.hasAttribute('data-filter-icon-added')) {
+            return
+          }
 
-  // Process data for KendoReact Grid
+          // Mark as processed
+          th.setAttribute('data-filter-icon-added', 'true')
+
+          // Create filter icon
+          const filterIcon = document.createElement('span')
+          filterIcon.className = 'column-filter-icon'
+          filterIcon.setAttribute('data-filter-toggle', 'true')
+          // Use SVG filter icon
+          filterIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 18H14V16H10V18ZM3 6V8H21V6H3ZM6 13H18V11H6V13Z" fill="currentColor"/></svg>'
+          
+          filterIcon.addEventListener('click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            // Toggle filters
+            setShowFilters((prev) => {
+              const newValue = !prev
+              // Force update the grid's filterable property
+              setTimeout(() => {
+                const grid = document.querySelector('.kendo-pos-grid')
+                if (grid) {
+                  grid.classList.toggle('filters-visible', newValue)
+                  grid.classList.toggle('filters-hidden', !newValue)
+                }
+              }, 0)
+              return newValue
+            })
+          })
+
+          // Add double-click handler to column header
+          const handleDoubleClick = (e: MouseEvent) => {
+            e.stopPropagation()
+            if (!showFilters) {
+              setShowFilters(true)
+            }
+          }
+          th.addEventListener('dblclick', handleDoubleClick as EventListener)
+
+          // Find the cell content wrapper
+          const cellInner = th.querySelector('.k-cell-inner') as HTMLElement | null
+          if (cellInner) {
+            // Check if icon already exists
+            const existingIcon = cellInner.querySelector('.column-filter-icon')
+            if (!existingIcon) {
+              cellInner.style.display = 'flex'
+              cellInner.style.alignItems = 'center'
+              cellInner.style.justifyContent = 'space-between'
+              cellInner.appendChild(filterIcon)
+            }
+          } else {
+            // Create wrapper if needed
+            const wrapper = document.createElement('div')
+            wrapper.className = 'k-cell-inner'
+            wrapper.style.cssText = 'display: flex; align-items: center; justify-content: space-between; width: 100%;'
+            
+            // Get title text, removing any existing icons or SVG
+            const titleText = Array.from(th.childNodes)
+              .filter(node => node.nodeType === Node.TEXT_NODE)
+              .map(node => node.textContent)
+              .join('')
+              .trim()
+              .replace(/[🔍✓]/g, '')
+              .trim()
+            
+            const titleSpan = document.createElement('span')
+            titleSpan.textContent = titleText || th.textContent?.trim() || ''
+            
+            wrapper.appendChild(titleSpan)
+            wrapper.appendChild(filterIcon)
+            th.innerHTML = ''
+            th.appendChild(wrapper)
+          }
+        })
+      }
+
+      // Use MutationObserver to watch for grid updates
+      const observer = new MutationObserver(() => {
+        // Reset processed flags when grid structure changes
+        const headerCells = document.querySelectorAll('.kendo-pos-grid .k-grid-header th')
+        headerCells.forEach((th) => {
+          if (!th.querySelector('.column-filter-icon')) {
+            th.removeAttribute('data-filter-icon-added')
+          }
+        })
+        addFilterIcons()
+      })
+
+      const gridElement = document.querySelector('.kendo-pos-grid')
+      if (gridElement) {
+        observer.observe(gridElement, {
+          childList: true,
+          subtree: true,
+        })
+        addFilterIcons()
+      }
+
+      return () => {
+        observer.disconnect()
+      }
+    }
+  }, [loading])
+
+  // Process data for KendoReact Grid - show all data
   const dataResult: DataResult = useMemo(() => {
-    const result = process(filteredPOS, dataState)
-    
-    // Check if we need to load more data when paginating
-    const currentEndIndex = (dataState.skip || 0) + (dataState.take || 25)
-    if (currentEndIndex >= filteredPOS.length && hasMoreData && !isLoadingNextLevel && !loadingMore) {
-      // Load more data in the background
-      setTimeout(() => {
-        loadMoreData()
-      }, 100)
+    // Override take to show all items
+    const allDataState = {
+      ...dataState,
+      take: posList.length || 999999,
+      skip: 0,
     }
-    
-    return result
-  }, [filteredPOS, dataState, hasMoreData, isLoadingNextLevel, loadingMore, loadMoreData])
+    return process(posList, allDataState)
+  }, [posList, dataState])
 
   const dataStateChange = (event: any) => {
     setDataState(event.dataState)
+  }
+
+  // Check if filters are active
+  const hasActiveFilters = useMemo(() => {
+    return dataState.filter?.filters && dataState.filter.filters.length > 0
+  }, [dataState.filter])
+
+  // Clear all filters
+  const clearFilters = () => {
+    setDataState(prev => ({
+      ...prev,
+      filter: {
+        logic: 'and',
+        filters: [],
+      },
+    }))
+    setShowFilters(false)
   }
 
   const handleOptionsClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -204,115 +320,68 @@ const POSList = () => {
 
   return (
     <Box className="pos-list-page">
-      {/* Header with Breadcrumbs */}
-      <Box className="pos-list-header">
-        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 0 }}>
-          <Link
-            underline="hover"
-            color="inherit"
-            href="#"
-            onClick={(e) => {
-              e.preventDefault()
-              navigate('/')
-            }}
-            sx={{ display: 'flex', alignItems: 'center' }}
-          >
-            <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-            Home
-          </Link>
-          {!isDirectPOSRoute && id && (
-            <>
-              <Link
-                underline="hover"
-                color="inherit"
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault()
-                  navigate('/suppliers')
-                }}
-              >
-                Suppliers
-              </Link>
-              <Link
-                underline="hover"
-                color="inherit"
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault()
-                  navigate(`/suppliers/${id}`)
-                }}
-              >
-                Show Supplier
-              </Link>
-            </>
-          )}
-          <Typography color="text.primary">POS List</Typography>
-        </Breadcrumbs>
-      </Box>
-
-      {/* Main Content */}
-      <Box className="pos-list-content">
-        {/* Title Section */}
-        <Box className="pos-title-section">
-          <Typography variant="h4" component="h1" className="pos-page-title">
-            POS List (Retail)
-          </Typography>
-          <Typography variant="body1" color="text.secondary" className="pos-page-subtitle">
-            {isDirectPOSRoute 
-              ? 'List of all Points-of-Sale.'
-              : `List of Points-of-Sale${id ? ` for Supplier` : ''}.`
-            }
-          </Typography>
+      {/* Compact Header */}
+      <Box className="pos-list-header-compact">
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Typography variant="h6" component="h1" sx={{ fontSize: '18px', fontWeight: 600 }}>
+              {textService.getText('WINDOW.TITLE', 'Points-of-Sale')}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ ml: 2 }}>
+              {textService.getText('LABEL:ENTRIES', 'Total')}: <strong>{dataResult.total || posList.length}</strong> {textService.getText('LABEL:ENTRIES', 'entries')}
+            </Typography>
         </Box>
-
-        {/* Action Buttons */}
-        <Box className="pos-actions-section">
-          <Box className="pos-action-buttons">
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Button
               variant="outlined"
-              startIcon={<SettingsIcon />}
-              className="pos-action-button"
+              size="small"
+              startIcon={<SettingsIcon sx={{ fontSize: '16px' }} />}
               onClick={() => handleAction('Settings')}
+              sx={{ minWidth: 'auto', px: 1.5, fontSize: '12px', textTransform: 'none' }}
             >
-              Settings
+              {textService.getText('LABEL:SETTINGS', 'Settings')}
             </Button>
             <Button
               variant="outlined"
-              startIcon={<CopyIcon />}
-              className="pos-action-button"
+              size="small"
+              startIcon={<CopyIcon sx={{ fontSize: '16px' }} />}
               onClick={() => handleAction('Copy')}
+              sx={{ minWidth: 'auto', px: 1.5, fontSize: '12px', textTransform: 'none' }}
+              title={textService.getText('BUTTON.IA:COPY', 'Copy')}
             >
-              Copy
+              {textService.getText('BUTTON.IA:COPY', 'Copy')}
             </Button>
             <Button
               variant="outlined"
-              startIcon={<PrintIcon />}
-              className="pos-action-button"
+              size="small"
+              startIcon={<PrintIcon sx={{ fontSize: '16px' }} />}
               onClick={() => handleAction('Print')}
+              sx={{ minWidth: 'auto', px: 1.5, fontSize: '12px', textTransform: 'none' }}
+              title={textService.getText('BUTTON.IA:PRINT', 'Opens a print version of this data.')}
             >
-              Print
+              {textService.getText('BUTTON.IA:PRINT', 'Print').replace('Opens a print version of this data.', 'Print')}
             </Button>
             <Button
               variant="outlined"
-              startIcon={<ExportIcon />}
-              className="pos-action-button"
+              size="small"
+              startIcon={<ExportIcon sx={{ fontSize: '16px' }} />}
               onClick={() => handleAction('Export')}
+              sx={{ minWidth: 'auto', px: 1.5, fontSize: '12px', textTransform: 'none' }}
+              title={textService.getText('BUTTON.IA:EXPORT', 'Exports this data into an Excel file.')}
             >
-              Export
+              {textService.getText('BUTTON.IA:EXPORT', 'Export').replace('Exports this data into an Excel file.', 'Export')}
             </Button>
-          </Box>
           <IconButton
-            className="pos-options-button"
+              size="small"
             onClick={handleOptionsClick}
             sx={{
               border: '1px solid',
               borderColor: 'var(--border-color, #d1d5db)',
-              borderRadius: '8px',
-              padding: '8px',
-              transition: 'border-color 0.2s ease',
+                borderRadius: '6px',
+                padding: '4px',
             }}
           >
-            <MoreVertIcon />
+              <MoreVertIcon sx={{ fontSize: '18px' }} />
           </IconButton>
           <Menu
             anchorEl={optionsAnchor}
@@ -327,57 +396,26 @@ const POSList = () => {
               horizontal: 'right',
             }}
           >
-            <MenuItem onClick={() => handleAction('Filter')}>Filter</MenuItem>
-            <MenuItem onClick={() => handleAction('Sort')}>Sort</MenuItem>
-            <MenuItem onClick={() => handleAction('Columns')}>Columns</MenuItem>
+            <MenuItem onClick={() => handleAction('Filter')} title={textService.getText('BUTTON.IA:FILTER', 'Server-Filter - Only data respecting these filter conditions will be requested from the server (performance optimization)')}>
+              {textService.getText('BUTTON.IA:FILTER_LIST', 'Filter').replace('Filters the list according to certain criteria', 'Filter')}
+            </MenuItem>
+            <MenuItem onClick={() => handleAction('Sort')}>
+              {textService.getText('REPORT:SORT', 'Sort')}
+            </MenuItem>
+            <MenuItem onClick={() => handleAction('Columns')}>
+              {textService.getText('COLUMN.CONFIG:HEADER.AVAILABLEDATA', 'Columns')}
+            </MenuItem>
           </Menu>
         </Box>
+        </Box>
+      </Box>
+
+      {/* Main Content - Focused on Table */}
+      <Box className="pos-list-content-compact" sx={{ paddingLeft: '24px', paddingRight: '24px' }}>
 
         {/* KendoReact Grid Card */}
         <Paper elevation={0} className="pos-table-card">
-          <Box className="table-header" sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <TextField
-              placeholder="Search POS..."
-              variant="outlined"
-              size="small"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon color="action" />
-                  </InputAdornment>
-                ),
-              }}
-              sx={{
-                width: '300px',
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
-                },
-              }}
-            />
-            <Box className="table-stats" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Typography variant="body2" color="text.secondary">
-                Total: <strong>{dataResult.total || filteredPOS.length}</strong> POS
-              </Typography>
-              <IconButton
-                onClick={handleOptionsClick}
-                sx={{
-                  color: 'text.secondary',
-                  padding: '4px',
-                  '&:hover': {
-                    backgroundColor: 'action.hover',
-                  },
-                  transition: 'all 0.2s ease',
-                }}
-                aria-label="POS actions menu"
-              >
-                <MoreVertIcon sx={{ fontSize: 20 }} />
-              </IconButton>
-            </Box>
-          </Box>
-
-          <Box sx={{ p: 2, width: '100%', display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
+          <Box sx={{ p: 0, width: '100%', display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0, overflow: 'hidden' }}>
             {error && (
               <Alert severity="warning" sx={{ mb: 2 }}>
                 {error}
@@ -388,128 +426,118 @@ const POSList = () => {
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
                 <CircularProgress />
               </Box>
-            ) : (
-              <>
-                {/* Premium Feature Indicator - Grouping */}
-                <Box
-                  sx={{
-                    mb: 0,
-                    p: 2,
-                    backgroundColor: 'var(--bg-hover, #f3f4f6)',
-                    border: '2px dashed var(--border-color, #cbd5e1)',
-                    borderRadius: '8px 8px 0 0',
-                    borderBottom: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    position: 'relative',
-                    opacity: 0.6,
-                    cursor: 'not-allowed',
-                  }}
-                  title="Grouping is a premium feature. Upgrade to KendoReact Premium to enable this feature."
-                >
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
+            ) : dataResult.data && dataResult.data.length === 0 ? (
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '400px', gap: 2 }}>
+                <Typography variant="h6" color="text.secondary">
+                  {textService.getText('MESSAGE:NODATAFOUND', 'No records found')}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {hasActiveFilters 
+                    ? textService.getText('MESSAGE:NODATAFOUND', 'There are no current data for this list.')
+                    : textService.getText('LABEL:NO_DATA_AVAILABLE', 'No data available')}
+                </Typography>
+                {hasActiveFilters && (
+                  <Button
+                    variant="contained"
+                    onClick={clearFilters}
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 1,
+                      mt: 2,
+                      textTransform: 'none',
                     }}
                   >
-                    <span>🔒</span>
-                    <span>Drag a column header here to group by that column</span>
-                    <span style={{ marginLeft: '8px', fontSize: '10px', color: '#9ca3af' }}>
-                      (Premium Feature)
-                    </span>
-                  </Typography>
+                    {textService.getText('BUTTON:CANCEL', 'Clear Filters')}
+                  </Button>
+                )}
                 </Box>
-                <Box sx={{ width: '100%', overflow: 'hidden', flex: 1, minWidth: 0 }}>
+            ) : (
+              <>
+                <Box sx={{ width: '100%', height: '100%', overflow: 'hidden', flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
                   <Grid
-                    style={{ height: '600px', width: '100%' }}
+                    style={{ height: '100%', width: '100%' }}
                     data={dataResult}
                     sortable={true}
-                    filterable={true}
+                    filterable={showFilters}
                     groupable={false}
-                    pageable={{
-                      buttonCount: 5,
-                      pageSizes: [10, 25, 50, 100],
-                    }}
+                    pageable={false}
                     resizable={true}
                     reorderable={true}
                     onDataStateChange={dataStateChange}
-                    className="kendo-pos-grid"
+                    className={`kendo-pos-grid ${showFilters ? 'filters-visible' : 'filters-hidden'}`}
                   >
-                  <GridToolbar />
+                  {fieldMetadata.length > 0
+                    ? fieldMetadata
+                        .filter(field => field.visible !== false) // Only show visible fields
+                        .map((field) => {
+                          const mappedField = fieldNameMap[field.name] || field.name.toLowerCase()
+                          const width = field.columnWidth ? `${field.columnWidth}px` : undefined
+                          
+                          return (
+                            <GridColumn
+                              key={field.name}
+                              field={mappedField}
+                              title={field.caption.toUpperCase()}
+                              width={width}
+                              groupable={false}
+                              filterable={showFilters}
+                              sortable={true}
+                            />
+                          )
+                        })
+                    : (
+                      // Fallback to default columns if metadata not available
+                      <>
                   <GridColumn
                     field="posId"
-                    title="POS ID"
+                    title={textService.getText('LABEL:POS_ID', 'PoS-ID')}
                     width="150px"
                     groupable={false}
-                    filterable={true}
+                    filterable={showFilters}
                     sortable={true}
                   />
                   <GridColumn
                     field="shortName"
-                    title="Short Name"
+                    title={textService.getText('WINDOW.TITLE', 'Points-of-Sale')}
                     width="260px"
                     groupable={false}
-                    filterable={true}
+                    filterable={showFilters}
                     sortable={true}
                   />
                   <GridColumn
                     field="address"
-                    title="Address"
+                    title={textService.getText('LABEL:ADDRESSDATA', 'Address data')}
                     width="260px"
                     groupable={false}
-                    filterable={true}
+                    filterable={showFilters}
                     sortable={true}
                   />
                   <GridColumn
                     field="city"
-                    title="City"
+                    title={textService.getText('LABEL:ADDRESSDATA', 'Address data')}
                     width="200px"
                     groupable={false}
-                    filterable={true}
+                    filterable={showFilters}
                     sortable={true}
                   />
                   <GridColumn
                     field="zipcode"
-                    title="Zipcode"
+                    title={textService.getText('REPORT:BY_PCODE', 'by zip code').replace('by ', '')}
                     width="150px"
                     groupable={false}
-                    filterable={true}
+                    filterable={showFilters}
                     sortable={true}
                   />
                   <GridColumn
                     field="phone"
-                    title="Phone"
+                    title={textService.getText('ACTIVITY.TOOLTIP:PHONE', 'Telephone')}
                     width="200px"
                     groupable={false}
-                    filterable={true}
+                    filterable={showFilters}
                     sortable={true}
                   />
+                      </>
+                    )}
                   </Grid>
                 </Box>
-                {(loadingMore || isLoadingNextLevel) && (
-                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 2 }}>
-                    <CircularProgress size={24} />
-                    <Typography variant="body2" sx={{ ml: 2 }}>
-                      Loading more POS data...
-                    </Typography>
-                  </Box>
-                )}
-                {hasMoreData && !loadingMore && !isLoadingNextLevel && (
-                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 2 }}>
-                    <Button
-                      variant="outlined"
-                      onClick={loadMoreData}
-                      disabled={isLoadingNextLevel}
-                    >
-                      Load More
-                    </Button>
-                  </Box>
-                )}
               </>
             )}
           </Box>

@@ -3,7 +3,8 @@
  * Backend URL: https://api.pantavista.net
  */
 
-import { parseXML, getMessageName, getUserMessages, getSystemMessages, extractPreAppInitCaptions, extractLoginTemplate, extractLoginConfirmation, extractSupplierList, extractPosSmallList, extractNextDataLevel, extractAppInitMenuCaptions, extractAppInitPermissions, getToken, getLanguage, type PreAppInitCaptions, type LoginTemplateField, type LoginConfirmation, type Supplier, type POSItem, type UserMessage, type AppInitMenuCaptions, type MenuPermissions } from '../utils/xmlParser';
+import { parseXML, getMessageName, getUserMessages, getSystemMessages, extractPreAppInitCaptions, extractLoginTemplate, extractLoginConfirmation, extractSupplierList, extractPosSmallList, extractNextDataLevel, extractAppInitMenuCaptions, extractAppInitPermissions, getToken, getLanguage, extractPosFieldMetadata, extractPosSortConfig, extractMenuItems, extractUIText, type PreAppInitCaptions, type LoginTemplateField, type LoginConfirmation, type Supplier, type POSItem, type UserMessage, type AppInitMenuCaptions, type MenuPermissions, type POSFieldMetadata, type POSSortConfig } from '../utils/xmlParser';
+import type { APIMenuItem, UIText } from '../types/appInit';
 
 const API_BASE_URL = 'https://api.pantavista.net';
 
@@ -24,7 +25,7 @@ export interface ApiError {
 }
 
 /**
- * Detect browser language
+ * Detect browser language (fallback only)
  */
 function detectLanguage(): { full: string; short: string } {
   const navLang = navigator.language || (navigator as any).browserLanguage || 'en';
@@ -35,6 +36,39 @@ function detectLanguage(): { full: string; short: string } {
   }
   console.log('🌍 Language detected: English (browser:', navLang + ')');
   return { full: 'ENGLISH', short: 'EN' };
+}
+
+/**
+ * Get user language from storage (preferred) or fallback to browser detection
+ * Returns language in format { full: 'ENGLISH', short: 'EN' }
+ */
+function getUserLanguage(): { full: string; short: string } {
+  const storedLang = getStoredLanguage();
+  
+  // If we have a stored language, parse it
+  if (storedLang && storedLang.includes(':')) {
+    const parts = storedLang.split(':');
+    if (parts.length > 1) {
+      const langName = parts[1].toUpperCase();
+      let langCode = 'EN';
+      
+      if (langName === 'GERMAN') {
+        langCode = 'GE';
+      } else if (langName === 'ENGLISH') {
+        langCode = 'EN';
+      } else {
+        // Fallback: use first 2 characters
+        langCode = langName.substring(0, 2);
+      }
+      
+      console.log('🌍 Using stored user language:', langName, '(' + langCode + ')');
+      return { full: langName, short: langCode };
+    }
+  }
+  
+  // Fallback to browser detection if no stored language
+  console.log('🌍 No stored language found, using browser detection');
+  return detectLanguage();
 }
 
 /**
@@ -120,7 +154,7 @@ export async function getPreAppInit(): Promise<ApiResponse<PreAppInitCaptions>> 
   
   const requestPromise = (async () => {
     try {
-      const lang = detectLanguage();
+      const lang = getUserLanguage();
       const token = getStoredToken() || '';
       
       const xmlPayload = `<?xml version="1.0" encoding="utf-8"?>
@@ -201,7 +235,7 @@ export async function getLoginTemplate(): Promise<ApiResponse<{ username?: Login
   
   const requestPromise = (async () => {
     try {
-    const lang = detectLanguage();
+    const lang = getUserLanguage();
     
     // Map language to correct code (German uses "GE" not "DE")
     let langCode = lang.short;
@@ -279,6 +313,7 @@ export async function login(
       };
     }
 
+    // For login, use browser detection as fallback (user language not yet known)
     const lang = detectLanguage();
     const prevToken = getStoredToken() || '';
     
@@ -378,9 +413,17 @@ export async function login(
       if (confirmation && confirmation.token) {
         // Store token and user data
         storeToken(confirmation.token);
-        if (confirmation.language) {
+        
+        // Priority: Store UI_LANGUAGE from USERDATA if available, otherwise use language from envelope
+        if (confirmation.uiLanguage) {
+          // UI_LANGUAGE is already in format "LANGUAGE:ENGLISH" or "LANGUAGE:GERMAN"
+          storeLanguage(confirmation.uiLanguage);
+          console.log('🌍 Stored UI_LANGUAGE from login response:', confirmation.uiLanguage);
+        } else if (confirmation.language) {
           storeLanguage(confirmation.language);
+          console.log('🌍 Stored language from envelope:', confirmation.language);
         }
+        
         if (confirmation.displayName) {
           localStorage.setItem('pv.displayName', confirmation.displayName);
         }
@@ -453,7 +496,7 @@ export async function getSupplierList(): Promise<ApiResponse<Supplier[]>> {
   
   const requestPromise = (async () => {
     try {
-      const lang = detectLanguage();
+      const lang = getUserLanguage();
       const token = getStoredToken();
       
       if (!token) {
@@ -461,27 +504,6 @@ export async function getSupplierList(): Promise<ApiResponse<Supplier[]>> {
           success: false,
           error: 'Authentication required. Please login first.',
         };
-      }
-      
-      const storedLang = getStoredLanguage();
-      
-      let langCode = lang.short;
-      if (storedLang.includes(':')) {
-        const parts = storedLang.split(':');
-        if (parts.length > 1) {
-          const langName = parts[1].toUpperCase();
-          if (langName === 'GERMAN') {
-            langCode = 'GE';
-          } else if (langName === 'ENGLISH') {
-            langCode = 'EN';
-          } else {
-            langCode = langName.substring(0, 2);
-          }
-        }
-      } else if (lang.full === 'GERMAN') {
-        langCode = 'GE';
-      } else if (lang.full === 'ENGLISH') {
-        langCode = 'EN';
       }
       
       const xmlPayload = `<?xml version="1.0" encoding="utf-8"?>
@@ -493,7 +515,7 @@ export async function getSupplierList(): Promise<ApiResponse<Supplier[]>> {
     <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
     <ORIGINATOR>PVNG.WEB.UI</ORIGINATOR>
   </ENVELOPE_DATA>
-  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
+  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${lang.short}">
     <BNO_REQUEST VERSION="1.00">
       <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
       <BNO_GROUP>SUPPLIER</BNO_GROUP>
@@ -581,7 +603,7 @@ export async function getSupplierList(): Promise<ApiResponse<Supplier[]>> {
  * GET_T_POS_SMALL_LIST - Get list of Point-of-Sale (POS) data
  * @param dataLevel - The data level to fetch (starts at 1)
  */
-export async function getPosSmallList(dataLevel: number = 1): Promise<ApiResponse<{ posList: POSItem[]; nextDataLevel: number }>> {
+export async function getPosSmallList(dataLevel: number = 1): Promise<ApiResponse<{ posList: POSItem[]; nextDataLevel: number; fieldMetadata?: POSFieldMetadata[]; sortConfig?: POSSortConfig | null }>> {
   const requestKey = `GET_T_POS_SMALL_LIST_${dataLevel}`;
   
   // If there's already a pending request for this data level, return it
@@ -592,7 +614,7 @@ export async function getPosSmallList(dataLevel: number = 1): Promise<ApiRespons
   
   const requestPromise = (async () => {
     try {
-      const lang = detectLanguage();
+      const lang = getUserLanguage();
       const token = getStoredToken();
       
       if (!token) {
@@ -600,27 +622,6 @@ export async function getPosSmallList(dataLevel: number = 1): Promise<ApiRespons
           success: false,
           error: 'Authentication required. Please login first.',
         };
-      }
-      
-      const storedLang = getStoredLanguage();
-      
-      let langCode = lang.short;
-      if (storedLang.includes(':')) {
-        const parts = storedLang.split(':');
-        if (parts.length > 1) {
-          const langName = parts[1].toUpperCase();
-          if (langName === 'GERMAN') {
-            langCode = 'GE';
-          } else if (langName === 'ENGLISH') {
-            langCode = 'EN';
-          } else {
-            langCode = langName.substring(0, 2);
-          }
-        }
-      } else if (lang.full === 'GERMAN') {
-        langCode = 'GE';
-      } else if (lang.full === 'ENGLISH') {
-        langCode = 'EN';
       }
       
       const xmlPayload = `<?xml version="1.0" encoding="utf-8"?>
@@ -632,7 +633,7 @@ export async function getPosSmallList(dataLevel: number = 1): Promise<ApiRespons
     <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
     <ORIGINATOR>PVNG.WEB.UI</ORIGINATOR>
   </ENVELOPE_DATA>
-  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
+  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${lang.short}">
     <BNO_REQUEST VERSION="1.00">
       <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
       <BNO_GROUP>LOGIN</BNO_GROUP>
@@ -693,12 +694,16 @@ export async function getPosSmallList(dataLevel: number = 1): Promise<ApiRespons
       if (messageName === 'GET_T_POS_SMALL_LIST' || messageName?.includes('POS')) {
         const posList = extractPosSmallList(doc);
         const nextDataLevel = extractNextDataLevel(doc);
+        const fieldMetadata = extractPosFieldMetadata(doc);
+        const sortConfig = extractPosSortConfig(doc);
         
         return {
           success: true,
           data: {
             posList,
             nextDataLevel: nextDataLevel || 0,
+            fieldMetadata,
+            sortConfig,
           },
           messages: allMessages,
         };
@@ -722,9 +727,9 @@ export async function getPosSmallList(dataLevel: number = 1): Promise<ApiRespons
 }
 
 /**
- * GET_T_APP_INIT - Get application initialization data including menu items and permissions
+ * GET_APP_INIT - Get application initialization data including menu items, text data, and permissions
  */
-export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitMenuCaptions; permissions: MenuPermissions }>> {
+export async function getAppInit(): Promise<ApiResponse<{ menuItems: APIMenuItem[]; uiTexts: UIText[]; menuCaptions: AppInitMenuCaptions; permissions: MenuPermissions }>> {
   const requestKey = 'GET_APP_INIT';
   
   // If there's already a pending request, return it
@@ -735,7 +740,7 @@ export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitM
   
   const requestPromise = (async () => {
     try {
-      const lang = detectLanguage();
+      const lang = getUserLanguage();
       const token = getStoredToken();
       
       if (!token) {
@@ -743,27 +748,6 @@ export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitM
           success: false,
           error: 'Authentication required. Please login first.',
         };
-      }
-      
-      const storedLang = getStoredLanguage();
-      
-      let langCode = lang.short;
-      if (storedLang.includes(':')) {
-        const parts = storedLang.split(':');
-        if (parts.length > 1) {
-          const langName = parts[1].toUpperCase();
-          if (langName === 'GERMAN') {
-            langCode = 'GE';
-          } else if (langName === 'ENGLISH') {
-            langCode = 'EN';
-          } else {
-            langCode = langName.substring(0, 2);
-          }
-        }
-      } else if (lang.full === 'GERMAN') {
-        langCode = 'GE';
-      } else if (lang.full === 'ENGLISH') {
-        langCode = 'EN';
       }
       
       const xmlPayload = `<?xml version="1.0" encoding="utf-8"?>
@@ -775,7 +759,7 @@ export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitM
     <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
     <ORIGINATOR>PV.TC.WEB.UI</ORIGINATOR>
   </ENVELOPE_DATA>
-  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
+  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${lang.short}">
     <BNO_REQUEST VERSION="1.00">
       <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
       <BNO_GROUP>LOGIN</BNO_GROUP>
@@ -833,16 +817,22 @@ export async function getAppInit(): Promise<ApiResponse<{ menuCaptions: AppInitM
       }
       
       if (messageName === 'GET_APP_INIT' || messageName === 'GET_T_APP_INIT' || messageName?.includes('APP_INIT')) {
-        console.log('getAppInit: Extracting menu captions and permissions...');
+        console.log('getAppInit: Extracting menu items, text data, and permissions...');
+        const menuItems = extractMenuItems(doc);
+        const uiTexts = extractUIText(doc);
         const menuCaptions = extractAppInitMenuCaptions(doc);
         const permissions = extractAppInitPermissions(doc);
         
+        console.log('getAppInit: Extracted', menuItems.length, 'menu items');
+        console.log('getAppInit: Extracted', uiTexts.length, 'UI texts');
         console.log('getAppInit: Extracted menu captions:', menuCaptions);
         console.log('getAppInit: Extracted permissions:', permissions);
         
         return {
           success: true,
           data: {
+            menuItems,
+            uiTexts,
             menuCaptions,
             permissions,
           },
@@ -884,27 +874,7 @@ export async function logout(): Promise<ApiResponse<{ success: boolean }>> {
       };
     }
 
-    const lang = detectLanguage();
-    const storedLang = getStoredLanguage();
-    
-    let langCode = lang.short;
-    if (storedLang.includes(':')) {
-      const parts = storedLang.split(':');
-      if (parts.length > 1) {
-        const langName = parts[1].toUpperCase();
-        if (langName === 'GERMAN') {
-          langCode = 'GE';
-        } else if (langName === 'ENGLISH') {
-          langCode = 'EN';
-        } else {
-          langCode = langName.substring(0, 2);
-        }
-      }
-    } else if (lang.full === 'GERMAN') {
-      langCode = 'GE';
-    } else if (lang.full === 'ENGLISH') {
-      langCode = 'EN';
-    }
+    const lang = getUserLanguage();
     
     const xmlPayload = `<?xml version="1.0" encoding="utf-8"?>
 <ENVELOPE NAME="PV.ENVELOPE" VERSION="1.00" CREATE="">
@@ -915,7 +885,7 @@ export async function logout(): Promise<ApiResponse<{ success: boolean }>> {
     <LANGUAGE>LANGUAGE:${lang.full}</LANGUAGE>
     <ORIGINATOR>PV.TC.WEB.UI</ORIGINATOR>
   </ENVELOPE_DATA>
-  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${langCode}">
+  <APPLICATION_REQUEST VERSION="1.00" LANGUAGE="${lang.short}">
     <BNO_REQUEST VERSION="1.00">
       <BNO_PRODUCTION_MODE>TRUE</BNO_PRODUCTION_MODE>
       <BNO_INTERACTION_NAME>SET_LOGOUT</BNO_INTERACTION_NAME>
@@ -1000,7 +970,8 @@ export async function requestNewPassword(username: string): Promise<ApiResponse<
         };
       }
 
-      const lang = detectLanguage();
+      // For forgot password, use browser detection as fallback (user may not be logged in)
+      const lang = getUserLanguage();
       
       // Map language to correct code (German uses "GE" not "DE")
       let langCode = lang.short;

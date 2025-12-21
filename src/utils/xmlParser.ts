@@ -410,6 +410,7 @@ export function extractLoginTemplate(doc: Document): {
 export interface LoginConfirmation {
   token: string;
   language: string;
+  uiLanguage?: string; // UI_LANGUAGE from USERDATA (e.g., "LANGUAGE:ENGLISH")
   displayName?: string;
   firstName?: string;
   lastName?: string;
@@ -470,6 +471,14 @@ export function extractLoginConfirmation(doc: Document): LoginConfirmation | nul
           const accessRightEl = findElement(group, 'ACCESSRIGHT_USER');
           if (accessRightEl) {
             confirmation.accessRight = getAttribute(accessRightEl, 'SYSNAME');
+          }
+          // Extract UI_LANGUAGE from USERDATA attribute group
+          const uiLanguageEl = findElement(group, 'UI_LANGUAGE');
+          if (uiLanguageEl) {
+            // Get SYSNAME attribute first (e.g., "LANGUAGE:ENGLISH"), fallback to text content
+            const uiLanguageSysname = getAttribute(uiLanguageEl, 'SYSNAME');
+            const uiLanguageText = getTextContent(uiLanguageEl);
+            confirmation.uiLanguage = uiLanguageSysname || uiLanguageText || undefined;
           }
         } else if (groupName === 'USERADR') {
           confirmation.firstName = getTextContent(findElement(group, 'FIRSTNAME'));
@@ -647,6 +656,194 @@ export function extractSupplierList(doc: Document): Supplier[] {
   
   console.log('extractSupplierList result:', suppliers);
   return suppliers;
+}
+
+/**
+ * Field metadata from XML METAFIELDS
+ */
+export interface POSFieldMetadata {
+  name: string; // Field name (e.g., PVNO, DISPLAYNAME)
+  caption: string; // Display caption
+  position: number; // Column position/order
+  columnWidth: number; // Column width
+  visible: boolean; // Whether field is visible
+  dataType?: string; // Data type
+  maxLength?: number; // Max length
+  mustFill?: boolean; // Required field
+  editable?: boolean; // Whether field is editable
+}
+
+/**
+ * Sort configuration from XML
+ */
+export interface POSSortConfig {
+  name: string; // Field name to sort by
+  sortType: string; // Sort direction (ASC/DESC)
+}
+
+/**
+ * Extract field metadata from METAFIELDS section
+ */
+export function extractPosFieldMetadata(doc: Document): POSFieldMetadata[] {
+  const fields: POSFieldMetadata[] = [];
+  
+  // Find MESSAGEAREA with NAME="T.POS.SMALL.LIST"
+  const messageAreas = findElements(doc, 'MESSAGEAREA');
+  const posMessageArea = messageAreas.find(
+    (area) => {
+      const name = getAttribute(area, 'NAME');
+      return name === 'T.POS.SMALL.LIST' || 
+             name === 'T.POS.LIST' ||
+             (name?.includes('POS') && name?.includes('LIST'));
+    }
+  );
+  
+  if (!posMessageArea) {
+    console.warn('extractPosFieldMetadata: POS MESSAGEAREA not found');
+    return fields;
+  }
+  
+  // Find METAFIELDS -> ENTITIES -> ENTITY NAME="T.POS.SMALL.LIST" -> FIELDS -> ATTRIBUTEGROUP
+  const metaFields = findElement(posMessageArea, 'METAFIELDS');
+  if (!metaFields) {
+    console.warn('extractPosFieldMetadata: METAFIELDS not found');
+    return fields;
+  }
+  
+  const entities = findElements(metaFields, 'ENTITY');
+  const posEntity = entities.find(
+    (entity) => {
+      const name = getAttribute(entity, 'NAME');
+      return name === 'T.POS.SMALL.LIST' || 
+             name === 'T.POS.LIST' ||
+             (name?.includes('POS') && name?.includes('LIST'));
+    }
+  );
+  
+  if (!posEntity) {
+    console.warn('extractPosFieldMetadata: POS ENTITY not found in METAFIELDS');
+    return fields;
+  }
+  
+  // Find FIELDS -> ATTRIBUTEGROUP NAME="T.POS.SMALL.DATA"
+  const fieldsElement = findElement(posEntity, 'FIELDS');
+  if (!fieldsElement) {
+    console.warn('extractPosFieldMetadata: FIELDS not found');
+    return fields;
+  }
+  
+  const attributeGroups = findElements(fieldsElement, 'ATTRIBUTEGROUP');
+  const posDataGroup = attributeGroups.find(
+    (group) => {
+      const name = getAttribute(group, 'NAME');
+      return name === 'T.POS.SMALL.DATA' || name?.includes('POS') || name?.includes('DATA');
+    }
+  );
+  
+  if (!posDataGroup) {
+    console.warn('extractPosFieldMetadata: ATTRIBUTEGROUP T.POS.SMALL.DATA not found');
+    return fields;
+  }
+  
+  // Extract all FIELD elements
+  const fieldElements = findElements(posDataGroup, 'FIELD');
+  
+  fieldElements.forEach((field) => {
+    const name = getAttribute(field, 'NAME') || '';
+    const caption = getTextContent(findElement(field, 'CAPTION')) || name;
+    const positionStr = getTextContent(findElement(field, 'POSITION')) || '0';
+    const position = parseInt(positionStr, 10) || 0;
+    const columnWidthStr = getTextContent(findElement(field, 'COLUMNWIDTH')) || '0';
+    const columnWidth = parseInt(columnWidthStr, 10) || 0;
+    const visibleStr = getTextContent(findElement(field, 'VISIBLE')) || 'False';
+    const visible = visibleStr.toLowerCase() === 'true';
+    const dataType = getTextContent(findElement(field, 'DATATYPE')) || undefined;
+    const maxLengthStr = getTextContent(findElement(field, 'MAXLENGTH')) || '';
+    const maxLength = maxLengthStr ? parseInt(maxLengthStr, 10) : undefined;
+    const mustFillStr = getTextContent(findElement(field, 'MUSTFILL')) || '';
+    const mustFill = mustFillStr.includes('TRUE');
+    
+    fields.push({
+      name,
+      caption,
+      position,
+      columnWidth: columnWidth > 0 ? columnWidth : 0,
+      visible,
+      dataType,
+      maxLength,
+      mustFill,
+    });
+  });
+  
+  // Sort by position
+  fields.sort((a, b) => a.position - b.position);
+  
+  console.log('extractPosFieldMetadata: Extracted', fields.length, 'fields');
+  return fields;
+}
+
+/**
+ * Extract sort configuration from DATARANGE -> SORT_LIST
+ */
+export function extractPosSortConfig(doc: Document): POSSortConfig | null {
+  // Find MESSAGEAREA with NAME="T.POS.SMALL.LIST"
+  const messageAreas = findElements(doc, 'MESSAGEAREA');
+  const posMessageArea = messageAreas.find(
+    (area) => {
+      const name = getAttribute(area, 'NAME');
+      return name === 'T.POS.SMALL.LIST' || 
+             name === 'T.POS.LIST' ||
+             (name?.includes('POS') && name?.includes('LIST'));
+    }
+  );
+  
+  if (!posMessageArea) {
+    return null;
+  }
+  
+  // Find METAFIELDS -> ENTITIES -> ENTITY -> DATARANGE -> SORT_LIST -> SORT
+  const metaFields = findElement(posMessageArea, 'METAFIELDS');
+  if (!metaFields) {
+    return null;
+  }
+  
+  const entities = findElements(metaFields, 'ENTITY');
+  const posEntity = entities.find(
+    (entity) => {
+      const name = getAttribute(entity, 'NAME');
+      return name === 'T.POS.SMALL.LIST' || 
+             name === 'T.POS.LIST' ||
+             (name?.includes('POS') && name?.includes('LIST'));
+    }
+  );
+  
+  if (!posEntity) {
+    return null;
+  }
+  
+  const dataRange = findElement(posEntity, 'DATARANGE');
+  if (!dataRange) {
+    return null;
+  }
+  
+  const sortList = findElement(dataRange, 'SORT_LIST');
+  if (!sortList) {
+    return null;
+  }
+  
+  const sortElement = findElement(sortList, 'SORT');
+  if (!sortElement) {
+    return null;
+  }
+  
+  const name = getTextContent(findElement(sortElement, 'NAME'));
+  const sortType = getTextContent(findElement(sortElement, 'SORTTYPE'));
+  
+  if (name && sortType) {
+    return { name, sortType };
+  }
+  
+  return null;
 }
 
 /**
@@ -1148,5 +1345,145 @@ export function extractAppInitPermissions(doc: Document): MenuPermissions {
   console.log('extractAppInitPermissions: Found interaction names:', interactionNames);
   
   return permissions;
+}
+
+// Import types from separate file to avoid module resolution issues
+import type { APIMenuItem, UIText } from '../types/appInit';
+
+// Re-export types for compatibility
+export type { APIMenuItem, UIText };
+
+/**
+ * Extract menu items from GET_APP_INIT response
+ */
+export function extractMenuItems(doc: Document): APIMenuItem[] {
+  const menuItems: APIMenuItem[] = [];
+  
+  // Find all ENTITY elements with NAME="UI.MENU.DATA"
+  const entities = findElements(doc, 'ENTITY');
+  const menuEntities = entities.filter((entity) => {
+    const name = getAttribute(entity, 'NAME');
+    return name === 'UI.MENU.DATA';
+  });
+  
+  console.log('extractMenuItems: Found', menuEntities.length, 'UI.MENU.DATA entities');
+  
+  menuEntities.forEach((entity) => {
+    // Find SETS -> SET elements
+    const sets = findElements(entity, 'SET');
+    
+    sets.forEach((set) => {
+      const sortOrder = parseInt(getAttribute(set, 'SORT') || '0', 10);
+      const setId = getAttribute(set, 'SET_ID') || '';
+      const parentSetId = getAttribute(set, 'PARENT_SET_ID') || undefined;
+      
+      // Find ATTRIBUTEGROUP with NAME="UI.MENU.ITEM"
+      const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
+      const menuGroup = attributeGroups.find((group) => {
+        const name = getAttribute(group, 'NAME');
+        return name === 'UI.MENU.ITEM';
+      });
+      
+      if (!menuGroup) {
+        return;
+      }
+      
+      // Extract menu item fields
+      const action = getTextContent(findElement(menuGroup, 'ACTION')) || '';
+      const captionElement = findElement(menuGroup, 'CAPTION');
+      const caption = getTextContent(captionElement) || '';
+      const interactionId = getTextContent(findElement(menuGroup, 'INTERACTION_ID')) || undefined;
+      const menuTypeElement = findElement(menuGroup, 'MENU_TYPE');
+      const menuType = getAttribute(menuTypeElement, 'SYSNAME') || getTextContent(menuTypeElement) || '';
+      const tooltip = getTextContent(findElement(menuGroup, 'TOOLTIP')) || undefined;
+      const closeCallerElement = findElement(menuGroup, 'CLOSECALLER');
+      const closeCaller = getAttribute(closeCallerElement, 'SYSNAME') || getTextContent(closeCallerElement) || undefined;
+      
+      // Debug logging
+      console.log('Processing menu item:', {
+        setId,
+        sortOrder,
+        parentSetId,
+        action,
+        caption,
+        menuType,
+        tooltip
+      });
+      
+      if (caption || action) {
+        const menuItem: APIMenuItem = {
+          id: setId,
+          sortOrder,
+          parentId: parentSetId || undefined,
+          action,
+          caption,
+          interactionId,
+          menuType,
+          tooltip,
+          closeCaller,
+        };
+        menuItems.push(menuItem);
+      } else {
+        console.log('Skipped menu item (no caption or action):', { setId, sortOrder, parentSetId });
+      }
+    });
+  });
+  
+  // Sort by sortOrder
+  menuItems.sort((a, b) => a.sortOrder - b.sortOrder);
+  
+  console.log('extractMenuItems: Extracted', menuItems.length, 'menu items');
+  return menuItems;
+}
+
+/**
+ * Extract UI text/localization data from GET_APP_INIT response
+ */
+export function extractUIText(doc: Document): UIText[] {
+  const uiTexts: UIText[] = [];
+  
+  // Find all ENTITY elements with NAME="UI.TEXT.DATA"
+  const entities = findElements(doc, 'ENTITY');
+  const textEntities = entities.filter((entity) => {
+    const name = getAttribute(entity, 'NAME');
+    return name === 'UI.TEXT.DATA';
+  });
+  
+  console.log('extractUIText: Found', textEntities.length, 'UI.TEXT.DATA entities');
+  
+  textEntities.forEach((entity) => {
+    // Find SETS -> SET elements
+    const sets = findElements(entity, 'SET');
+    
+    sets.forEach((set) => {
+      // Find ATTRIBUTEGROUP with NAME="UI.TEXT.ITEM"
+      const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
+      const textGroup = attributeGroups.find((group) => {
+        const name = getAttribute(group, 'NAME');
+        return name === 'UI.TEXT.ITEM';
+      });
+      
+      if (!textGroup) {
+        return;
+      }
+      
+      // Extract text item fields
+      const key = getAttribute(textGroup, 'KEY') || '';
+      const captionElement = findElement(textGroup, 'CAPTION');
+      const name = getAttribute(captionElement, 'NAME') || '';
+      const caption = getTextContent(captionElement) || '';
+      
+      if (name && caption) {
+        uiTexts.push({
+          name,
+          caption,
+          key,
+        });
+      }
+    });
+  });
+  
+  console.log('extractUIText: Extracted', uiTexts.length, 'text items');
+  return uiTexts;
 }
 
