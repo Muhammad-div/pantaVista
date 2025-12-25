@@ -219,6 +219,26 @@
   flex-direction: column;
   height: 100%;
   flex: 1;
+  overflow: hidden;
+}
+
+/* Mobile: Ensure both header and body can scroll horizontally */
+@media (max-width: 600px) {
+  .kendo-pos-grid .k-grid {
+    overflow: visible;
+  }
+  
+  .kendo-pos-grid .k-grid-header {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .kendo-pos-grid .k-grid-content {
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .kendo-pos-grid .k-grid-header {
@@ -238,29 +258,125 @@
   border-bottom: none;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   position: relative;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow: visible;
+  vertical-align: top;
+  min-height: 44px;
 }
 
+/* Base styles for k-cell-inner */
 .kendo-pos-grid .k-grid-header th .k-cell-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  min-height: 20px;
+  position: relative;
+}
+
+/* Desktop: Keep text and icons on same line - no wrapping, icons aligned right */
+@media (min-width: 961px) {
+  .kendo-pos-grid .k-grid-header th .k-cell-inner {
+    flex-wrap: nowrap !important; /* Prevent wrapping on desktop */
+    gap: 8px !important; /* Space between text and icons */
+    justify-content: flex-start !important; /* Start from left */
+    align-items: center !important;
+    position: relative;
+  }
+
+  /* Ensure header text is visible and doesn't grow */
+  .kendo-pos-grid .k-grid-header th .k-cell-inner > span:first-child:not(.column-filter-icon):not(.k-sort-icon),
+  .kendo-pos-grid .k-grid-header th .k-cell-inner > div:first-child:not(.column-filter-icon),
+  .kendo-pos-grid .k-grid-header th .k-cell-inner > .k-link,
+  .kendo-pos-grid .k-grid-header th .k-cell-inner > .k-link > span {
+    flex: 0 1 auto !important; /* Don't grow, allow shrink */
+    min-width: 0 !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    line-height: 1.4 !important;
+    margin-right: 8px !important; /* Space between text and icons */
+  }
+
+  /* Handle Kendo's .k-link structure */
+  .kendo-pos-grid .k-grid-header th .k-cell-inner .k-link {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    margin-right: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .kendo-pos-grid .k-grid-header th .k-cell-inner .k-link > span {
+    flex: 0 1 auto !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+  }
+
+  /* Sort icon styling */
+  .kendo-pos-grid .k-grid-header th .k-cell-inner .k-sort-icon {
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    min-width: 16px;
+    margin-left: 4px !important;
+    order: 998;
+  }
+
+  /* Filter icon - always on the right side */
+  .kendo-pos-grid .k-grid-header th .k-cell-inner .column-filter-icon {
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    min-width: 16px;
+    margin-left: auto !important; /* Push to right */
+    order: 999 !important;
+  }
+
+  /* Override any inline styles */
+  .kendo-pos-grid .k-grid-header th .k-cell-inner[style*="justify-content"] {
+    justify-content: flex-start !important;
+  }
+
+  .kendo-pos-grid .k-grid-header th .k-cell-inner[style*="flex-wrap"],
+  .kendo-pos-grid .k-grid-header th .k-cell-inner[style*="flexWrap"] {
+    flex-wrap: nowrap !important;
+  }
+
+  /* Ensure filter icon inline styles are overridden */
+  .kendo-pos-grid .k-grid-header th .k-cell-inner .column-filter-icon[style] {
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+  }
 }
 
 .kendo-pos-grid .k-grid-content {
   background-color: var(--bg-paper, #ffffff);
   width: 100% !important;
   overflow-y: auto !important;
-  overflow-x: hidden !important;
+  overflow-x: auto !important;
   flex: 1;
   height: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 
 .kendo-pos-grid .k-grid-content-wrap {
   height: 100%;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
+  -webkit-overflow-scrolling: touch;
 }
 
 .kendo-pos-grid .k-grid-table {
@@ -268,10 +384,18 @@
   table-layout: auto;
 }
 
-.kendo-pos-grid .k-grid-header-wrap,
+.kendo-pos-grid .k-grid-header-wrap {
+  width: 100% !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
 .kendo-pos-grid .k-grid-content-wrap {
   width: 100% !important;
   overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .kendo-pos-grid .k-grid-header,
@@ -327,16 +451,23 @@
   display: table-row !important;
 }
 
-/* Filter icon styles */
+/* Filter icon styles - Desktop */
 .kendo-pos-grid .column-filter-icon {
-  margin-left: 8px;
+  margin-left: 4px !important;
   cursor: pointer;
   opacity: 0.5;
   transition: all 0.2s ease;
   user-select: none;
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  align-self: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: auto !important;
+  min-width: 16px;
 }
 
 .kendo-pos-grid .column-filter-icon:hover {
@@ -397,6 +528,24 @@
 
 .kendo-pos-grid .k-sort-icon {
   color: var(--text-tertiary, #9ca3af);
+  flex-shrink: 0;
+  margin-left: 0; /* Remove margin, use gap from parent */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure header text is always visible */
+.kendo-pos-grid .k-grid-header th .k-link,
+.kendo-pos-grid .k-grid-header th .k-cell-inner {
+  overflow: visible !important;
+}
+
+.kendo-pos-grid .k-grid-header th .k-link > span,
+.kendo-pos-grid .k-grid-header th .k-cell-inner > span:first-child {
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
 }
 
 .kendo-pos-grid .k-grid-header th:hover {
@@ -425,8 +574,26 @@
 
 /* Responsive */
 @media (max-width: 960px) {
-  .pos-list-content {
-    padding: 20px;
+  .pos-list-page {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .pos-list-content-compact {
+    padding: 12px 16px;
+    height: calc(100vh - 56px);
+  }
+
+  .pos-list-header-compact {
+    padding: 8px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pos-list-header-compact > div {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .pos-actions-section {
@@ -436,21 +603,26 @@
 
   .pos-action-buttons {
     width: 100%;
+    flex-wrap: wrap;
   }
 
   .pos-action-button {
     flex: 1;
-    min-width: 120px;
+    min-width: 100px;
+    font-size: 12px;
+    padding: 6px 12px;
   }
 
   .pos-table-card {
     overflow-x: auto;
+    border-radius: 12px;
   }
 
   .table-header {
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     align-items: stretch;
+    padding: 8px 12px;
   }
 
   .table-header .MuiTextField-root {
@@ -463,7 +635,269 @@
 
   .kendo-pos-grid .k-grid-header th,
   .kendo-pos-grid .k-grid-content td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .kendo-pos-grid .k-grid-header th {
+    font-size: 11px;
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.4;
+    min-height: 44px;
+    vertical-align: top;
+  }
+
+  .kendo-pos-grid .k-grid-header th .k-cell-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 4px;
+  }
+
+  .kendo-pos-grid .k-grid-header th .k-cell-inner > span:first-child {
+    display: block;
+    width: 100%;
+    line-height: 1.4;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+@media (max-width: 600px) {
+  .pos-list-page {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .pos-list-content-compact {
     padding: 8px 12px;
+    height: calc(100vh - 48px);
+  }
+
+  .pos-list-header-compact {
+    padding: 6px 12px;
+  }
+
+  .pos-list-header-compact h6 {
+    font-size: 16px !important;
+    font-weight: 600;
+  }
+
+  .pos-list-header-compact .MuiTypography-body2 {
+    font-size: 11px !important;
+    margin-left: 8px !important;
+  }
+
+  /* Stack buttons vertically on very small screens */
+  .pos-list-header-compact > div > div:last-child {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-start;
+  }
+
+  .pos-list-header-compact .MuiButton-root {
+    min-width: auto;
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+    flex: 1;
+    min-width: 70px;
+  }
+
+  .pos-list-header-compact .MuiButton-startIcon {
+    margin-right: 4px !important;
+  }
+
+  .pos-list-header-compact .MuiButton-startIcon > * {
+    font-size: 14px !important;
+  }
+
+  .pos-list-header-compact .MuiIconButton-root {
+    padding: 4px !important;
+  }
+
+  .pos-table-card {
+    border-radius: 8px;
+    box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -1px rgba(15, 23, 42, 0.04));
+  }
+
+  .kendo-pos-grid {
+    font-size: 11px;
+  }
+
+  .kendo-pos-grid .k-grid-header th {
+    padding: 8px 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.3;
+    min-height: 48px;
+    vertical-align: top;
+  }
+
+  .kendo-pos-grid .k-grid-header th .k-cell-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 4px;
+    min-height: 40px;
+    overflow: visible !important;
+  }
+
+  .kendo-pos-grid .k-grid-header th .k-cell-inner > span:first-child {
+    display: block;
+    width: 100%;
+    line-height: 1.3;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+  }
+
+  /* Override any Kendo styles that might hide text */
+  .kendo-pos-grid .k-grid-header th * {
+    overflow: visible !important;
+  }
+
+  .kendo-pos-grid .k-grid-header th .k-link,
+  .kendo-pos-grid .k-grid-header th .k-link * {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+
+  .kendo-pos-grid .k-grid-content td {
+    padding: 8px 6px;
+    font-size: 11px;
+    word-break: break-word;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .kendo-pos-grid .k-grid-header-wrap {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .kendo-pos-grid .k-grid-content-wrap {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .kendo-pos-grid .k-grid-content {
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .kendo-pos-grid .k-grid-table {
+    min-width: 600px; /* Ensure table doesn't get too compressed */
+  }
+
+  .kendo-pos-grid .k-grid-header table {
+    table-layout: auto;
+  }
+
+  .kendo-pos-grid .k-grid-header th {
+    min-width: 95px; /* Fixed width on mobile */
+    max-width: 95px;
+    width: 95px !important;
+  }
+
+  .kendo-pos-grid .k-grid-content td {
+    min-width: 95px;
+    max-width: 95px;
+    width: 95px !important;
+  }
+
+  /* Better filter cell styling on mobile */
+  .kendo-pos-grid .k-filtercell {
+    padding: 4px;
+  }
+
+  .kendo-pos-grid .k-filtercell input,
+  .kendo-pos-grid .k-filtercell select {
+    padding: 4px 6px;
+    font-size: 11px;
+    min-height: 32px; /* Better touch target */
+  }
+
+  /* Column filter icon adjustments - hide on mobile */
+  .kendo-pos-grid .column-filter-icon {
+    display: none !important;
+  }
+
+  /* Hide filter row on mobile */
+  .kendo-pos-grid .k-filter-row {
+    display: none !important;
+  }
+
+  /* Ensure header text wraps properly on mobile */
+  .kendo-pos-grid .k-grid-header th {
+    position: relative;
+  }
+
+  .kendo-pos-grid .k-grid-header th .k-link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .kendo-pos-grid .k-grid-header th .k-link > span {
+    width: 100%;
+    display: block;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.3;
+  }
+
+  /* Override Kendo's default header text handling */
+  .kendo-pos-grid .k-grid-header th .k-link,
+  .kendo-pos-grid .k-grid-header th .k-link > * {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+
+  /* Ensure sort icons don't interfere with text */
+  .kendo-pos-grid .k-grid-header th .k-sort-icon {
+    margin-left: 4px;
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 960px) and (orientation: landscape) {
+  .pos-list-content-compact {
+    padding: 8px 12px;
+    height: calc(100vh - 48px);
+  }
+
+  .kendo-pos-grid .k-grid-header th,
+  .kendo-pos-grid .k-grid-content td {
+    padding: 6px 8px;
+    font-size: 11px;
   }
 }
 

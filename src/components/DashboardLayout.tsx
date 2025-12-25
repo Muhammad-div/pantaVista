@@ -48,6 +48,7 @@ import { useMenu } from '../contexts/MenuContext'
 import { useAppInit } from '../contexts/AppInitContext'
 import { useTextService } from '../services/textService'
 import { useAuth } from '../contexts/AuthContext'
+import { imageService } from '../services/imageService'
 import SettingsSidebar from './SettingsSidebar'
 import './DashboardLayout.css'
 
@@ -57,7 +58,7 @@ const DRAWER_WIDTH_COLLAPSED = 72
 interface NavItem {
   path: string
   label: string
-  icon: React.ReactNode
+  icon: React.ReactNode | string // Can be ReactNode or image URL string
   tooltip?: string
   hasSubmenu?: boolean
   submenuItems?: { path: string; label: string }[]
@@ -75,6 +76,7 @@ const DashboardLayout = () => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const [settingsSidebarOpen, setSettingsSidebarOpen] = useState(false)
   const [sidebarExpanded, setSidebarExpanded] = useState(true)
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
 
   // Build dynamic menu items from actual API data
   const navItems: NavItem[] = useMemo(() => {
@@ -108,59 +110,113 @@ const DashboardLayout = () => {
     // Map menu items to navigation items
     rootMenuItems.forEach(item => {
       let path = ''
-      let icon = <ActivitiesIcon /> // Default icon
+      let icon: React.ReactNode = <ActivitiesIcon /> // Default icon
       
-      // Map captions to routes and icons
+      // Try to get dynamic icon from imageService first
+      if (imageService.isInitialized()) {
+        console.log('DashboardLayout: Getting icon for menu item:', {
+          caption: item.caption,
+          action: item.action,
+          interactionId: item.interactionId,
+          imageServiceInitialized: imageService.isInitialized(),
+          imageCount: imageService.getImageCount(),
+          availableIcons: imageService.getAvailableImageIdentifiers().slice(0, 10) // Show first 10 for debugging
+        });
+      }
+      const dynamicIconUrl = imageService.getMenuIcon(item.action, item.caption, item.interactionId)
+      if (imageService.isInitialized()) {
+        console.log('DashboardLayout: Dynamic icon URL result for', item.caption, ':', dynamicIconUrl ? '✓ Found' : '✗ Not found');
+      }
+      
+      // Map captions to routes
       switch (item.caption.toLowerCase()) {
         case 'points-of-sale':
         case 'point-of-sale':
           path = '/pos'
-          icon = <POSIcon />
           break
         case 'suppliers':
         case 'supplier':
           path = '/suppliers'
-          icon = <SuppliersIcon />
           break
         case 'regions':
         case 'region':
           path = '/regions'
-          icon = <RegionsIcon />
           break
         case 'persons':
         case 'person':
           path = '/persons'
-          icon = <PersonsIcon />
           break
         case 'transactions':
         case 'transaction':
           path = '/transactions'
-          icon = <TransactionsIcon />
           break
         case 'documents':
         case 'document':
           path = '/documents'
-          icon = <DocumentsIcon />
           break
         case 'products':
         case 'product':
           path = '/products'
-          icon = <ProductsIcon />
           break
         case 'pantaree':
           path = '/pentaree'
-          icon = <PentareeIcon />
           break
         case 'activities':
         case 'activity':
           path = '/activities'
-          icon = <ActivitiesIcon />
           break
         default:
           // For unknown items, create a development route
           path = '/development'
-          icon = <ActivitiesIcon />
           break
+      }
+      
+      // Use dynamic icon if available, otherwise fallback to Material-UI icons
+      if (dynamicIconUrl) {
+        // Store the icon URL as a string - we'll render it as img in renderNavItem
+        icon = dynamicIconUrl
+      } else {
+        // Fallback to Material-UI icons
+        switch (item.caption.toLowerCase()) {
+          case 'points-of-sale':
+          case 'point-of-sale':
+            icon = <POSIcon />
+            break
+          case 'suppliers':
+          case 'supplier':
+            icon = <SuppliersIcon />
+            break
+          case 'regions':
+          case 'region':
+            icon = <RegionsIcon />
+            break
+          case 'persons':
+          case 'person':
+            icon = <PersonsIcon />
+            break
+          case 'transactions':
+          case 'transaction':
+            icon = <TransactionsIcon />
+            break
+          case 'documents':
+          case 'document':
+            icon = <DocumentsIcon />
+            break
+          case 'products':
+          case 'product':
+            icon = <ProductsIcon />
+            break
+          case 'pantaree':
+            icon = <PentareeIcon />
+            break
+          case 'activities':
+          case 'activity':
+            icon = <ActivitiesIcon />
+            break
+          default:
+            icon = <ActivitiesIcon />
+            break
+        }
       }
       
       if (path) {
@@ -198,19 +254,25 @@ const DashboardLayout = () => {
     
     // Daily Agenda - shown if not supplier AND we have caption
     if (!permissions.showPOS && menuCaptions?.dailyAgenda) {
+      // Try to get dynamic icon for Daily Agenda/Activities
+      const agendaIconUrl = imageService.getMenuIcon('DAILYAGENDA', menuCaptions.dailyAgenda, 'agenda') || 
+                            imageService.getMenuIcon('ACTIVITY', menuCaptions.dailyAgenda, 'agenda')
       items.push({
         path: '/agenda',
         label: menuCaptions.dailyAgenda,
-        icon: <AgendaIcon />,
+        icon: agendaIconUrl || <AgendaIcon />,
       })
     }
     
     // Exchange Data - shown if we have caption
     if (menuCaptions?.exchangeData) {
+      // Try to get dynamic icon for Exchange Data/Settings
+      const exchangeIconUrl = imageService.getMenuIcon('EXCHANGEDATA', menuCaptions.exchangeData, 'exchange') ||
+                              imageService.getMenuIcon('SETTINGS', menuCaptions.exchangeData, 'exchange')
       items.push({
         path: '/exchange-data',
         label: menuCaptions.exchangeData,
-        icon: <ExchangeDataIcon />,
+        icon: exchangeIconUrl || <ExchangeDataIcon />,
       })
     }
     
@@ -242,6 +304,14 @@ const DashboardLayout = () => {
 
   const toggleSidebar = () => {
     setSidebarExpanded(!sidebarExpanded)
+  }
+
+  const handleMobileDrawerToggle = () => {
+    setMobileDrawerOpen(!mobileDrawerOpen)
+  }
+
+  const handleMobileDrawerClose = () => {
+    setMobileDrawerOpen(false)
   }
 
   // Generate breadcrumbs based on current route
@@ -316,6 +386,13 @@ const DashboardLayout = () => {
     const isHovered = hoveredItem === item.path
     const isSettings = item.path === '/settings'
 
+    const handleItemClick = () => {
+      // Close mobile drawer when item is clicked
+      if (window.innerWidth < 960) {
+        setMobileDrawerOpen(false)
+      }
+    }
+
     return (
       <Box
         key={item.path}
@@ -352,7 +429,7 @@ const DashboardLayout = () => {
             <ListItemButton
               component={isSettings ? 'div' : RouterLink}
               to={isSettings ? undefined : item.path}
-              onClick={isSettings ? handleSettingsClick : undefined}
+              onClick={isSettings ? handleSettingsClick : handleItemClick}
               selected={isActive}
               className={`nav-item ${isActive ? 'active' : ''} ${
                 isHovered ? 'hovered' : ''
@@ -382,7 +459,20 @@ const DashboardLayout = () => {
                 transition: 'color 0.2s ease',
               }}
             >
-              {item.icon}
+              {typeof item.icon === 'string' ? (
+                <img 
+                  src={item.icon} 
+                  alt={item.label || ''} 
+                  style={{ 
+                    width: '24px', 
+                    height: '24px', 
+                    objectFit: 'contain',
+                    filter: isActive ? 'brightness(0) invert(1)' : 'none',
+                  }} 
+                />
+              ) : (
+                item.icon
+              )}
             </ListItemIcon>
             {sidebarExpanded && (
               <ListItemText
@@ -416,11 +506,12 @@ const DashboardLayout = () => {
             className="submenu-container"
             sx={{
               position: 'absolute',
-              left: sidebarExpanded ? DRAWER_WIDTH : DRAWER_WIDTH_COLLAPSED,
+              left: { xs: DRAWER_WIDTH, md: sidebarExpanded ? DRAWER_WIDTH : DRAWER_WIDTH_COLLAPSED },
               top: 0,
               zIndex: 1000,
               pointerEvents: isHovered ? 'auto' : 'none',
               transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              display: { xs: 'none', md: 'block' }, // Hide submenu on mobile
             }}
           >
             <Collapse
@@ -469,6 +560,7 @@ const DashboardLayout = () => {
                             component={RouterLink}
                             to={subItem.path}
                             selected={isSubActive}
+                            onClick={handleItemClick}
                             className={`submenu-item ${
                               isSubActive ? 'submenu-active' : ''
                             }`}
@@ -496,11 +588,135 @@ const DashboardLayout = () => {
     )
   }
 
+  // Mobile drawer content component
+  const drawerContent = (
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: DRAWER_WIDTH }}>
+      <Box className="sidebar-header">
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: sidebarExpanded ? 'space-between' : 'center', width: '100%', gap: 1 }}>
+          {(() => {
+            // Try to get logo from imageService first (prioritizes SYSOWNER_ORGA_LOGO)
+            const logoUrl = imageService.getLogoUrl() || menuCaptions?.logo
+            
+            if (logoUrl && sidebarExpanded) {
+              return (
+                <img 
+                  src={logoUrl} 
+                  alt="Logo" 
+                  style={{ 
+                    maxWidth: '150px', 
+                    maxHeight: '50px', 
+                    objectFit: 'contain',
+                    transition: 'opacity 0.3s ease, width 0.3s ease',
+                  }} 
+                />
+              )
+            } else if (!sidebarExpanded) {
+              return null
+            } else {
+              return (
+                <Typography 
+                  variant="h5" 
+                  className="logo-text" 
+                  sx={{ 
+                    opacity: sidebarExpanded ? 1 : 0,
+                    width: sidebarExpanded ? 'auto' : 0,
+                    overflow: 'hidden',
+                    transition: 'opacity 0.3s ease, width 0.3s ease',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <span className="logo-panta">panta</span>
+                  <span className="logo-vista">Vista</span>
+                </Typography>
+              )
+            }
+          })()}
+          <IconButton
+            onClick={toggleSidebar}
+            sx={{
+              color: 'text.secondary',
+              padding: '8px',
+              flexShrink: 0,
+              '&:hover': {
+                backgroundColor: 'action.hover',
+              },
+              transition: 'all 0.2s ease',
+              display: { xs: 'none', md: 'flex' },
+            }}
+            aria-label={sidebarExpanded ? 'collapse sidebar' : 'expand sidebar'}
+          >
+            {sidebarExpanded ? <ChevronLeftIcon /> : <MenuIcon />}
+          </IconButton>
+        </Box>
+      </Box>
+
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {menuLoading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+            <Typography variant="body2" color="text.secondary">
+{textService.getText('LABEL:PROXY_LOADING', 'Loading menu...')}
+            </Typography>
+          </Box>
+        ) : navItems.length === 0 && bottomNavItems.length === 0 ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+            <Typography variant="body2" color="text.secondary">
+{textService.getText('LABEL:NO_DATA_AVAILABLE', 'No menu items available')}
+            </Typography>
+          </Box>
+        ) : (
+          <>
+            <List className="sidebar-nav" sx={{ flex: 1, overflowY: 'auto' }}>
+              {navItems.map((item) => renderNavItem(item))}
+            </List>
+
+            {bottomNavItems.length > 0 && (
+              <Box sx={{ mt: 'auto' }}>
+                <Divider sx={{ my: 1 }} />
+                <List className="sidebar-nav-bottom">
+                  {bottomNavItems.map((item) => renderNavItem(item, true))}
+                </List>
+              </Box>
+            )}
+          </>
+        )}
+      </Box>
+    </Box>
+  )
+
   return (
     <Box sx={{ display: 'flex', width: '100%', height: '100vh', overflow: 'hidden' }}>
+      {/* Mobile Drawer */}
+      <Drawer
+        variant="temporary"
+        open={mobileDrawerOpen}
+        onClose={handleMobileDrawerClose}
+        ModalProps={{
+          keepMounted: true, // Better mobile performance
+        }}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': {
+            width: DRAWER_WIDTH,
+            boxSizing: 'border-box',
+            borderRight: (theme) => `1px solid ${theme.palette.divider}`,
+            backgroundColor: 'background.paper',
+            overflow: 'visible',
+            display: 'flex',
+            flexDirection: 'column',
+            boxShadow: mode === 'light' 
+              ? '2px 0 8px rgba(15, 23, 42, 0.04), 4px 0 12px rgba(15, 23, 42, 0.02)'
+              : undefined,
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+
+      {/* Desktop Drawer */}
       <Drawer
         variant="permanent"
         sx={{
+          display: { xs: 'none', md: 'block' },
           width: sidebarExpanded ? DRAWER_WIDTH : DRAWER_WIDTH_COLLAPSED,
           flexShrink: 0,
           transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -523,83 +739,7 @@ const DashboardLayout = () => {
           },
         }}
       >
-        <Box className="sidebar-header">
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: sidebarExpanded ? 'space-between' : 'center', width: '100%', gap: 1 }}>
-            {menuCaptions?.logo && sidebarExpanded ? (
-              <img 
-                src={menuCaptions.logo} 
-                alt="Logo" 
-                style={{ 
-                  maxWidth: '150px', 
-                  maxHeight: '50px', 
-                  objectFit: 'contain',
-                  transition: 'opacity 0.3s ease, width 0.3s ease',
-                }} 
-              />
-            ) : (
-              <Typography 
-                variant="h5" 
-                className="logo-text" 
-                sx={{ 
-                  opacity: sidebarExpanded ? 1 : 0,
-                  width: sidebarExpanded ? 'auto' : 0,
-                  overflow: 'hidden',
-                  transition: 'opacity 0.3s ease, width 0.3s ease',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                <span className="logo-panta">panta</span>
-                <span className="logo-vista">Vista</span>
-              </Typography>
-            )}
-            <IconButton
-              onClick={toggleSidebar}
-              sx={{
-                color: 'text.secondary',
-                padding: '8px',
-                flexShrink: 0,
-                '&:hover': {
-                  backgroundColor: 'action.hover',
-                },
-                transition: 'all 0.2s ease',
-              }}
-              aria-label={sidebarExpanded ? 'collapse sidebar' : 'expand sidebar'}
-            >
-              {sidebarExpanded ? <ChevronLeftIcon /> : <MenuIcon />}
-            </IconButton>
-          </Box>
-        </Box>
-
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-          {menuLoading ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
-              <Typography variant="body2" color="text.secondary">
-{textService.getText('LABEL:PROXY_LOADING', 'Loading menu...')}
-              </Typography>
-            </Box>
-          ) : navItems.length === 0 && bottomNavItems.length === 0 ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
-              <Typography variant="body2" color="text.secondary">
-{textService.getText('LABEL:NO_DATA_AVAILABLE', 'No menu items available')}
-              </Typography>
-            </Box>
-          ) : (
-            <>
-              <List className="sidebar-nav" sx={{ flex: 1, overflowY: 'auto' }}>
-                {navItems.map((item) => renderNavItem(item))}
-              </List>
-
-              {bottomNavItems.length > 0 && (
-                <Box sx={{ mt: 'auto' }}>
-                  <Divider sx={{ my: 1 }} />
-                  <List className="sidebar-nav-bottom">
-                    {bottomNavItems.map((item) => renderNavItem(item, true))}
-                  </List>
-                </Box>
-              )}
-            </>
-          )}
-        </Box>
+        {drawerContent}
       </Drawer>
 
       <Box 
@@ -612,11 +752,25 @@ const DashboardLayout = () => {
       >
         <Box className="top-header">
           <Box className="header-content">
-            <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', gap: 2 }}>
+              {/* Mobile menu button */}
+              <IconButton
+                onClick={handleMobileDrawerToggle}
+                sx={{
+                  display: { xs: 'flex', md: 'none' },
+                  color: 'text.secondary',
+                  '&:hover': {
+                    backgroundColor: 'action.hover',
+                  },
+                }}
+                aria-label="open drawer"
+              >
+                <MenuIcon />
+              </IconButton>
               <Breadcrumbs 
                 aria-label="breadcrumb" 
-                sx={{ fontSize: '14px' }}
-                separator={<Typography sx={{ fontSize: '14px', color: 'text.secondary' }}>/</Typography>}
+                sx={{ fontSize: { xs: '12px', sm: '14px' } }}
+                separator={<Typography sx={{ fontSize: { xs: '12px', sm: '14px' }, color: 'text.secondary' }}>/</Typography>}
               >
                 {getBreadcrumbs().map((crumb, index, allCrumbs) => {
                   const isLast = index === allCrumbs.length - 1
@@ -648,7 +802,7 @@ const DashboardLayout = () => {
                 })}
               </Breadcrumbs>
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 2 } }}>
               <Select
                 size="small"
                 value={primaryColor}
@@ -673,8 +827,9 @@ const DashboardLayout = () => {
                   }
                 }}
                 sx={{
-                  minWidth: 120,
-                  fontSize: 13,
+                  minWidth: { xs: 100, sm: 120 },
+                  fontSize: { xs: 11, sm: 13 },
+                  display: { xs: 'none', sm: 'block' },
                   '& .MuiSelect-select': {
                     py: 0.5,
                     display: 'flex',
@@ -693,6 +848,7 @@ const DashboardLayout = () => {
                 onClick={toggleTheme}
                 sx={{
                   color: 'text.secondary',
+                  padding: { xs: '6px', sm: '8px' },
                   '&:hover': {
                     backgroundColor: 'action.hover',
                   },
@@ -701,23 +857,23 @@ const DashboardLayout = () => {
                 aria-label="toggle theme"
               >
                 {mode === 'dark' ? (
-                  <LightModeIcon sx={{ fontSize: 20 }} />
+                  <LightModeIcon sx={{ fontSize: { xs: 18, sm: 20 } }} />
                 ) : (
-                  <DarkModeIcon sx={{ fontSize: 20 }} />
+                  <DarkModeIcon sx={{ fontSize: { xs: 18, sm: 20 } }} />
                 )}
               </IconButton>
               <Box
                 className="user-menu-trigger"
                 onClick={handleUserMenuOpen}
-                sx={{ cursor: 'pointer' }}
+                sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
               >
-              <Avatar sx={{ width: 32, height: 32, bgcolor: 'var(--primary-main, #3b82f6)' }}>
+              <Avatar sx={{ width: { xs: 28, sm: 32 }, height: { xs: 28, sm: 32 }, bgcolor: 'var(--primary-main, #3b82f6)' }}>
                   <AccountCircleIcon />
                 </Avatar>
-                <Typography variant="body2" sx={{ ml: 1, fontWeight: 500 }}>
+                <Typography variant="body2" sx={{ ml: { xs: 0.5, sm: 1 }, fontWeight: 500, display: { xs: 'none', sm: 'block' } }}>
 {textService.getText('LABEL:USERDATA', 'User')}
                 </Typography>
-                <Typography variant="body2" sx={{ ml: 0.5 }}>
+                <Typography variant="body2" sx={{ ml: 0.5, display: { xs: 'none', sm: 'block' } }}>
                   ▼
                 </Typography>
               </Box>

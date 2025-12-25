@@ -5,6 +5,7 @@
 
 import { parseXML, getMessageName, getUserMessages, getSystemMessages, extractPreAppInitCaptions, extractLoginTemplate, extractLoginConfirmation, extractSupplierList, extractPosSmallList, extractNextDataLevel, extractAppInitMenuCaptions, extractAppInitPermissions, getToken, getLanguage, extractPosFieldMetadata, extractPosSortConfig, extractMenuItems, extractUIText, type PreAppInitCaptions, type LoginTemplateField, type LoginConfirmation, type Supplier, type POSItem, type UserMessage, type AppInitMenuCaptions, type MenuPermissions, type POSFieldMetadata, type POSSortConfig } from '../utils/xmlParser';
 import type { APIMenuItem, UIText } from '../types/appInit';
+import { imageService } from './imageService';
 
 const API_BASE_URL = 'https://api.pantavista.net';
 
@@ -823,10 +824,14 @@ export async function getAppInit(): Promise<ApiResponse<{ menuItems: APIMenuItem
         const menuCaptions = extractAppInitMenuCaptions(doc);
         const permissions = extractAppInitPermissions(doc);
         
+        // Initialize image service with UI.IMAGE.DATA from the response
+        imageService.initialize(doc);
+        
         console.log('getAppInit: Extracted', menuItems.length, 'menu items');
         console.log('getAppInit: Extracted', uiTexts.length, 'UI texts');
         console.log('getAppInit: Extracted menu captions:', menuCaptions);
         console.log('getAppInit: Extracted permissions:', permissions);
+        console.log('getAppInit: Initialized image service with', imageService.getImageCount(), 'images');
         
         return {
           success: true,

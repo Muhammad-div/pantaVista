@@ -98,9 +98,184 @@
   margin-top: 16px;
 }
 
+/* Mobile Responsive Styles */
 @media (max-width: 600px) {
+  .login-container {
+    padding: 12px;
+    align-items: flex-start;
+    padding-top: 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+  }
+
   .login-card {
-    padding: 32px 24px;
+    padding: 32px 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
+
+  .login-header {
+    margin-bottom: 28px;
+  }
+
+  .logo-container {
+    margin-bottom: 20px;
+  }
+
+  .welcome-text {
+    font-size: 1.5rem !important;
+    margin-bottom: 10px !important;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+
+  .description-text {
+    font-size: 0.875rem;
+    max-width: 100%;
+    padding: 0 4px;
+    line-height: 1.5;
+    color: #6b7280;
+  }
+
+  .login-form {
+    margin-top: 28px;
+  }
+
+  .login-form .MuiTextField-root {
+    margin-bottom: 20px;
+  }
+
+  .login-form .MuiTextField-root .MuiOutlinedInput-root {
+    background-color: #fafafa;
+    transition: all 0.2s ease;
+  }
+
+  .login-form .MuiTextField-root .MuiOutlinedInput-root:hover {
+    background-color: #ffffff;
+  }
+
+  .login-form .MuiTextField-root .MuiOutlinedInput-root.Mui-focused {
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .login-form .MuiFormHelperText-root {
+    margin-top: 6px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #6b7280;
+  }
+
+  .forgot-password-container {
+    margin-top: 12px;
+    margin-bottom: 8px;
+  }
+
+  .forgot-password-link {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 0;
+  }
+
+  .login-button {
+    font-size: 15px !important;
+    padding: 14px 20px !important;
+    min-height: 48px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  }
+
+  .login-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+  }
+
+  /* Improve touch targets */
+  .MuiIconButton-root {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+  }
+
+  /* Better spacing for form elements */
+  .MuiTextField-root + .MuiTextField-root {
+    margin-top: 4px;
+  }
+
+  /* Enhanced card shadow on mobile */
+  .login-card {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .login-container {
+    padding: 8px;
+    padding-top: 16px;
+  }
+
+  .login-card {
+    padding: 28px 18px;
+    border-radius: 14px;
+  }
+
+  .login-header {
+    margin-bottom: 24px;
+  }
+
+  .logo-container {
+    margin-bottom: 18px;
+  }
+
+  .welcome-text {
+    font-size: 1.375rem !important;
+    margin-bottom: 8px !important;
+  }
+
+  .description-text {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .login-form {
+    margin-top: 24px;
+  }
+
+  .login-form .MuiTextField-root {
+    margin-bottom: 18px;
+  }
+
+  .login-form .MuiFormHelperText-root {
+    font-size: 11px;
+    margin-top: 5px;
+  }
+
+  .forgot-password-link {
+    font-size: 12px;
+  }
+
+  .login-button {
+    font-size: 14px !important;
+    padding: 13px 18px !important;
+    min-height: 46px;
   }
 }
 

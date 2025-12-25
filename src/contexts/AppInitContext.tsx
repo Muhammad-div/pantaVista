@@ -4,6 +4,7 @@ import { getAppInit, getStoredToken } from '../services/api'
 import { textService } from '../services/textService'
 import { menuService } from '../services/menuService'
 import { tooltipService } from '../services/tooltipService'
+import { imageService } from '../services/imageService'
 import type { AppInitMenuCaptions, MenuPermissions } from '../utils/xmlParser'
 import type { APIMenuItem, UIText } from '../types/appInit'
 

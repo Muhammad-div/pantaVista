@@ -15,6 +15,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useAuth } from '../contexts/AuthContext'
@@ -27,6 +29,8 @@ const Login = () => {
   const navigate = useNavigate()
   const { login: loginApi, isAuthenticated } = useAuth()
   const { refreshMenu } = useMenu()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -172,24 +176,35 @@ const Login = () => {
         background: 'linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%)',
       }}
     >
-      <Container maxWidth="sm">
+      <Container 
+        maxWidth="sm" 
+        sx={{
+          px: isMobile ? 2 : 3,
+          width: '100%',
+        }}
+      >
         <Card 
           className="login-card" 
           elevation={3}
           sx={{
             backgroundColor: '#ffffff !important',
             color: '#1f2937 !important',
+            padding: isMobile ? '32px 20px' : '48px 40px',
+            width: '100%',
             '& .MuiTypography-root': {
               color: '#1f2937 !important',
             },
             '& .welcome-text': {
               color: '#1f2937 !important',
+              fontSize: isMobile ? '1.5rem' : '1.75rem',
             },
             '& .description-text': {
               color: '#6b7280 !important',
+              fontSize: isMobile ? '0.875rem' : '1rem',
             },
             '& .MuiInputLabel-root': {
               color: '#6b7280 !important',
+              fontSize: isMobile ? '0.875rem' : '1rem',
               '&.Mui-focused': {
                 color: 'var(--primary-main, #3b82f6) !important',
               },
@@ -197,6 +212,7 @@ const Login = () => {
             '& .MuiOutlinedInput-root': {
               backgroundColor: '#ffffff !important',
               color: '#1f2937 !important',
+              fontSize: isMobile ? '0.875rem' : '1rem',
               '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: '#d1d5db !important',
               },
@@ -209,15 +225,18 @@ const Login = () => {
             },
             '& .MuiInputBase-input': {
               color: '#1f2937 !important',
+              padding: isMobile ? '12px 14px' : '14px',
               '&::placeholder': {
                 color: '#9ca3af !important',
               },
             },
             '& .MuiFormHelperText-root': {
               color: '#6b7280 !important',
+              fontSize: isMobile ? '0.75rem' : '0.875rem',
             },
             '& .MuiButton-text': {
               color: 'var(--primary-main, #3b82f6) !important',
+              fontSize: isMobile ? '0.875rem' : '0.9375rem',
             },
           }}
         >
@@ -228,14 +247,19 @@ const Login = () => {
                   src={captions.loginLogo} 
                   alt="Login Logo" 
                   style={{ 
-                    maxWidth: '200px', 
-                    maxHeight: '100px', 
+                    maxWidth: isMobile ? '150px' : '200px', 
+                    maxHeight: isMobile ? '75px' : '100px', 
                     objectFit: 'contain',
-                    marginBottom: '16px'
+                    marginBottom: isMobile ? '12px' : '16px'
                   }} 
                 />
               ) : (
-              <Typography variant="h4" component="div" className="logo-text">
+              <Typography 
+                variant={isMobile ? 'h5' : 'h4'} 
+                component="div" 
+                className="logo-text"
+                sx={{ fontSize: isMobile ? '1.5rem' : '2rem' }}
+              >
                 <span className="logo-panta">panta</span>
                 <span className="logo-vista">Vista</span>
               </Typography>
@@ -249,7 +273,19 @@ const Login = () => {
             </Typography>
           </Box>
 
-          <Box component="form" onSubmit={handleLogin} className="login-form">
+          <Box 
+            component="form" 
+            onSubmit={handleLogin} 
+            className="login-form"
+            sx={{
+              '& .MuiTextField-root': {
+                marginBottom: isMobile ? '20px' : '16px',
+                '&:last-of-type': {
+                  marginBottom: isMobile ? '12px' : '8px',
+                },
+              },
+            }}
+          >
             <TextField
               fullWidth
               label={captions.usernameLabel || loginFields.username?.caption || 'Username'}
@@ -264,7 +300,21 @@ const Login = () => {
               error={!!error && !username}
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
+                  borderRadius: isMobile ? '12px' : '8px',
+                  fontSize: isMobile ? '16px' : '1rem', // Prevent zoom on iOS
+                },
+                '& .MuiInputLabel-root': {
+                  fontSize: isMobile ? '14px' : '1rem',
+                },
+                '& .MuiFormHelperText-root': {
+                  marginLeft: 0,
+                  marginRight: 0,
+                  textAlign: 'left',
+                  fontSize: isMobile ? '12px' : '0.875rem',
+                  lineHeight: 1.4,
+                },
+                '& .MuiInputBase-input': {
+                  padding: isMobile ? '14px 16px' : '14px',
                 },
               }}
             />
@@ -289,6 +339,9 @@ const Login = () => {
                       onClick={() => setShowPassword(!showPassword)}
                       edge="end"
                       disabled={loading}
+                      sx={{
+                        padding: isMobile ? '8px' : '4px',
+                      }}
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
@@ -297,7 +350,21 @@ const Login = () => {
               }}
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
+                  borderRadius: isMobile ? '12px' : '8px',
+                  fontSize: isMobile ? '16px' : '1rem', // Prevent zoom on iOS
+                },
+                '& .MuiInputLabel-root': {
+                  fontSize: isMobile ? '14px' : '1rem',
+                },
+                '& .MuiFormHelperText-root': {
+                  marginLeft: 0,
+                  marginRight: 0,
+                  textAlign: 'left',
+                  fontSize: isMobile ? '12px' : '0.875rem',
+                  lineHeight: 1.4,
+                },
+                '& .MuiInputBase-input': {
+                  padding: isMobile ? '14px 16px' : '14px',
                 },
               }}
             />
@@ -320,7 +387,18 @@ const Login = () => {
             </Box>
 
             {error && (
-              <Alert severity="error" sx={{ mt: 2, mb: 1 }}>
+              <Alert 
+                severity="error" 
+                sx={{ 
+                  mt: isMobile ? 1.5 : 2, 
+                  mb: isMobile ? 1.5 : 1,
+                  borderRadius: isMobile ? '10px' : '8px',
+                  fontSize: isMobile ? '13px' : '0.875rem',
+                  '& .MuiAlert-icon': {
+                    fontSize: isMobile ? '20px' : '22px',
+                  },
+                }}
+              >
                 {error}
               </Alert>
             )}
@@ -329,17 +407,18 @@ const Login = () => {
               type="submit"
               fullWidth
               variant="contained"
-              size="large"
+              size={isMobile ? 'medium' : 'large'}
               className="login-button"
               disabled={loading}
               sx={{
-                mt: 3,
-                mb: 2,
+                mt: isMobile ? 2 : 3,
+                mb: isMobile ? 1.5 : 2,
                 borderRadius: '8px',
                 textTransform: 'none',
-                fontSize: '16px',
+                fontSize: isMobile ? '14px' : '16px',
                 fontWeight: 600,
-                py: 1.5,
+                py: isMobile ? 1.25 : 1.5,
+                minHeight: isMobile ? '44px' : '48px',
               }}
             >
               {loading ? (
@@ -365,6 +444,14 @@ const Login = () => {
         }}
         maxWidth="sm"
         fullWidth
+        fullScreen={isMobile}
+        PaperProps={{
+          sx: {
+            m: isMobile ? 0 : 2,
+            borderRadius: isMobile ? 0 : '8px',
+            maxHeight: isMobile ? '100vh' : '90vh',
+          }
+        }}
       >
         <DialogTitle>
           {captions.requestPasswordHead || captions.requestPassword || 'Request New Password'}

@@ -15,6 +15,13 @@ import {
   DialogContent,
   DialogActions,
   Snackbar,
+  useMediaQuery,
+  useTheme,
+  Drawer,
+  TextField,
+  Chip,
+  Divider,
+  Badge,
 } from '@mui/material'
 import {
   Settings as SettingsIcon,
@@ -23,6 +30,7 @@ import {
   FileDownload as ExportIcon,
   MoreVert as MoreVertIcon,
   FilterList as FilterListIcon,
+  Close as CloseIcon,
 } from '@mui/icons-material'
 import { Grid, GridColumn, GridToolbar } from '@progress/kendo-react-grid'
 import {
@@ -53,6 +61,8 @@ const POSList = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const textService = useTextService()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [optionsAnchor, setOptionsAnchor] = useState<null | HTMLElement>(null)
   const [posList, setPosList] = useState<POSItem[]>([])
   const [loading, setLoading] = useState(true)
@@ -63,6 +73,8 @@ const POSList = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [mobileFilterDrawerOpen, setMobileFilterDrawerOpen] = useState(false)
+  const [mobileFilters, setMobileFilters] = useState<Record<string, string>>({})
 
   // Check if we're on the /pos route (not from suppliers)
   const isDirectPOSRoute = location.pathname === '/pos'
@@ -169,6 +181,52 @@ const POSList = () => {
     updateFilterIcons()
   }, [showFilters])
 
+  // Sync horizontal scrolling between header and body on mobile
+  useEffect(() => {
+    if (!loading && isMobile) {
+      const syncScroll = () => {
+        const headerWrap = document.querySelector('.kendo-pos-grid .k-grid-header-wrap') as HTMLElement
+        const contentWrap = document.querySelector('.kendo-pos-grid .k-grid-content-wrap') as HTMLElement
+        const content = document.querySelector('.kendo-pos-grid .k-grid-content') as HTMLElement
+
+        if (!headerWrap) return
+
+        // Find which element actually scrolls (content or contentWrap)
+        const scrollableContent = content || contentWrap
+        if (!scrollableContent) return
+
+        // Sync header scroll with content scroll
+        const syncHeaderScroll = () => {
+          headerWrap.scrollLeft = scrollableContent.scrollLeft
+        }
+
+        // Sync content scroll with header scroll
+        const syncContentScroll = () => {
+          scrollableContent.scrollLeft = headerWrap.scrollLeft
+        }
+
+        // Add scroll listeners
+        scrollableContent.addEventListener('scroll', syncHeaderScroll, { passive: true })
+        headerWrap.addEventListener('scroll', syncContentScroll, { passive: true })
+
+        return () => {
+          scrollableContent.removeEventListener('scroll', syncHeaderScroll)
+          headerWrap.removeEventListener('scroll', syncContentScroll)
+        }
+      }
+
+      // Wait for grid to render
+      const timeoutId = setTimeout(() => {
+        const cleanup = syncScroll()
+        return cleanup
+      }, 100)
+
+      return () => {
+        clearTimeout(timeoutId)
+      }
+    }
+  }, [loading, isMobile, posList.length])
+
   // Add filter icons to column headers and handle clicks
   useEffect(() => {
     if (!loading) {
@@ -223,16 +281,69 @@ const POSList = () => {
             // Check if icon already exists
             const existingIcon = cellInner.querySelector('.column-filter-icon')
             if (!existingIcon) {
-              cellInner.style.display = 'flex'
-              cellInner.style.alignItems = 'center'
-              cellInner.style.justifyContent = 'space-between'
-              cellInner.appendChild(filterIcon)
+              // Use flexbox but allow wrapping on mobile
+              const isMobile = window.innerWidth < 600
+              if (isMobile) {
+                cellInner.style.display = 'flex'
+                cellInner.style.flexDirection = 'column'
+                cellInner.style.alignItems = 'flex-start'
+                cellInner.style.justifyContent = 'flex-start'
+                cellInner.style.gap = '4px'
+                cellInner.style.width = '100%'
+              } else {
+                // Desktop: horizontal layout, no wrapping, icons on right
+                cellInner.style.display = 'flex'
+                cellInner.style.alignItems = 'center'
+                cellInner.style.justifyContent = 'flex-start'
+                cellInner.style.flexWrap = 'nowrap'
+                cellInner.style.gap = '8px'
+                cellInner.style.width = '100%'
+              }
+              
+              // Check if there's a .k-link element (Kendo's structure)
+              const kLink = cellInner.querySelector('.k-link') as HTMLElement | null
+              
+              if (kLink && !isMobile) {
+                // If .k-link exists, ensure it doesn't grow and add margin
+                kLink.style.cssText = 'flex: 0 1 auto; min-width: 0; margin-right: 8px; display: flex; align-items: center;'
+                // Add filter icon after .k-link
+                filterIcon.style.cssText = 'margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center; order: 999;'
+                cellInner.appendChild(filterIcon)
+              } else {
+                // Wrap existing content in a span if it's not already wrapped
+                const existingContent = Array.from(cellInner.childNodes).filter(
+                  node => node.nodeType === Node.TEXT_NODE || 
+                  (node.nodeType === Node.ELEMENT_NODE && 
+                   !(node as Element).classList.contains('column-filter-icon') &&
+                   !(node as Element).classList.contains('k-link'))
+                )
+                
+                if (existingContent.length > 0 && !cellInner.querySelector('span:not(.column-filter-icon):not(.k-link)')) {
+                  const textWrapper = document.createElement('span')
+                  textWrapper.style.cssText = isMobile 
+                    ? 'display: block; width: 100%; word-wrap: break-word; overflow-wrap: break-word; line-height: 1.3;'
+                    : 'flex: 0 1 auto; min-width: 0; word-wrap: break-word; overflow-wrap: break-word; margin-right: 8px;'
+                  existingContent.forEach(node => textWrapper.appendChild(node.cloneNode(true)))
+                  // Remove original nodes
+                  existingContent.forEach(node => node.remove())
+                  cellInner.insertBefore(textWrapper, cellInner.firstChild)
+                }
+                
+                // Add filter icon with proper styling for desktop
+                if (!isMobile) {
+                  filterIcon.style.cssText = 'margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center; order: 999;'
+                }
+                cellInner.appendChild(filterIcon)
+              }
             }
           } else {
             // Create wrapper if needed
             const wrapper = document.createElement('div')
             wrapper.className = 'k-cell-inner'
-            wrapper.style.cssText = 'display: flex; align-items: center; justify-content: space-between; width: 100%;'
+            const isMobile = window.innerWidth < 600
+            wrapper.style.cssText = isMobile
+              ? 'display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; width: 100%; gap: 4px;'
+              : 'display: flex; align-items: center; justify-content: flex-start; flex-wrap: nowrap; width: 100%; gap: 8px;'
             
             // Get title text, removing any existing icons or SVG
             const titleText = Array.from(th.childNodes)
@@ -245,8 +356,15 @@ const POSList = () => {
             
             const titleSpan = document.createElement('span')
             titleSpan.textContent = titleText || th.textContent?.trim() || ''
+            titleSpan.style.cssText = isMobile
+              ? 'display: block; width: 100%; word-wrap: break-word; overflow-wrap: break-word; line-height: 1.3;'
+              : 'flex: 0 1 auto; min-width: 0; word-wrap: break-word; overflow-wrap: break-word; margin-right: 8px;'
             
             wrapper.appendChild(titleSpan)
+            // Add filter icon with proper styling for desktop
+            if (!isMobile) {
+              filterIcon.style.cssText = 'margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center;'
+            }
             wrapper.appendChild(filterIcon)
             th.innerHTML = ''
             th.appendChild(wrapper)
@@ -300,6 +418,59 @@ const POSList = () => {
   const hasActiveFilters = useMemo(() => {
     return dataState.filter?.filters && dataState.filter.filters.length > 0
   }, [dataState.filter])
+
+  // Count active filters for mobile badge
+  const activeFilterCount = useMemo(() => {
+    if (isMobile) {
+      return Object.values(mobileFilters).filter(v => v && v.trim() !== '').length
+    }
+    return dataState.filter?.filters?.length || 0
+  }, [mobileFilters, dataState.filter, isMobile])
+
+  // Apply mobile filters to dataState
+  useEffect(() => {
+    if (isMobile && Object.keys(mobileFilters).length > 0) {
+      const filters: any[] = []
+      Object.entries(mobileFilters).forEach(([field, value]) => {
+        if (value && value.trim() !== '') {
+          const mappedField = fieldNameMap[field] || field.toLowerCase()
+          filters.push({
+            field: mappedField,
+            operator: 'contains',
+            value: value.trim()
+          })
+        }
+      })
+      
+      setDataState(prev => ({
+        ...prev,
+        filter: {
+          logic: 'and',
+          filters: filters
+        }
+      }))
+    }
+  }, [mobileFilters, isMobile])
+
+  // Handle mobile filter change
+  const handleMobileFilterChange = (field: string, value: string) => {
+    setMobileFilters(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
+
+  // Clear all mobile filters
+  const clearMobileFilters = () => {
+    setMobileFilters({})
+    setDataState(prev => ({
+      ...prev,
+      filter: {
+        logic: 'and',
+        filters: []
+      }
+    }))
+  }
 
   // Clear all filters
   const clearFilters = () => {
@@ -566,7 +737,11 @@ const POSList = () => {
         setSettingsOpen(true)
         break
       case 'Filter':
-        setShowFilters(!showFilters)
+        if (isMobile) {
+          setMobileFilterDrawerOpen(true)
+        } else {
+          setShowFilters(!showFilters)
+        }
         break
       case 'Sort':
         // Sort functionality is already handled by the grid
@@ -588,54 +763,113 @@ const POSList = () => {
     <Box className="pos-list-page">
       {/* Compact Header */}
       <Box className="pos-list-header-compact">
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Typography variant="h6" component="h1" sx={{ fontSize: '18px', fontWeight: 600 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between', 
+          width: '100%', 
+          gap: { xs: 1, sm: 2 },
+          flexWrap: { xs: 'wrap', sm: 'nowrap' }
+        }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1, minWidth: 0 }}>
+            <Typography variant="h6" component="h1" sx={{ fontSize: { xs: '16px', sm: '18px' }, fontWeight: 600 }}>
               {textService.getText('WINDOW.TITLE', 'Points-of-Sale')}
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ ml: 2 }}>
+            <Typography variant="body2" color="text.secondary" sx={{ ml: { xs: 1, sm: 2 }, fontSize: { xs: '11px', sm: '14px' }, display: { xs: 'none', sm: 'block' } }}>
               {textService.getText('LABEL:ENTRIES', 'Total')}: <strong>{dataResult.total || posList.length}</strong> {textService.getText('LABEL:ENTRIES', 'entries')}
             </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ ml: { xs: 1, sm: 2 }, fontSize: '11px', display: { xs: 'block', sm: 'none' } }}>
+              <strong>{dataResult.total || posList.length}</strong>
+            </Typography>
         </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1 }, flexWrap: 'wrap' }}>
+            {/* Mobile Filter Button */}
+            {isMobile && (
+              <Badge badgeContent={activeFilterCount} color="primary" sx={{ display: { xs: 'flex', sm: 'none' } }}>
+                <IconButton
+                  size="small"
+                  onClick={() => setMobileFilterDrawerOpen(true)}
+                  sx={{
+                    border: '1px solid',
+                    borderColor: 'var(--border-color, #d1d5db)',
+                    borderRadius: '6px',
+                    padding: '6px',
+                    backgroundColor: activeFilterCount > 0 ? 'var(--nav-active-bg, #3b82f6)' : 'transparent',
+                    color: activeFilterCount > 0 ? '#ffffff' : 'inherit',
+                    '&:hover': {
+                      backgroundColor: activeFilterCount > 0 ? '#1d4ed8' : 'var(--bg-hover, #f1f5f9)',
+                    }
+                  }}
+                >
+                  <FilterListIcon sx={{ fontSize: '18px' }} />
+                </IconButton>
+              </Badge>
+            )}
             <Button
               variant="outlined"
               size="small"
-              startIcon={<SettingsIcon sx={{ fontSize: '16px' }} />}
+              startIcon={<SettingsIcon sx={{ fontSize: { xs: '14px', sm: '16px' } }} />}
               onClick={() => handleAction('Settings')}
-              sx={{ minWidth: 'auto', px: 1.5, fontSize: '12px', textTransform: 'none' }}
+              sx={{ 
+                minWidth: 'auto', 
+                px: { xs: 1, sm: 1.5 }, 
+                fontSize: { xs: '11px', sm: '12px' }, 
+                textTransform: 'none',
+                display: { xs: 'none', sm: 'flex' }
+              }}
             >
               {textService.getText('LABEL:SETTINGS', 'Settings')}
             </Button>
             <Button
               variant="outlined"
               size="small"
-              startIcon={<CopyIcon sx={{ fontSize: '16px' }} />}
+              startIcon={<CopyIcon sx={{ fontSize: { xs: '14px', sm: '16px' } }} />}
               onClick={() => handleAction('Copy')}
-              sx={{ minWidth: 'auto', px: 1.5, fontSize: '12px', textTransform: 'none' }}
+              sx={{ 
+                minWidth: 'auto', 
+                px: { xs: 1, sm: 1.5 }, 
+                fontSize: { xs: '11px', sm: '12px' }, 
+                textTransform: 'none'
+              }}
               title={textService.getText('BUTTON.IA:COPY', 'Copy')}
             >
-              {textService.getText('BUTTON.IA:COPY', 'Copyrfe')}
+              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                {textService.getText('BUTTON.IA:COPY', 'Copyrfe')}
+              </Box>
             </Button>
             <Button
               variant="outlined"
               size="small"
-              startIcon={<PrintIcon sx={{ fontSize: '16px' }} />}
+              startIcon={<PrintIcon sx={{ fontSize: { xs: '14px', sm: '16px' } }} />}
               onClick={() => handleAction('Print')}
-              sx={{ minWidth: 'auto', px: 1.5, fontSize: '12px', textTransform: 'none' }}
+              sx={{ 
+                minWidth: 'auto', 
+                px: { xs: 1, sm: 1.5 }, 
+                fontSize: { xs: '11px', sm: '12px' }, 
+                textTransform: 'none'
+              }}
               title={textService.getText('BUTTON.IA:PRINT', 'Opens a print version of this data.')}
             >
-              {textService.getText('BUTTON.IA:PRINT', 'Print').replace('Opens a print version of this data.', 'Print')}
+              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                {textService.getText('BUTTON.IA:PRINT', 'Print').replace('Opens a print version of this data.', 'Print')}
+              </Box>
             </Button>
             <Button
               variant="outlined"
               size="small"
-              startIcon={<ExportIcon sx={{ fontSize: '16px' }} />}
+              startIcon={<ExportIcon sx={{ fontSize: { xs: '14px', sm: '16px' } }} />}
               onClick={() => handleAction('Export')}
-              sx={{ minWidth: 'auto', px: 1.5, fontSize: '12px', textTransform: 'none' }}
+              sx={{ 
+                minWidth: 'auto', 
+                px: { xs: 1, sm: 1.5 }, 
+                fontSize: { xs: '11px', sm: '12px' }, 
+                textTransform: 'none'
+              }}
               title={textService.getText('BUTTON.IA:EXPORT', 'Exports this data into an Excel file.')}
             >
-              {textService.getText('BUTTON.IA:EXPORT', 'Exportfrerferfrefre').replace('Exports this data into an Excel file.', 'Export')}
+              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                {textService.getText('BUTTON.IA:EXPORT', 'Exportfrerferfrefre').replace('Exports this data into an Excel file.', 'Export')}
+              </Box>
             </Button>
           <IconButton
               size="small"
@@ -644,10 +878,10 @@ const POSList = () => {
               border: '1px solid',
               borderColor: 'var(--border-color, #d1d5db)',
                 borderRadius: '6px',
-                padding: '4px',
+                padding: { xs: '4px', sm: '4px' },
             }}
           >
-              <MoreVertIcon sx={{ fontSize: '18px' }} />
+              <MoreVertIcon sx={{ fontSize: { xs: '16px', sm: '18px' } }} />
           </IconButton>
           <Menu
             anchorEl={optionsAnchor}
@@ -675,6 +909,176 @@ const POSList = () => {
         </Box>
         </Box>
       </Box>
+
+      {/* Mobile Filter Drawer */}
+      <Drawer
+        anchor="bottom"
+        open={mobileFilterDrawerOpen}
+        onClose={() => setMobileFilterDrawerOpen(false)}
+        PaperProps={{
+          sx: {
+            maxHeight: '85vh',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            overflow: 'visible',
+          }
+        }}
+      >
+        <Box sx={{ p: 3, pb: 4, overflowY: 'auto', maxHeight: '85vh' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+            <Typography variant="h6" sx={{ fontWeight: 600 }}>
+              {textService.getText('BUTTON.IA:FILTER_LIST', 'Filter')}
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+              {activeFilterCount > 0 && (
+                <Button
+                  size="small"
+                  onClick={clearMobileFilters}
+                  sx={{ textTransform: 'none', fontSize: '12px' }}
+                >
+                  {textService.getText('BUTTON:CANCEL', 'Clear All')}
+                </Button>
+              )}
+              <IconButton
+                size="small"
+                onClick={() => setMobileFilterDrawerOpen(false)}
+                sx={{ padding: '4px' }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          </Box>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mb: 3, minHeight: '200px' }}>
+            {/* Default filter fields - use fieldMetadata when available, otherwise use textService */}
+            {(() => {
+              // Default field definitions with textService fallbacks
+              const defaultFields = [
+                { name: 'PVNO', textKey: 'LABEL:POS_ID', fallback: 'PoS-ID' },
+                { name: 'DISPLAYNAME', textKey: 'WINDOW.TITLE', fallback: 'Points-of-Sale' },
+                { name: 'ADDRESS1', textKey: 'LABEL:ADDRESSDATA', fallback: 'Address data' },
+                { name: 'CITY', textKey: 'LABEL:ADDRESSDATA', fallback: 'City' },
+                { name: 'PCODE', textKey: 'REPORT:BY_PCODE', fallback: 'Zip code', transform: (text: string) => text.replace('by ', '') },
+                { name: 'PHONE1', textKey: 'ACTIVITY.TOOLTIP:PHONE', fallback: 'Telephone' },
+              ]
+
+              return defaultFields.map((fieldDef) => {
+                const fieldName = fieldDef.name || ''
+                const fieldValue = mobileFilters[fieldName] || ''
+                
+                // Try to get caption from fieldMetadata first (most accurate, comes from API)
+                const fieldMeta = fieldMetadata.find(f => f.name === fieldName)
+                let caption = fieldMeta?.caption || ''
+                
+                // If no caption from metadata, use textService with the defined key
+                if (!caption && fieldDef.textKey) {
+                  caption = textService.getText(fieldDef.textKey, fieldDef.fallback)
+                  // Apply transform if defined (e.g., remove "by " from zip code)
+                  if (fieldDef.transform && typeof fieldDef.transform === 'function') {
+                    caption = fieldDef.transform(caption)
+                  }
+                }
+                
+                // Final fallback to field name
+                if (!caption) {
+                  caption = fieldName
+                }
+                
+                return (
+                  <TextField
+                    key={fieldName}
+                    label={caption}
+                    value={fieldValue}
+                    onChange={(e) => handleMobileFilterChange(fieldName, e.target.value)}
+                    size="medium"
+                    fullWidth
+                    variant="outlined"
+                    placeholder={`${textService.getText('LABEL:SEARCHFIELD_CAPTION', 'Search in')} ${caption}`}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        fontSize: '14px',
+                      }
+                    }}
+                    InputProps={{
+                      endAdornment: fieldValue && (
+                        <IconButton
+                          size="small"
+                          onClick={() => handleMobileFilterChange(fieldName, '')}
+                          sx={{ mr: -1, padding: '4px' }}
+                          edge="end"
+                        >
+                          <CloseIcon sx={{ fontSize: '18px' }} />
+                        </IconButton>
+                      )
+                    }}
+                  />
+                )
+              })
+            })()}
+          </Box>
+
+          {activeFilterCount > 0 && (
+            <Box>
+              <Divider sx={{ mb: 2 }} />
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                {textService.getText('WINDOW.LABEL:FILTER.ITEMS', 'Entries')} ({textService.getText('WINDOW.LABEL:FILTER.INFO', 'filtered')}): {activeFilterCount}
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {Object.entries(mobileFilters).map(([field, value]) => {
+                  if (!value || value.trim() === '') return null
+                  
+                  // Get caption from fieldMetadata first
+                  let caption = fieldMetadata.find(f => f.name === field)?.caption || ''
+                  
+                  // Fallback to textService if no metadata caption
+                  if (!caption) {
+                    const fieldTextMap: Record<string, { key: string; fallback: string; transform?: (text: string) => string }> = {
+                      'PVNO': { key: 'LABEL:POS_ID', fallback: 'PoS-ID' },
+                      'DISPLAYNAME': { key: 'WINDOW.TITLE', fallback: 'Points-of-Sale' },
+                      'ADDRESS1': { key: 'LABEL:ADDRESSDATA', fallback: 'Address data' },
+                      'CITY': { key: 'LABEL:ADDRESSDATA', fallback: 'City' },
+                      'PCODE': { key: 'REPORT:BY_PCODE', fallback: 'Zip code', transform: (text: string) => text.replace('by ', '') },
+                      'PHONE1': { key: 'ACTIVITY.TOOLTIP:PHONE', fallback: 'Telephone' },
+                    }
+                    
+                    const fieldDef = fieldTextMap[field]
+                    if (fieldDef) {
+                      caption = textService.getText(fieldDef.key, fieldDef.fallback)
+                      if (fieldDef.transform) {
+                        caption = fieldDef.transform(caption)
+                      }
+                    } else {
+                      caption = field
+                    }
+                  }
+                  
+                  return (
+                    <Chip
+                      key={field}
+                      label={`${caption}: ${value}`}
+                      onDelete={() => handleMobileFilterChange(field, '')}
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                    />
+                  )
+                })}
+              </Box>
+            </Box>
+          )}
+
+          <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
+            <Button
+              variant="contained"
+              fullWidth
+              onClick={() => setMobileFilterDrawerOpen(false)}
+              sx={{ textTransform: 'none' }}
+            >
+              {textService.getText('BUTTON:ASSUME', 'Apply')}
+            </Button>
+          </Box>
+        </Box>
+      </Drawer>
 
       {/* Settings Dialog */}
       <Dialog
@@ -715,7 +1119,10 @@ const POSList = () => {
       </Snackbar>
 
       {/* Main Content - Focused on Table */}
-      <Box className="pos-list-content-compact" sx={{ paddingLeft: '24px', paddingRight: '24px' }}>
+      <Box className="pos-list-content-compact" sx={{ 
+        paddingLeft: { xs: '12px', sm: '24px' }, 
+        paddingRight: { xs: '12px', sm: '24px' } 
+      }}>
 
         {/* KendoReact Grid Card */}
         <Paper elevation={0} className="pos-table-card">
@@ -755,16 +1162,25 @@ const POSList = () => {
                 </Box>
             ) : (
               <>
-                <Box sx={{ width: '100%', height: '100%', overflow: 'hidden', flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  overflow: 'hidden', 
+                  flex: 1, 
+                  minWidth: 0, 
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  position: 'relative'
+                }}>
                   <Grid
                     style={{ height: '100%', width: '100%' }}
                     data={dataResult}
                     sortable={true}
-                    filterable={showFilters}
+                    filterable={isMobile ? false : showFilters}
                     groupable={false}
                     pageable={false}
-                    resizable={true}
-                    reorderable={true}
+                    resizable={false}
+                    reorderable={false}
                     onDataStateChange={dataStateChange}
                     className={`kendo-pos-grid ${showFilters ? 'filters-visible' : 'filters-hidden'}`}
                   >
@@ -773,7 +1189,8 @@ const POSList = () => {
                         .filter(field => field.visible !== false) // Only show visible fields
                         .map((field) => {
                           const mappedField = fieldNameMap[field.name] || field.name.toLowerCase()
-                          const width = field.columnWidth ? `${field.columnWidth}px` : undefined
+                          // Responsive width - fixed 95px on mobile
+                          const width = isMobile ? '95px' : (field.columnWidth ? `${field.columnWidth}px` : undefined)
                           
                           return (
                             <GridColumn
@@ -782,7 +1199,7 @@ const POSList = () => {
                               title={field.caption.toUpperCase()}
                               width={width}
                               groupable={false}
-                              filterable={showFilters}
+                              filterable={isMobile ? false : showFilters}
                               sortable={true}
                             />
                           )
@@ -793,49 +1210,49 @@ const POSList = () => {
                   <GridColumn
                     field="posId"
                     title={textService.getText('LABEL:POS_ID', 'PoS-ID')}
-                    width="150px"
+                    width={isMobile ? "95px" : "150px"}
                     groupable={false}
-                    filterable={showFilters}
+                    filterable={isMobile ? false : showFilters}
                     sortable={true}
                   />
                   <GridColumn
                     field="shortName"
                     title={textService.getText('WINDOW.TITLE', 'Points-of-Sale')}
-                    width="260px"
+                    width={isMobile ? "95px" : "260px"}
                     groupable={false}
-                    filterable={showFilters}
+                    filterable={isMobile ? false : showFilters}
                     sortable={true}
                   />
                   <GridColumn
                     field="address"
                     title={textService.getText('LABEL:ADDRESSDATA', 'Address data')}
-                    width="260px"
+                    width={isMobile ? "95px" : "260px"}
                     groupable={false}
-                    filterable={showFilters}
+                    filterable={isMobile ? false : showFilters}
                     sortable={true}
                   />
                   <GridColumn
                     field="city"
                     title={textService.getText('LABEL:ADDRESSDATA', 'Address data')}
-                    width="200px"
+                    width={isMobile ? "95px" : "200px"}
                     groupable={false}
-                    filterable={showFilters}
+                    filterable={isMobile ? false : showFilters}
                     sortable={true}
                   />
                   <GridColumn
                     field="zipcode"
                     title={textService.getText('REPORT:BY_PCODE', 'by zip code').replace('by ', '')}
-                    width="150px"
+                    width={isMobile ? "95px" : "150px"}
                     groupable={false}
-                    filterable={showFilters}
+                    filterable={isMobile ? false : showFilters}
                     sortable={true}
                   />
                   <GridColumn
                     field="phone"
                     title={textService.getText('ACTIVITY.TOOLTIP:PHONE', 'Telephone')}
-                    width="200px"
+                    width={isMobile ? "95px" : "200px"}
                     groupable={false}
-                    filterable={showFilters}
+                    filterable={isMobile ? false : showFilters}
                     sortable={true}
                   />
                       </>
