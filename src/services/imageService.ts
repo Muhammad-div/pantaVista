@@ -112,50 +112,106 @@ class ImageService {
       }
       
       console.log('ImageService: Found UI.IMAGE.DATA entity, extracting images...');
-      const imageSets = findElements(imageDataEntity, 'SET');
       
-      imageSets.forEach((set) => {
-        const attributeGroups = findElements(set, 'ATTRIBUTEGROUP');
-        const imageItemGroup = attributeGroups.find(
-          (group) => getAttribute(group, 'NAME') === 'UI.IMAGE.ITEM'
-        );
+      // First find the SETS container
+      const setsContainer = findElement(imageDataEntity, 'SETS');
+      if (!setsContainer) {
+        console.warn('ImageService: SETS container not found in UI.IMAGE.DATA entity');
+        this.initialized = true;
+        return;
+      }
+      
+      // Direct approach: Search for all IMAGE_IDENTIFIER elements within SETS
+      // This is more reliable than traversing SET > ATTRIBUTEGROUP manually
+      const allImageIdentifiers = findElements(setsContainer, 'IMAGE_IDENTIFIER');
+      console.log('ImageService: Found', allImageIdentifiers.length, 'IMAGE_IDENTIFIER elements in SETS');
+      
+      let processedCount = 0;
+      let skippedCount = 0;
+      let emptyCount = 0;
+      
+      allImageIdentifiers.forEach((identifierEl, index) => {
+        // Get the identifier value
+        const identifier = getTextContent(identifierEl);
         
-        if (imageItemGroup) {
-          const imageIdentifierEl = findElement(imageItemGroup, 'IMAGE_IDENTIFIER');
-          const imageEl = findElement(imageItemGroup, 'IMAGE');
+        // Find the parent ATTRIBUTEGROUP to get the IMAGE element
+        let parent = identifierEl.parentElement;
+        while (parent && parent.nodeName !== 'ATTRIBUTEGROUP') {
+          parent = parent.parentElement;
+        }
+        
+        if (!parent) {
+          console.warn(`ImageService: [${index}] Could not find ATTRIBUTEGROUP parent for ${identifier}`);
+          return;
+        }
+        
+        // Find IMAGE element within the same ATTRIBUTEGROUP
+        const imageEl = findElement(parent, 'IMAGE');
+        
+        if (imageEl) {
+          const imageDataRaw = imageEl.textContent || '';
+          const imageData = imageDataRaw.trim();
+          const key = getAttribute(parent, 'KEY');
+          const keyVersion = getAttribute(parent, 'KEYVERSION');
           
-          if (imageIdentifierEl && imageEl) {
-            const identifier = getTextContent(imageIdentifierEl);
-            const imageData = getTextContent(imageEl);
-            const key = getAttribute(imageItemGroup, 'KEY');
-            const keyVersion = getAttribute(imageItemGroup, 'KEYVERSION');
+          // Log first few images for debugging
+          if (index < 5) {
+            console.log(`ImageService: [${index}] Identifier: ${identifier}`);
+            console.log(`ImageService: [${index}] Raw data length: ${imageDataRaw.length}, Trimmed length: ${imageData.length}`);
+            console.log(`ImageService: [${index}] First 50 chars: ${imageData.substring(0, 50)}`);
+            console.log(`ImageService: [${index}] Is placeholder: ${imageData === 'base64_data'}`);
+            console.log(`ImageService: [${index}] Starts with iVBOR: ${imageData.startsWith('iVBOR')}`);
+          }
+          
+          if (imageData && imageData.length > 0 && imageData !== 'base64_data') {
+            // Create data URL
+            const dataUrl = `data:image/png;base64,${imageData}`;
             
-            if (imageData && imageData.trim() && imageData !== 'base64_data') {
-              // Skip placeholder text "base64_data"
-              // Create data URL
-              const dataUrl = `data:image/png;base64,${imageData}`;
-              
-              const imageItem: UIImageItem = {
-                identifier,
-                imageData,
-                dataUrl,
-                key: key || undefined,
-                keyVersion: keyVersion || undefined,
-              };
-              
-              // Map identifiers to standardized keys
-              this.mapImageItem(identifier, imageItem);
-              
-              console.log(`ImageService: Processed image ${identifier} (${Math.round(imageData.length / 1024)}KB)`);
-            } else if (imageData === 'base64_data') {
-              console.log(`ImageService: Skipping placeholder image ${identifier}`);
+            const imageItem: UIImageItem = {
+              identifier,
+              imageData,
+              dataUrl,
+              key: key || undefined,
+              keyVersion: keyVersion || undefined,
+            };
+            
+            // Store directly by identifier (e.g., "ICON:POS")
+            this.images[identifier] = imageItem;
+            
+            // Also map to alternative keys for backward compatibility
+            this.mapImageItem(identifier, imageItem);
+            
+            processedCount++;
+            if (processedCount <= 10) {
+              console.log(`ImageService: ✓ Processed image ${identifier} (${Math.round(imageData.length / 1024)}KB)`);
+            }
+          } else if (imageData === 'base64_data') {
+            skippedCount++;
+            if (skippedCount <= 5) {
+              console.log(`ImageService: ⚠ Skipping placeholder image ${identifier}`);
+            }
+          } else {
+            emptyCount++;
+            if (emptyCount <= 5) {
+              console.log(`ImageService: ⚠ Skipping empty image ${identifier}`);
             }
           }
+        } else {
+          console.warn(`ImageService: [${index}] IMAGE element not found for ${identifier}`);
         }
       });
       
+      console.log(`ImageService: Summary - Processed: ${processedCount}, Skipped (placeholders): ${skippedCount}, Empty: ${emptyCount}, Total identifiers: ${allImageIdentifiers.length}`);
+      
       console.log('ImageService: Initialized with', Object.keys(this.images).length, 'images');
-      console.log('ImageService: Available images:', Object.keys(this.images));
+      console.log('ImageService: Available image identifiers:', Object.keys(this.images).filter(key => {
+        const img = this.images[key];
+        return img && typeof img === 'object' && 'identifier' in img;
+      }).map(key => {
+        const img = this.images[key];
+        return typeof img === 'object' && 'identifier' in img ? img.identifier : key;
+      }));
+      console.log('ImageService: All image keys:', Object.keys(this.images));
       this.initialized = true;
       
     } catch (error) {
@@ -432,9 +488,10 @@ class ImageService {
    * Get image by identifier or standardized key
    */
   getImage(key: string): UIImageItem | null {
+    // Direct lookup first
     const image = this.images[key];
-    if (image) {
-      return image;
+    if (image && typeof image === 'object' && 'dataUrl' in image) {
+      return image as UIImageItem;
     }
     
     // Try with different variations of the key
@@ -448,9 +505,15 @@ class ImageService {
     
     for (const variation of variations) {
       const found = this.images[variation];
-      if (found) {
-        return found;
+      if (found && typeof found === 'object' && 'dataUrl' in found) {
+        console.log('ImageService: Found image using variation:', key, '→', variation);
+        return found as UIImageItem;
       }
+    }
+    
+    // Debug: log what keys are available if not found
+    if (key.includes('POS') || key.includes('SUPPLIER') || key.includes('REGION') || key.includes('PRODUCT') || key.includes('DOCUMENT') || key.includes('TRANSACTION') || key.includes('USER')) {
+      console.log('ImageService: getImage failed for', key, '- Available keys:', Object.keys(this.images).slice(0, 20));
     }
     
     return null;
@@ -510,12 +573,86 @@ class ImageService {
   }
   
   /**
-   * Get icon for menu items by caption, action, interaction ID, or type
+   * Get fallback local PNG file path for an icon identifier
+   * Maps identifiers like "ICON:POS" to "/images/ICON_POS.png"
    */
-  getMenuIcon(action: string | undefined, caption?: string, interactionId?: string): string | null {
+  getLocalIconPath(iconIdentifier: string): string | null {
+    if (!iconIdentifier) return null;
+    
+    // Convert "ICON:POS" to "ICON_POS.png"
+    const fileName = iconIdentifier.replace(/:/g, '_') + '.png';
+    return `/images/${fileName}`;
+  }
+  
+  /**
+   * Get icon identifier from caption (for fallback lookup)
+   */
+  private getIconIdentifierFromCaption(caption: string): string | null {
+    if (!caption) return null;
+    
+    const captionLower = caption.toLowerCase().trim().replace(/\s+/g, ' ');
+    const captionMappings: { [key: string]: string } = {
+      'points-of-sale': 'ICON:POS',
+      'point-of-sale': 'ICON:POS',
+      'points of sale': 'ICON:POS',
+      'pos': 'ICON:POS',
+      'suppliers': 'ICON:SUPPLIER',
+      'supplier': 'ICON:SUPPLIER',
+      'regions': 'ICON:REGION_AGENCY',
+      'region': 'ICON:REGION_AGENCY',
+      'agency': 'ICON:REGION_AGENCY',
+      'agencies': 'ICON:REGION_AGENCY',
+      'persons': 'ICON:USER',
+      'person': 'ICON:USER',
+      'users': 'ICON:USER',
+      'user': 'ICON:USER',
+      'products': 'ICON:PRODUCT',
+      'product': 'ICON:PRODUCT',
+      'documents': 'ICON:DOCUMENTS2',
+      'document': 'ICON:DOCUMENTS2',
+      'transactions': 'ICON:CONTRACT',
+      'transaction': 'ICON:CONTRACT',
+      'pantaree': 'ICON:PANTAVISTA',
+      'pantavista': 'ICON:PANTAVISTA',
+      'activities': 'ICON:ACTIVITY',
+      'activity': 'ICON:ACTIVITY',
+      'agenda': 'ICON:ACTIVITY',
+      'settings': 'ICON:SETTINGS',
+      'setting': 'ICON:SETTINGS',
+      'logout': 'ICON:LOGOUT',
+      'log out': 'ICON:LOGOUT',
+    };
+    
+    // Try exact match
+    if (captionMappings[captionLower]) {
+      return captionMappings[captionLower];
+    }
+    
+    // Try partial match
+    for (const [key, iconId] of Object.entries(captionMappings)) {
+      if (captionLower.includes(key) || key.includes(captionLower)) {
+        return iconId;
+      }
+    }
+    
+    return null;
+  }
+  
+  /**
+   * Get icon for menu items by caption, action, interaction ID, or type
+   * Returns dynamic icon URL if available, otherwise returns local PNG path as fallback
+   */
+  getMenuIcon(action: string | undefined, caption?: string, interactionId?: string, useLocalFallback: boolean = true): string | null {
     // Check if service is initialized
     if (!this.initialized) {
       console.warn('ImageService: getMenuIcon called before initialization');
+      // Still return local fallback if requested
+      if (useLocalFallback && caption) {
+        const iconId = this.getIconIdentifierFromCaption(caption);
+        if (iconId) {
+          return this.getLocalIconPath(iconId);
+        }
+      }
       return null;
     }
     
@@ -594,12 +731,22 @@ class ImageService {
       if (captionMappings[captionLower]) {
         const iconId = captionMappings[captionLower];
         console.log('ImageService: Found caption mapping:', captionLower, '→', iconId);
+        console.log('ImageService: Checking if', iconId, 'exists in cache...');
+        console.log('ImageService: Direct lookup this.images[iconId]:', this.images[iconId] ? 'FOUND' : 'NOT FOUND');
         const icon = this.getImage(iconId);
         if (icon) {
-          console.log('ImageService: Successfully retrieved icon for', iconId);
+          console.log('ImageService: ✓ Successfully retrieved icon for', iconId, 'dataUrl length:', icon.dataUrl?.length || 0);
           return icon.dataUrl;
         } else {
-          console.warn('ImageService: Icon ID', iconId, 'not found in image cache');
+          console.warn('ImageService: ✗ Icon ID', iconId, 'not found in image cache');
+          // Return local fallback if enabled
+          if (useLocalFallback) {
+            const localPath = this.getLocalIconPath(iconId);
+            if (localPath) {
+              console.log('ImageService: Using local fallback for', iconId, '→', localPath);
+              return localPath;
+            }
+          }
         }
       }
       
@@ -611,6 +758,24 @@ class ImageService {
           if (icon) {
             console.log('ImageService: Successfully retrieved icon for', iconId);
             return icon.dataUrl;
+          } else if (useLocalFallback) {
+            const localPath = this.getLocalIconPath(iconId);
+            if (localPath) {
+              console.log('ImageService: Using local fallback for', iconId, '→', localPath);
+              return localPath;
+            }
+          }
+        }
+      }
+      
+      // If no dynamic icon found and fallback is enabled, try to get local icon
+      if (useLocalFallback) {
+        const iconId = this.getIconIdentifierFromCaption(captionLower);
+        if (iconId) {
+          const localPath = this.getLocalIconPath(iconId);
+          if (localPath) {
+            console.log('ImageService: Using local fallback for caption:', captionLower, '→', localPath);
+            return localPath;
           }
         }
       }
@@ -646,6 +811,11 @@ class ImageService {
           const icon = this.getImage(iconId);
           if (icon) {
             return icon.dataUrl;
+          } else if (useLocalFallback) {
+            const localPath = this.getLocalIconPath(iconId);
+            if (localPath) {
+              return localPath;
+            }
           }
         }
       }
@@ -690,6 +860,11 @@ class ImageService {
         const icon = this.getImage(iconMappings[actionKey]);
         if (icon) {
           return icon.dataUrl;
+        } else if (useLocalFallback) {
+          const localPath = this.getLocalIconPath(iconMappings[actionKey]);
+          if (localPath) {
+            return localPath;
+          }
         }
       }
       
@@ -697,6 +872,23 @@ class ImageService {
       const directImage = this.getImage(action) || this.getImage(`ICON:${action.toUpperCase()}`);
       if (directImage) {
         return directImage.dataUrl;
+      } else if (useLocalFallback) {
+        const localPath = this.getLocalIconPath(`ICON:${action.toUpperCase()}`);
+        if (localPath) {
+          return localPath;
+        }
+      }
+    }
+    
+    // Final fallback: try to get local icon from caption if available
+    if (useLocalFallback && caption) {
+      const iconId = this.getIconIdentifierFromCaption(caption);
+      if (iconId) {
+        const localPath = this.getLocalIconPath(iconId);
+        if (localPath) {
+          console.log('ImageService: Final fallback - using local icon for caption:', caption, '→', localPath);
+          return localPath;
+        }
       }
     }
     

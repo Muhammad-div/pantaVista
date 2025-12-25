@@ -52,6 +52,20 @@ import { imageService } from '../services/imageService'
 import SettingsSidebar from './SettingsSidebar'
 import './DashboardLayout.css'
 
+// Helper function to get local icon path for navbar icons
+const getNavbarIconPath = (iconName: string): string => {
+  const iconMap: Record<string, string> = {
+    'profile': '/images/ICON_OWN_PROFILE.png',
+    'user': '/images/ICON_OWN_PROFILE.png',
+    'account': '/images/ICON_OWN_PROFILE.png',
+    'settings': '/images/ICON_SETTINGS.png',
+    'logout': '/images/ICON_LOGOUT.png',
+    'workspace': '/images/ICON_SETTINGS.png', // Fallback, or use a workspace icon if available
+    'home': '/images/ICON_SETTINGS.png', // Fallback for workspace/home
+  }
+  return iconMap[iconName.toLowerCase()] || `/images/ICON_SETTINGS.png`
+}
+
 const DRAWER_WIDTH = 280
 const DRAWER_WIDTH_COLLAPSED = 72
 
@@ -77,6 +91,7 @@ const DashboardLayout = () => {
   const [settingsSidebarOpen, setSettingsSidebarOpen] = useState(false)
   const [sidebarExpanded, setSidebarExpanded] = useState(true)
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
+  const [profileIconError, setProfileIconError] = useState(false)
 
   // Build dynamic menu items from actual API data
   const navItems: NavItem[] = useMemo(() => {
@@ -110,7 +125,7 @@ const DashboardLayout = () => {
     // Map menu items to navigation items
     rootMenuItems.forEach(item => {
       let path = ''
-      let icon: React.ReactNode = <ActivitiesIcon /> // Default icon
+      let icon: React.ReactNode = '/images/ICON_ACTIVITY.png' // Default icon
       
       // Try to get dynamic icon from imageService first
       if (imageService.isInitialized()) {
@@ -171,52 +186,15 @@ const DashboardLayout = () => {
           break
       }
       
-      // Use dynamic icon if available, otherwise fallback to Material-UI icons
+      // Use dynamic icon if available (from API), otherwise fallback to local PNG files
+      // getMenuIcon now returns local PNG paths as fallback, so we always get a string URL
       if (dynamicIconUrl) {
         // Store the icon URL as a string - we'll render it as img in renderNavItem
+        // This can be either a data URL (from API) or a local PNG path (from /public/images/)
         icon = dynamicIconUrl
       } else {
-        // Fallback to Material-UI icons
-        switch (item.caption.toLowerCase()) {
-          case 'points-of-sale':
-          case 'point-of-sale':
-            icon = <POSIcon />
-            break
-          case 'suppliers':
-          case 'supplier':
-            icon = <SuppliersIcon />
-            break
-          case 'regions':
-          case 'region':
-            icon = <RegionsIcon />
-            break
-          case 'persons':
-          case 'person':
-            icon = <PersonsIcon />
-            break
-          case 'transactions':
-          case 'transaction':
-            icon = <TransactionsIcon />
-            break
-          case 'documents':
-          case 'document':
-            icon = <DocumentsIcon />
-            break
-          case 'products':
-          case 'product':
-            icon = <ProductsIcon />
-            break
-          case 'pantaree':
-            icon = <PentareeIcon />
-            break
-          case 'activities':
-          case 'activity':
-            icon = <ActivitiesIcon />
-            break
-          default:
-            icon = <ActivitiesIcon />
-            break
-        }
+        // If getMenuIcon returns null, use a default local icon as last resort
+        icon = '/images/ICON_ACTIVITY.png'
       }
       
       if (path) {
@@ -256,11 +234,12 @@ const DashboardLayout = () => {
     if (!permissions.showPOS && menuCaptions?.dailyAgenda) {
       // Try to get dynamic icon for Daily Agenda/Activities
       const agendaIconUrl = imageService.getMenuIcon('DAILYAGENDA', menuCaptions.dailyAgenda, 'agenda') || 
-                            imageService.getMenuIcon('ACTIVITY', menuCaptions.dailyAgenda, 'agenda')
+                            imageService.getMenuIcon('ACTIVITY', menuCaptions.dailyAgenda, 'agenda') ||
+                            '/images/ICON_ACTIVITY.png'
       items.push({
         path: '/agenda',
         label: menuCaptions.dailyAgenda,
-        icon: agendaIconUrl || <AgendaIcon />,
+        icon: agendaIconUrl,
       })
     }
     
@@ -268,11 +247,12 @@ const DashboardLayout = () => {
     if (menuCaptions?.exchangeData) {
       // Try to get dynamic icon for Exchange Data/Settings
       const exchangeIconUrl = imageService.getMenuIcon('EXCHANGEDATA', menuCaptions.exchangeData, 'exchange') ||
-                              imageService.getMenuIcon('SETTINGS', menuCaptions.exchangeData, 'exchange')
+                              imageService.getMenuIcon('SETTINGS', menuCaptions.exchangeData, 'exchange') ||
+                              '/images/ICON_SETTINGS.png'
       items.push({
         path: '/exchange-data',
         label: menuCaptions.exchangeData,
-        icon: exchangeIconUrl || <ExchangeDataIcon />,
+        icon: exchangeIconUrl,
       })
     }
     
@@ -795,7 +775,20 @@ const DashboardLayout = () => {
                         verticalAlign: 'middle',
                       }}
                     >
-                      {crumb.label === textService.getText('LABEL:WORKSPACE', 'Home') && <HomeIcon sx={{ mr: 0.5, fontSize: '16px', verticalAlign: 'middle' }} />}
+                      {crumb.label === textService.getText('LABEL:WORKSPACE', 'Home') && (
+                        <img 
+                          src={getNavbarIconPath('workspace')} 
+                          alt="Workspace"
+                          style={{ 
+                            width: '16px', 
+                            height: '16px', 
+                            objectFit: 'contain',
+                            marginRight: '4px',
+                            verticalAlign: 'middle',
+                            display: 'inline-block'
+                          }}
+                        />
+                      )}
                       <span>{crumb.label}</span>
                     </MUILink>
                   )
@@ -868,8 +861,22 @@ const DashboardLayout = () => {
                 sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
               >
               <Avatar sx={{ width: { xs: 28, sm: 32 }, height: { xs: 28, sm: 32 }, bgcolor: 'var(--primary-main, #3b82f6)' }}>
-                  <AccountCircleIcon />
-                </Avatar>
+                {!profileIconError ? (
+                  <img 
+                    src={getNavbarIconPath('profile')} 
+                    alt="Profile"
+                    style={{ 
+                      width: '70%', 
+                      height: '70%', 
+                      objectFit: 'contain',
+                      display: 'block'
+                    }}
+                    onError={() => setProfileIconError(true)}
+                  />
+                ) : (
+                  <AccountCircleIcon sx={{ width: '70%', height: '70%' }} />
+                )}
+              </Avatar>
                 <Typography variant="body2" sx={{ ml: { xs: 0.5, sm: 1 }, fontWeight: 500, display: { xs: 'none', sm: 'block' } }}>
 {textService.getText('LABEL:USERDATA', 'User')}
                 </Typography>
@@ -899,7 +906,13 @@ const DashboardLayout = () => {
               handleUserMenuClose()
               navigate('/profile')
             }}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
+            <img 
+              src={getNavbarIconPath('profile')} 
+              alt="Profile"
+              style={{ width: '20px', height: '20px', objectFit: 'contain' }}
+            />
             {textService.getText('SYSTEMCENTER.LABEL:OWN_PROFILE_HEADER', 'Profile')}
           </MenuItem>
           <MenuItem 
@@ -907,11 +920,25 @@ const DashboardLayout = () => {
               handleUserMenuClose()
               navigate('/account-settings')
             }}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
+            <img 
+              src={getNavbarIconPath('settings')} 
+              alt="Settings"
+              style={{ width: '20px', height: '20px', objectFit: 'contain' }}
+            />
             {textService.getText('LABEL:SETTINGS', 'Account Settings')}
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleLogout}>
+          <MenuItem 
+            onClick={handleLogout}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+          >
+            <img 
+              src={getNavbarIconPath('logout')} 
+              alt="Logout"
+              style={{ width: '20px', height: '20px', objectFit: 'contain' }}
+            />
             {textService.getText('PAGE.TOOLTIP:LOGOUT', 'Logout').replace('Click here to log off and exit the application.', 'Logout')}
           </MenuItem>
         </Menu>

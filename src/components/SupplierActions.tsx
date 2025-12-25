@@ -17,7 +17,7 @@ import {
   Description as DescriptionIcon,
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
-import type { Supplier } from '../pages/Suppliers'
+import type { Supplier } from '../utils/xmlParser'
 import './SupplierActions.css'
 
 interface SupplierActionsProps {

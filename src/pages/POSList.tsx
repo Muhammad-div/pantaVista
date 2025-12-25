@@ -45,6 +45,20 @@ import { useTextService } from '../services/textService'
 import type { POSItem as ApiPOSItem, POSFieldMetadata, POSSortConfig } from '../utils/xmlParser'
 import './POSList.css'
 
+// Helper function to get local icon path for action buttons
+const getActionIconPath = (iconName: string): string => {
+  const iconMap: Record<string, string> = {
+    'settings': '/images/WINDOW.ICON_CONFIG.png',
+    'config': '/images/WINDOW.ICON_CONFIG.png',
+    'copy': '/images/ICON_COPY.png',
+    'print': '/images/WINDOW.ICON_PRINT.png',
+    'export': '/images/WINDOW.ICON_EXPORT.png',
+    'filter': '/images/ICON_REPORT_FILTER.png',
+    'more': '/images/ICON_SETTINGS.png', // Fallback for more options
+  }
+  return iconMap[iconName.toLowerCase()] || `/images/ICON_SETTINGS.png`
+}
+
 interface POSItem {
   id: number
   posId: string
@@ -801,14 +815,37 @@ const POSList = () => {
                     }
                   }}
                 >
-                  <FilterListIcon sx={{ fontSize: '18px' }} />
+                  <img 
+                    src={getActionIconPath('filter')} 
+                    alt="Filter"
+                    style={{ width: '18px', height: '18px', objectFit: 'contain' }}
+                    onError={(e) => {
+                      // Fallback to MUI icon if image fails
+                      const target = e.target as HTMLImageElement
+                      target.style.display = 'none'
+                      const parent = target.parentElement
+                      if (parent && !parent.querySelector('.mui-fallback-icon')) {
+                        const fallback = document.createElement('span')
+                        fallback.className = 'mui-fallback-icon'
+                        parent.appendChild(fallback)
+                        // Render MUI icon via React would require more complex handling
+                        // For now, just hide the broken image
+                      }
+                    }}
+                  />
                 </IconButton>
               </Badge>
             )}
             <Button
               variant="outlined"
               size="small"
-              startIcon={<SettingsIcon sx={{ fontSize: { xs: '14px', sm: '16px' } }} />}
+              startIcon={
+                <img 
+                  src={getActionIconPath('settings')} 
+                  alt="Settings"
+                  style={{ width: '16px', height: '16px', objectFit: 'contain' }}
+                />
+              }
               onClick={() => handleAction('Settings')}
               sx={{ 
                 minWidth: 'auto', 
@@ -823,7 +860,13 @@ const POSList = () => {
             <Button
               variant="outlined"
               size="small"
-              startIcon={<CopyIcon sx={{ fontSize: { xs: '14px', sm: '16px' } }} />}
+              startIcon={
+                <img 
+                  src={getActionIconPath('copy')} 
+                  alt="Copy"
+                  style={{ width: '16px', height: '16px', objectFit: 'contain' }}
+                />
+              }
               onClick={() => handleAction('Copy')}
               sx={{ 
                 minWidth: 'auto', 
@@ -840,7 +883,13 @@ const POSList = () => {
             <Button
               variant="outlined"
               size="small"
-              startIcon={<PrintIcon sx={{ fontSize: { xs: '14px', sm: '16px' } }} />}
+              startIcon={
+                <img 
+                  src={getActionIconPath('print')} 
+                  alt="Print"
+                  style={{ width: '16px', height: '16px', objectFit: 'contain' }}
+                />
+              }
               onClick={() => handleAction('Print')}
               sx={{ 
                 minWidth: 'auto', 
@@ -857,7 +906,13 @@ const POSList = () => {
             <Button
               variant="outlined"
               size="small"
-              startIcon={<ExportIcon sx={{ fontSize: { xs: '14px', sm: '16px' } }} />}
+              startIcon={
+                <img 
+                  src={getActionIconPath('export')} 
+                  alt="Export"
+                  style={{ width: '16px', height: '16px', objectFit: 'contain' }}
+                />
+              }
               onClick={() => handleAction('Export')}
               sx={{ 
                 minWidth: 'auto', 
@@ -881,7 +936,11 @@ const POSList = () => {
                 padding: { xs: '4px', sm: '4px' },
             }}
           >
-              <MoreVertIcon sx={{ fontSize: { xs: '16px', sm: '18px' } }} />
+              <img 
+                src={getActionIconPath('more')} 
+                alt="More options"
+                style={{ width: '18px', height: '18px', objectFit: 'contain' }}
+              />
           </IconButton>
           <Menu
             anchorEl={optionsAnchor}
