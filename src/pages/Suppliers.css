@@ -29,6 +29,40 @@
   transform: translateY(-2px);
 }
 
+.suppliers-development-card {
+  background: var(--bg-paper, #ffffff);
+  border-radius: 20px;
+  box-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(15, 23, 42, 0.02));
+  border: 1px solid var(--border-color, #cbd5e1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+}
+
+.suppliers-development-card:hover {
+  box-shadow: var(--shadow-2xl, 0 25px 50px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.03));
+  transform: translateY(-4px);
+}
+
+.development-title {
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  margin-bottom: 16px !important;
+  transition: color 0.2s ease;
+}
+
+.development-message {
+  color: var(--text-secondary, #6b7280);
+  line-height: 1.6;
+  margin-bottom: 12px !important;
+  transition: color 0.2s ease;
+}
+
+.development-subtitle {
+  color: var(--text-tertiary, #9ca3af);
+  font-style: italic;
+  transition: color 0.2s ease;
+}
+
 .table-header {
   display: flex;
   justify-content: space-between;
@@ -182,6 +216,61 @@
   .kendo-suppliers-grid .k-grid-header th,
   .kendo-suppliers-grid .k-grid-content td {
     padding: 8px 12px;
+  }
+
+  .suppliers-development-card {
+    padding: 32px 20px !important;
+    border-radius: 16px;
+    margin: 16px !important;
+  }
+
+  .suppliers-development-card:hover {
+    transform: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .development-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  .development-message {
+    font-size: 0.875rem !important;
+    line-height: 1.5;
+    margin-bottom: 10px !important;
+    padding: 0 8px;
+  }
+
+  .development-subtitle {
+    font-size: 0.8125rem !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .suppliers-development-card {
+    padding: 24px 16px !important;
+    border-radius: 12px;
+  }
+
+  .development-title {
+    font-size: 1.25rem !important;
+    margin-bottom: 10px !important;
+  }
+
+  .development-message {
+    font-size: 0.8125rem !important;
+    padding: 0 4px;
+  }
+
+  .development-subtitle {
+    font-size: 0.75rem !important;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+  .suppliers-development-card {
+    padding: 40px 28px !important;
+    max-width: 90% !important;
   }
 }
 
